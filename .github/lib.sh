@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha e3f87ed2ad7d - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 5c4f17b0ae40 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -641,12 +641,26 @@ bring_in() {
   [ $# -ge 2 ] && shift 2 || shift $#
   wait_ui "$rx" "$secs" "$@"; rc=$?
   for i in 1 2 3 4 5 6; do
-    [ $rc -eq 3 ] || break
-    case $EMU_WHY in
-      *above*) near scroll "'$rx' above the page: swipe down"; swipe_page down short ;;
-      *below*) near scroll "'$rx' below the page: swipe up"; swipe_page up short ;;
-      *) break ;;
-    esac
+    if [ $rc -eq 3 ]; then
+      case $EMU_WHY in
+        *above*) near scroll "'$rx' above the page: swipe down"; swipe_page down short ;;
+        *below*) near scroll "'$rx' below the page: swipe up"; swipe_page up short ;;
+        *) break ;;
+      esac
+    # none on the screen, but wholly beyond the edge in the dump, bounds [0,0][0,0] (find_ui drops it): below,
+    # as in tap_ui --land-below (T-619 lesson 2: the switch row of the modern look under the screen, ~20 min).
+    # [0,0][0,0] is beyond any edge: the page did not move (its end, or the node is above) - stop
+    elif [ $rc -eq 1 ] && [ -s ui.xml ] && uifind ui.xml --offscreen "$rx" > /dev/null 2>&1; then
+      near scroll "'$rx' wholly beyond the screen ([0,0][0,0]): swipe up"
+      cp ui.xml .emu_bring_prev.xml
+      swipe_page up short
+      dump || break
+      cmp -s ui.xml .emu_bring_prev.xml && { near scroll "'$rx': the page did not move - not below"; break; }
+      find_ui "$rx" "$@"; rc=$?
+      continue
+    else
+      break
+    fi
     dump && { find_ui "$rx" "$@"; rc=$?; }
   done
   return $rc
@@ -705,13 +719,29 @@ swipe_page() {
   emu_sleep 1
 }
 
+# scroll_past_why <regex> <look|""> <mode>: the tail of a scroll_to refusal when the node was in a dump wholly
+# beyond the screen ([0,0][0,0]) - at that look or in the last dump; nothing otherwise
+scroll_past_why() {
+  local at=$2
+  if [ -z "$at" ] && [ -s ui.xml ] && uifind ui.xml --offscreen "$1" > /dev/null 2>&1; then
+    at=last
+  fi
+  [ -n "$at" ] || return 0
+  if [ "$3" = exact ]; then
+    printf "; '%s' was in the dump beyond the screen ([0,0][0,0], look %s) - passed even by exact drags, or hidden" "$1" "$at"
+  else
+    printf "; '%s' was in the dump beyond the screen ([0,0][0,0], look %s) - the swipe carried it past: --exact" "$1" "$at"
+  fi
+}
+
 # scroll_to <regex> [swipes] [uifind options] [--exact]: swipe the page until the control is on the screen.
 # The end of the page - the layout did not change after a swipe. Not reached - a frame not-reached-<time>, "!!"
 # The swipe flicks: the row comes at another y run by run and the flick may carry it past, to the end of the
 # page (T-588, lesson 3, run 44180158751: 2 of 12 cases). --exact: the page goes by the finger only
-# (swipe_page exact) - for a row of a settings page; not on pages with onPressAndHold (see swipe_page)
+# (swipe_page exact) - for a row of a settings page; not on pages with onPressAndHold (see swipe_page).
+# A refusal names the look where the control was in the dump beyond the screen ([0,0][0,0]): passed, not absent
 scroll_to() {
-  local rx=$1 max=${2:-25} i rc a mode=""
+  local rx=$1 max=${2:-25} i rc a mode="" past=""
   [ $# -ge 2 ] && shift 2 || shift $#
   for a in "$@"; do
     [ "$a" = --exact ] && mode=exact
@@ -734,6 +764,12 @@ scroll_to() {
       fail "scroll to '$rx': two or more on the screen ($EMU_WHY)"
       return 1
     fi
+    # none on the screen, but in the dump wholly beyond the edge, bounds [0,0][0,0] (find_ui drops it): the
+    # first look where it was so - the cause of the refusal below, if one comes (T-602, lesson 3: the hint of
+    # Clinchers was in the dump at 0x0, the log said only "end of the page", the cause was taken for the regex)
+    if [ $rc -eq 1 ] && [ -z "$past" ] && uifind ui.xml --offscreen "$rx" > /dev/null 2>&1; then
+      past=$i
+    fi
     cp ui.xml .emu_s.xml
     case $EMU_WHY in
       *above*) swipe_page down ${mode:-short} ;;
@@ -742,12 +778,12 @@ scroll_to() {
     # the end: the same nodes with the same texts (by the layout only, rows of one height scrolled by
     # whole rows would look like the end)
     if dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
-      fail "scroll to '$rx': end of the page, not found"
+      fail "scroll to '$rx': end of the page, not found$(scroll_past_why "$rx" "$past" "$mode")"
       shot "not-reached-$(date +%s)" now
       return 1
     fi
   done
-  fail "scroll to '$rx': not reached in $max swipes ($EMU_WHY)"
+  fail "scroll to '$rx': not reached in $max swipes ($EMU_WHY)$(scroll_past_why "$rx" "$past" "$mode")"
   shot "not-reached-$(date +%s)" now
   return 1
 }
@@ -859,7 +895,7 @@ checked_of() {
 # row_toggle <shot> <regex> [--right N]: the switch row off by a tap and on again - frames <shot>,
 # <shot>-off, <shot>-on and a check that the state went b -> !b -> b
 row_toggle() {
-  local s=$1 rx=$2 b a c x y name
+  local s=$1 rx=$2 b a c x y name right
   shift 2
   if ! bring_in "$rx" 15 --checkable; then
     fail "$s: no switch row '$rx' ($EMU_WHY)"; shot "$s-none" now; return 1
@@ -869,6 +905,7 @@ row_toggle() {
   find_ui "$rx" --checkable "$@" || { fail "$s: '$rx' gone ($EMU_WHY)"; return 1; }
   # the name found, not only the pattern (T-498 lesson 6: '^user_.*' took QZWS on master, qz on the branch)
   name=$(uifind ui.xml "$rx" --checkable "$@" --name 2>/dev/null)
+  case " $* " in *" --right "*) right=1 ;; *) right= ;; esac
   set -- $EMU_AT
   x=$1; y=$2; b=$4
   say "tap row '$rx' = '$name' at $x $y (checked $b)"
@@ -876,6 +913,17 @@ row_toggle() {
   emu_sleep 3
   shot "$s-off"
   a=$(checked_of "dumps/$s-off.xml" "$rx")
+  # the row did not turn by its middle: IndicatorOnlySwitch turns by the indicator only (MouseArea, mouse.x
+  # > width - indicator.width) - once more 90 px in from the right end, as --right 90, and a near miss
+  # (T-619 lesson 2: the case red, ~20 min and a rerun)
+  if [ -z "$right" ] && [ -n "$b" ] && [ "$a" = "$b" ]; then
+    x=$(( $7 - 90 ))
+    near row-toggle "'$rx' did not turn by the middle of the row: tap at $x $y (the indicator); add --right 90"
+    adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
+    emu_sleep 3
+    shot "$s-off"
+    a=$(checked_of "dumps/$s-off.xml" "$rx")
+  fi
   adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
   emu_sleep 3
   shot "$s-on"
