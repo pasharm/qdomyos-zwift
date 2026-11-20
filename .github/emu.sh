@@ -251,6 +251,42 @@ else:
 EOF
 }
 
+# menu_back_and_pick <case>: the menu of the page open (head). Back closes the menu, not the editor (as Back
+# closes the system list; WorkoutEditor.qml handleBack); opened again, a tap on "Bike" chooses it - the select
+# takes the change: the interval shows the fields of a bike (Cadence), not of a treadmill (Speed)
+menu_back_and_pick() {
+  local c=$1
+  say "press Back with the menu open"
+  adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+  still
+  shot "$c-5-menu-back"
+  if [ "$(menu_is_page "$c-5-menu-back")" = none ] && find_ui '^Add Interval$' --first; then
+    say "check $c-5-menu-back: Back closed the menu, the editor stays: OK"
+  else
+    fail "check $c-5-menu-back: after Back the menu is '$(menu_is_page "$c-5-menu-back")', the editor $(find_ui '^Add Interval$' --first && echo open || echo gone)"
+    return 1
+  fi
+  find_device || { fail "$c: the device list not on the screen after Back"; return 1; }
+  set -- $EMU_AT
+  adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+  if ! wait_ui '^Bike$' 10; then
+    fail "$c: the menu did not open again"
+    return 1
+  fi
+  tap_ui '^Bike$' '^Cadence' 15
+  emu_sleep 2
+  still
+  shot "$c-6-bike"
+  # the field label of the treadmill ("Speed (km/h)"), not the chips of the chart
+  if find_ui '^Cadence' --first && ! find_ui '^Speed \(km/h\)$' --first; then
+    say "check $c-6-bike: Bike chosen in the menu - the interval has the fields of a bike: OK"
+  else
+    fail "check $c-6-bike: after Bike in the menu no Cadence field, or still Speed"
+  fi
+}
+
 # editor <side> <look>: the workout editor - New makes an interval for the treadmill of the app (speed 9.5,
 # incline 1.0: two charts, T-187 scenario); the top of the page, the chart card, and in the modern look the
 # device list open
@@ -286,6 +322,7 @@ editor() {
         say "before $c-4-menu: the device list is '$m'"
       elif [ "$m" = page ]; then
         say "check $c-4-menu: the device list is the menu of the page: OK"
+        menu_back_and_pick "$c"
       else
         fail "check $c-4-menu: the device list is '$m', the menu of the page expected"
       fi
