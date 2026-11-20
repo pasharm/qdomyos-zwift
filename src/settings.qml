@@ -4308,7 +4308,7 @@ import QtQuick 2.12 as Quick212
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
+                        color: window.ui.modern ? window.ui.warning : Material.color(Material.Red)
                     }
 
                     UiButton {
@@ -7852,7 +7852,7 @@ import QtQuick 2.12 as Quick212
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
-                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
+                        color: window.ui.modern ? window.ui.warning : Material.color(Material.Red)
                         Layout.fillWidth: true
                     }
 
@@ -11620,7 +11620,7 @@ import QtQuick 2.12 as Quick212
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Orange)
+                        color: window.ui.modern ? window.ui.warning : Material.color(Material.Orange)
                     }
                 }
             }
@@ -16903,7 +16903,7 @@ import QtQuick 2.12 as Quick212
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
-                                color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
+                                color: window.ui.modern ? window.ui.warning : Material.color(Material.Red)
                                 Layout.fillWidth: true
                             }
 
