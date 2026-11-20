@@ -24,8 +24,8 @@ LIGHT="ui_modern=true ui_theme_mode=light"
 DARK="ui_modern=true ui_theme_mode=dark"
 CLASSIC="ui_modern=false"
 
-# settings.qml of the branch (a23bb201d + PR): General Options :2860, App Language :2873, Player Weight :2930
-# (SettingsNumberField, name in the dump - its value, default 75), Gender :3079 (ValueComboBox, OK okSex :3094)
+# settings.qml of the branch (a23bb201d + PR): General Options :2862, App Language :2875, Player Weight :2932
+# (SettingsNumberField, name in the dump - its value, default 75), Gender :3081 (ValueComboBox, OK okSex :3096)
 GEN_SEC='^General Options$'
 LANG_LABEL='^App Language:$'
 WEIGHT_LABEL='^Player Weight.*'
@@ -117,7 +117,7 @@ select_case() {
     [ "${n:-0}" -ge 1 ] && break
     i=$((i + 1))
   done
-  say "$c: sex=Female in qz.conf: ${n:-0} (after $(( (i + 1) * 3 )) s at most)"
+  say "$c: sex=Female in qz.conf: ${n:-0} (looks: $(( i < 5 ? i + 1 : 5 )), 3 s apart)"
   if [ "$side" = h ]; then
     # UiButton.applySelection (Qt.callLater after onActivated) presses okSex: settings.sex = "Female"
     [ "${n:-0}" -ge 1 ] && say "check $c: the pick saved at once: OK" \
@@ -129,18 +129,21 @@ select_case() {
   fi
 }
 
-# page_case <case> <look keys> <section> <landing> [<inner section> <inner landing>] -- <row>
+# page_case <case> <look keys> <section> <landing> <acc|page> [<inner page> <inner landing>] -- <row>
+# acc - the section is an accordion (its landing may open below the page: --land-below); page - a NewPageElement
+# (stackView.push: the landing is the top of a new page, the full wait of tap_ui, no swipes). The inner one is a page
 page_case() {
-  local c=$1 keys=$2 sec=$3 land=$4 row
-  shift 4
+  local c=$1 keys=$2 sec=$3 land=$4 kind=$5 row below=()
+  shift 5
+  [ "$kind" = acc ] && below=(--land-below)
   # shellcheck disable=SC2086 # the look keys are words
   start_case "$c" $keys $NODEV || return 1
   settings_open || { shot "$c-0-no-settings" now; return 1; }
   scroll_to "$sec" 30 --exact || { shot "$c-0-no-section" now; return 1; }
-  tap_ui "$sec" "$land" --first --land-below || { shot "$c-0-closed" now; return 1; }
+  tap_ui "$sec" "$land" --first "${below[@]}" || { shot "$c-0-closed" now; return 1; }
   if [ "$1" != -- ]; then
     scroll_to "$1" 30 --exact || { shot "$c-0-no-inner" now; return 1; }
-    tap_ui "$1" "$2" --land-below || { shot "$c-0-inner-closed" now; return 1; }
+    tap_ui "$1" "$2" || { shot "$c-0-inner-closed" now; return 1; }
     shift 2
   fi
   shift
@@ -165,10 +168,10 @@ for side in b h; do
   rows_case "${side}d" "$gok" $DARK
   weight_case "${side}w"
   select_case "${side}s" "$side"
-  page_case "${side}t" "$LIGHT" "$TTS_SEC" "$TTS_LAND" -- "$TTS_ROW"
-  page_case "${side}u" "$CLASSIC" "$TTS_SEC" "$TTS_LAND" -- "$TTS_ROW"
-  page_case "${side}i" "$LIGHT" "$TM_SEC" "$TM_LAND" "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
-  page_case "${side}j" "$CLASSIC" "$TM_SEC" "$TM_LAND" "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
+  page_case "${side}t" "$LIGHT" "$TTS_SEC" "$TTS_LAND" page -- "$TTS_ROW"
+  page_case "${side}u" "$CLASSIC" "$TTS_SEC" "$TTS_LAND" page -- "$TTS_ROW"
+  page_case "${side}i" "$LIGHT" "$TM_SEC" "$TM_LAND" acc "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
+  page_case "${side}j" "$CLASSIC" "$TM_SEC" "$TM_LAND" acc "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
 done
 
 finish
