@@ -74,7 +74,8 @@ elif CASE == "tts":
         page("tts row", ok)
 elif CASE == "inc":
     if settings_section("Treadmill Options", "Treadmill as a Bike"):
-        ok = tap("Inclination Overrides", "Treadmill Inclination Overrides", scrolls=40)
+        # below the pinned header of the open section first (y 110-154 in the modern look): press() takes y >= 50
+        ok = bring("Inclination Overrides") and tap("Inclination Overrides", "Treadmill Inclination Overrides")
         page("inclination overrides", ok)
         if ok:
             ok = bring("Inclination Override Gain:")

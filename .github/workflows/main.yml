@@ -1,6 +1,6 @@
 # Test only (T-643; the workflow of T-627): build QZ for the iOS simulator as Xcode Cloud does, then
 # the buttons of the settings pages on UiButton (.github/ios_t643.py): General Options rows (App Language,
-# "0.005 = Clinchers" (modern light, modern dark, classic), Training Program Options - the GPX hint (modern light).
+# Player Weight, Gender) in modern light, modern dark and classic; the TTS page and Inclination Overrides (modern light).
 # With app_run the build is skipped and the .app comes from the ios-cloud-sim artifact of that run
 name: CI
 
