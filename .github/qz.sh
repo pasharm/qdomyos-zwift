@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha df11864e645e - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha 537554f5943f - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -145,18 +145,31 @@ open_drawer() {
     adb shell input tap $MENU < /dev/null > /dev/null 2>&1
     emu_sleep 3
     # --any: the entry in the tree, on the screen or not - the entries of a closed menu are not in the tree
-    # (18 home dumps of notes/emu, none with "Settings"); at 170 % text "Settings" lies in the navigation
-    # bar, tap_ui brings it in by a swipe (T-514, 43209989589)
+    # (18 home dumps of notes/emu, none with "Settings"); at 170 % text on API 35 "Settings" lies in the
+    # navigation bar, tap_ui brings it in by a swipe (T-514, 43209989589). Wholly below the screen (API 30,
+    # 170 %) it is in the tree with [0,0][0,0], and --any drops it too - the next check
     if wait_ui "$1" 9 --any; then
       say "outcome 'menu': ok ('$1' shown)"
       return 0
+    fi
+    # The menu is open (only its entries are in the tree), the entry wholly beyond the screen, [0,0][0,0]: on
+    # API 30 at 170 % "Settings" and all below lie past the end of a menu at its top - drag it up to its end;
+    # not there - to its top, as below (T-616; T-612, lesson 6, 44533999395)
+    if [ -s ui.xml ] && uifind ui.xml --offscreen "$1" > /dev/null 2>&1; then
+      local up
+      menu_drag "$1" up && return 0
+      up=$EMU_WHY
+      menu_drag "$1" down && return 0
+      say "outcome 'menu': no-effect"
+      fail "the menu is open, '$1' in the tree beyond the screen ([0,0][0,0]) - not shown after dragging the menu up ($up) and down ($EMU_WHY)"
+      return 1
     fi
     # The menu is open, the entry not in the tree: the menu keeps the place it was dragged to (API 30:
     # after Credits its top entries are not in the tree), closing and opening it again shows the same -
     # drag it down to its top (T-526; T-525, lesson 3, 43310802748)
     # (no dump: uifind prints nothing - not "open", the old retry below)
     if n=$(uifind ui.xml --count "$MENU_RX" 2>/dev/null) && [ "${n:-0}" -gt 0 ]; then
-      menu_to_top "$1" && return 0
+      menu_drag "$1" down && return 0
       say "outcome 'menu': no-effect"
       fail "the menu is open, '$1' not in the tree after dragging the menu down ($EMU_WHY)"
       return 1
@@ -169,21 +182,25 @@ open_drawer() {
   fail "the menu did not open ('$1' not shown)"
 }
 
-# menu_to_top <regex of an entry>: the open menu dragged down (a finger down, in the menu column) until the
-# entry is in the tree or the menu stops moving (its top); EMU_WHY - why it stopped
-menu_to_top() {
-  local i
+# menu_drag <regex of an entry> <down|up>: the open menu dragged in the menu column - a finger down to its
+# top, up to its end - until the entry is in the tree (on the screen or not, as --any takes it) or the menu
+# stops moving; EMU_WHY - why it stopped. Up: 1900 -> 600, as settings_open_end of T-612 (44551913972: Settings
+# reached on API 30 and 35)
+menu_drag() {
+  local i a=900 b=2000 edge=top
+  [ "$2" = up ] && { a=1900; b=600; edge=end; }
   for i in 1 2 3 4; do
-    cp ui.xml .emu_m.xml
-    say "drag the menu down $i"
-    adb shell input swipe 300 900 300 2000 400 < /dev/null > /dev/null 2>&1
+    # no dump after the last drag of the other way: nothing to compare with - this drag is not "the same"
+    cp ui.xml .emu_m.xml 2>/dev/null || : > .emu_m.xml
+    say "drag the menu $2 $i"
+    adb shell input swipe 300 "$a" 300 "$b" 400 < /dev/null > /dev/null 2>&1
     emu_sleep 2
     dump || { EMU_WHY="no dump after drag $i"; return 1; }
     if find_ui "$1" --any; then
-      say "outcome 'menu': ok ('$1' shown after dragging the menu down $i)"
+      say "outcome 'menu': ok ('$1' shown after dragging the menu $2 $i)"
       return 0
     fi
-    "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_m.xml ui.xml && { EMU_WHY="its top: drag $i did not move it"; return 1; }
+    "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_m.xml ui.xml && { EMU_WHY="its $edge: drag $i did not move it"; return 1; }
   done
   EMU_WHY="still moving after 4 drags"
   return 1

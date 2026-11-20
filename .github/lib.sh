@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 5c4f17b0ae40 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 0398de650c01 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -15,6 +15,7 @@
 #                                  on the screen / the screen changed, but not to the landing / the screen
 #                                  changed and the dump failed - unknown, the fail-*.png frame says what it is
 #   check <shot>: <what>: OK       a check passed; `finish` wants at least one
+#   log '<text>': after N s ...    wait_log found the line of the app log: when it came
 #   -- shot <name>                 a frame <name>.png with its dumps: dumps/<name>.xml after the frame,
 #                                  dumps/pre/<name>.xml before it
 # Rules for every function here: all variables local, a failure says "!!" and sets FAILED, the
@@ -167,6 +168,12 @@ app_alive() {
     | awk -v p="$PKG" '$NF == p || index($NF, p ":") == 1 { f = 1 } END { exit !f }'
 }
 
+# app_pid: the pid of the main process of PKG (not of PKG:service) by ps, as app_alive; empty - not running
+app_pid() {
+  { adb shell ps -A < /dev/null 2>/dev/null; adb shell ps < /dev/null 2>/dev/null; } | tr -d '\r' \
+    | awk -v p="$PKG" '$NF == p { print $2; exit }'
+}
+
 # EMU_ROWS: the rows of a frame compared by tap_ui and still - without the status bar (its clock turns
 # a minute: "nothing changed" became wrong-screen, a still screen "moving"); 84 px on the CI Nexus 6
 EMU_ROWS="${EMU_STATUS_BAR:-84},100000"
@@ -298,6 +305,35 @@ wait_gone() {
     [ "$i" -lt "$polls" ] && emu_sleep $((EMU_POLL > 2 ? EMU_POLL - 2 : 1))
   done
   return 1
+}
+
+# wait_log <text> [seconds, 90]: until a line with <text> (a plain string, not a regex) is in the log of the app
+# process running now (app_pid; the buffer still holds the lines of the starts before). By `logcat -d -v
+# threadtime` and the pid column, not `logcat --pid`/pidof: API 21/23 have neither. The pid is read at every
+# look: the app may come up during the wait. One look every EMU_POLL seconds, at least one look.
+# In steps.log: "log '<text>': after N s (look i of n)" - the time it came, for the limit of the next run on
+# that API; found in the last third - "~~ near wait"; not found - "!! log '<text>': not in N s", 1.
+# T-639 (T-599 lesson 2; T-272, T-425): each scenario polled `adb logcat -d … | grep -q` with its own 20 s -
+# on API 30 the home page loads longer, 3 cases of 6 without the line, and no time of it in the evidence
+# (check_emu_script logcat-poll)
+wait_log() {
+  local text=$1 secs=${2:-90} polls i pid="" t0=$SECONDS
+  polls=$(( (secs + EMU_POLL - 1) / EMU_POLL ))
+  [ "$polls" -ge 1 ] || polls=1
+  for i in $(seq 1 "$polls"); do
+    pid=$(app_pid)
+    # the text through ENVIRON, not awk -v: -v turns \t, \n of the text into a tab and a new line (T-639 review)
+    if [ -n "$pid" ] && adb logcat -d -v threadtime < /dev/null 2>/dev/null | tr -d '\r' \
+        | EMU_LOG_TEXT=$text awk -v p="$pid" '$3 == p && index($0, ENVIRON["EMU_LOG_TEXT"]) { f = 1 } END { exit !f }'; then
+      say "log '$text': after $((SECONDS - t0)) s (look $i of $polls)"
+      [ "$polls" -ge 3 ] && [ $((i * 3)) -gt $((polls * 2)) ] && near wait "log '$text' only at look $i of $polls"
+      return 0
+    fi
+    # the limit in seconds too: a look (two ps and logcat -d) takes time of its own besides the sleep
+    [ $((SECONDS - t0)) -ge "$secs" ] && break
+    [ "$i" -lt "$polls" ] && emu_sleep "$EMU_POLL"
+  done
+  fail "log '$text': not in $secs s (pid ${pid:-none}, $i looks of $polls, $((SECONDS - t0)) s)"
 }
 
 # The keyboard is not in the uiautomator dump: over the lower half of the screen it takes the tap

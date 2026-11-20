@@ -15,6 +15,14 @@
 #           (~11602): one of the seven hints with the classic size Qt.application.font.pixelSize - 2,
 #           the head has window.fontHint and window.hintGap in the modern look
 #   xk      classic: the same GPX hint - the same on both sides
+#   xt      modern light: Experimental Features > Enable Virtual Device > Virtual Device Bluetooth, the hint
+#           of "Virtual Tacx" (~18440): the classic size was window.fontPx(9), the head window.fontHint
+#           (Qt.application.font.pixelSize - 2 at 100 %) - a bigger hint at the default text size
+#   xs, xu  modern light, the app text at 170 % (ui_text_scale, the system size off; main.qml textScale):
+#           the GPX hint and the Tacx hint - on the head fontHint and hintGap grow with the text size
+#           (main.qml fontHint/hintGap), on master the classic size stays
+# Both switch sections (virtual_device_enabled, virtual_device_bluetooth) are on by default
+# (qzsettings.h:1146, :1151), so their content is open (AccordionCheckElement isOpen from the setting).
 . .github/lib.sh
 . .github/qz.sh
 
@@ -29,7 +37,8 @@ setting_case() {
   # shellcheck disable=SC2086 # the look keys are words
   start_case "$c" $keys $NODEV || return 1
   settings_open || { shot "$c-0-no-settings" now; return 1; }
-  scroll_to "$sec" 20 --exact || { shot "$c-0-no-section" now; return 1; }
+  # 60 looks: Experimental Features is near the end of the page, further at 170 %
+  scroll_to "$sec" 60 --exact || { shot "$c-0-no-section" now; return 1; }
   tap_ui "$sec" "$land" --land-below || { shot "$c-0-closed" now; return 1; }
   while [ $# -ge 2 ]; do
     name=$1 label=$2
@@ -56,6 +65,11 @@ ROLL_HINT='^0\.005 = Clinchers[\s\S]*'
 PROG_SEC='^Training Program Options$'
 PROG_LAND='^Stop Treadmill at the End$'
 GPX_HINT='^For GPX workouts, ignore inclination changes.*'
+# Experimental Features :17946, first row "Gym Mode" :17957; the Tacx hint :18440
+EXP_SEC='^Experimental Features$'
+EXP_LAND='^Gym Mode$'
+TACX_HINT='^Enables a virtual bluetooth bridge to the Tacx App\.$'
+BIG="ui_modern=true ui_theme_mode=light ui_text_scale_system=false ui_text_scale=170"
 
 emu_init
 logcat_start
@@ -70,6 +84,9 @@ for side in b h; do
   setting_case "${side}c" "$BIKE_SEC" "$BIKE_LAND" "$CLASSIC" 1-speed "$SPEED_HINT" 2-roll "$ROLL_HINT"
   setting_case "${side}g" "$PROG_SEC" "$PROG_LAND" "$LIGHT" 1-gpx "$GPX_HINT"
   setting_case "${side}k" "$PROG_SEC" "$PROG_LAND" "$CLASSIC" 1-gpx "$GPX_HINT"
+  setting_case "${side}t" "$EXP_SEC" "$EXP_LAND" "$LIGHT" 1-tacx "$TACX_HINT"
+  setting_case "${side}s" "$PROG_SEC" "$PROG_LAND" "$BIG" 1-gpx "$GPX_HINT"
+  setting_case "${side}u" "$EXP_SEC" "$EXP_LAND" "$BIG" 1-tacx "$TACX_HINT"
 done
 
 finish
