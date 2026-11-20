@@ -8,14 +8,15 @@
 # The cutout - the emulation overlay "tall" (centred on the short edge, so on the left side in landscape).
 # Measured by t638_strip.py on the raw frame: the middle column of the strip, rows 30-90 % of the height.
 # Base (apk-base) - master before the fix: the light gradient (shown, not required).
-# Head (apk-head): one colour from top to bottom - black (classic), the status bar colour (modern dark, light).
+# Head (apk-head): one colour from top to bottom - black (classic), the status bar colour that is the page
+# colour (modern dark, light).
 . .github/lib.sh
 . .github/qz.sh
 
 CUTOUT=com.android.internal.display.cutout.emulation.tall
 
 # displays <name>: dumpsys window displays as dumps/<name>.displays.txt. API 28 prints no DisplayCutout there
-# (T-548 run 44289517868): then the last "Cutout insets - Top:t Bottom:b Left:l Right:r" of CustomQtActivity
+# (T-548 run 44291411211): then the last "Cutout insets - Top:t Bottom:b Left:l Right:r" of CustomQtActivity
 # (px; only a window the cutout overlaps logs it) as the same line
 displays() {
   local f="dumps/$1.displays.txt" ci
@@ -28,13 +29,14 @@ displays() {
   echo "$ci" > "$f"
 }
 
-# strip_case <case> <side> <black|bar> key=value...: the home page in landscape, the strip measured;
+# strip_case <case> <side> <black|bar:RRGGBB> key=value...: the home page in landscape, the strip measured;
 # head - the wanted colour, base - only said
 strip_case() {
   local c=$1 side=$2 want=$3 n out rc
   shift 3
   start_case "$c" "$@" || return 1
-  rotate land "$c" || return 1
+  # a failed turn leaves EMU_ROT=land: the next start_case would fail on "not landscape after the start"
+  rotate land "$c" || { rotate port "$c"; return 1; }
   n="$c-land"
   shot "$n"
   adb exec-out screencap < /dev/null > "$n.raw" 2>/dev/null
@@ -71,8 +73,9 @@ for side in b h; do
   say "== $side: start"
   install_apk "$apk"
   strip_case "${side}c" "$side" black fakedevice_treadmill=true ui_modern=false
-  strip_case "${side}d" "$side" bar fakedevice_treadmill=true ui_modern=true ui_theme_mode=dark
-  strip_case "${side}l" "$side" bar fakedevice_treadmill=true ui_modern=true ui_theme_mode=light
+  # the page colours of the default theme graphite (main.qml themes / lightThemes, bg)
+  strip_case "${side}d" "$side" bar:111318 fakedevice_treadmill=true ui_modern=true ui_theme_mode=dark
+  strip_case "${side}l" "$side" bar:F4F5F7 fakedevice_treadmill=true ui_modern=true ui_theme_mode=light
 done
 
 finish
