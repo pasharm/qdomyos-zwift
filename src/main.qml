@@ -325,6 +325,8 @@ ApplicationWindow {
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"
         readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
+        // Notes that ask for attention but are not errors: the orange pair of the accents above
+        readonly property color warning: dark ? "#FFB36B" : "#984200"
         // Dimming behind a modal popup
         readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
 
@@ -384,9 +386,9 @@ ApplicationWindow {
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 
-        // Theme of the web pages in a WebView (charts, workout history, maps): their
-        // qz-theme-bridge.js maps these onto CSS variables. Null in the classic look, so the pages
-        // keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
+        // Theme of the web pages in a WebView (charts, workout history, maps, workout editor and
+        // preview): their qz-theme-bridge.js maps these onto CSS variables. Null in the classic
+        // look, so the pages keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
         // reads; a translucent one would come out as "#aarrggbb", which CSS misreads.
         readonly property var webTheme: !modern ? null : ({
             modern: "1",
@@ -394,10 +396,13 @@ ApplicationWindow {
             bg: bg.toString(),
             surface: surface.toString(),
             surfaceHigh: surfaceHigh.toString(),
+            surfaceHighest: surfaceHighest.toString(),
             outline: outline.toString(),
             text: textMain.toString(),
             muted: textMuted.toString(),
-            accent: accent.toString()
+            accent: accent.toString(),
+            accentInk: accentInk.toString(),
+            danger: danger.toString()
         })
         // The theme as a URL fragment for the first load of such a page ("" in the classic look)
         function webThemeFragment() {
@@ -1442,16 +1447,26 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonFloating
-            Accessible.name: window.ui.modern ? qsTr("Floating window") : text
+            Accessible.name: OS_VERSION === "iOS" ? qsTr("Floating Metrics (Picture in Picture)") : (window.ui.modern ? qsTr("Floating window") : text)
             icon.source: window.ui.modern ? "" : "icons/icons/mini-display.png"
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.textMain; visible: window.ui.modern }
-            onClicked: { console.log("floating!"); floatingOpen(); }
+            function toggleFloating() {
+                if (OS_VERSION === "iOS") {
+                    console.log("Floating metrics: toolbar activated")
+                    rootItem.toggleFloatingMetrics();
+                }
+                else { console.log("floating!"); floatingOpen(); }
+            }
+            onClicked: toggleFloating()
+            Accessible.onPressAction: toggleFloating()
             anchors.left: toolButton.right
             // The header is as tall as the back arrow, which grows with the text size (iOS):
             // the icon buttons stay in its middle, in line with the arrow and the title
             anchors.verticalCenter: parent.verticalCenter
-            // Modern look: on the home page only, the other pages have nothing to float
-            visible: OS_VERSION === "Android" ? (!window.ui.modern || stackView.depth === 1) : false
+            // The iOS PiP displays workout metrics and is available on the home page.
+            // Keep the existing Android visibility in both looks.
+            visible: OS_VERSION === "Android" ? (!window.ui.modern || stackView.depth === 1)
+                     : OS_VERSION === "iOS" && window.rootReady && stackView.depth === 1 && rootItem.floatingMetricsSupported()
         }
 
         UiNotice {
