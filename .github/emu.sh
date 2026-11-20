@@ -135,7 +135,8 @@ expect_no_page() {
 
 # segment <name>: the toolbar segment 2D or 3D tapped (the map page stays: its Back is the landing)
 segment() {
-  tap_ui "^$1\$" '^Back$' 20
+  # --first: the segment, above the "3D" button of the 3D map page itself
+  tap_ui "^$1\$" '^Back$' 20 --first
 }
 
 # settings_2d <case>: Settings -> Maps -> Maps Type 2D -> OK (modern settings page of master: the section
@@ -179,8 +180,14 @@ last_page() {
 # stored, the 3D map shown (frame)
 fast_switch() {
   local c=$1 from st p2 p3
-  dump && find_ui '^2D$' && p2=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 2D segment"; return 1; }
-  find_ui '^3D$' && p3=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 3D segment"; return 1; }
+  dump || { fail "$c-5: no dump of the map page"; return 1; }
+  mkdir -p dumps
+  cp ui.xml "dumps/$c-5-before.xml"
+  # --first: the 3D map page has a "3D" button of its own (the scene mode of the page, below the toolbar,
+  # also on master: dump bm-1-map-3d of 44800927947) - the segment is the upper one
+  find_ui '^2D$' --first && p2=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 2D segment ($EMU_WHY)"; return 1; }
+  find_ui '^3D$' --first && p3=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 3D segment ($EMU_WHY)"; return 1; }
+  say "$c-5: 2D at $p2, 3D at $p3"
   from=$(log_lines)
   adb shell input tap $p2 < /dev/null > /dev/null 2>&1
   adb shell input tap $p3 < /dev/null > /dev/null 2>&1
@@ -398,7 +405,8 @@ for SIDE in b h; do
   install_apk "$apk"
   fresh "${SIDE}f"
   modern "${SIDE}m"
-  drawer_settings "${SIDE}d"
+  # drawer_settings "${SIDE}d" - run once (44800927947): the menu does not reach the settings over the map
+  # (API 30: the native map view covers the menu below the toolbar; API 35: the edge swipe is the back gesture)
 done
 
 logcat_stop
