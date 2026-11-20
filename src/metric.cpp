@@ -73,7 +73,8 @@ void metric::setValue(double v, bool applyGainAndOffset, bool includeZeroInStats
     // std::isfinite, not v != INFINITY: NaN != NaN, so a NaN (sqrt of a negative, 0/0) passed the old check
     if (v != m_value && std::isfinite(v)) {
         m_valueChanged = now;
-        if (m_last5.count() > 1) {
+        // after a NaN the difference would be NaN too
+        if (m_last5.count() > 1 && std::isfinite(m_value)) {
             double diff = v - m_value;
             double diffFromLastValue = qAbs(now.msecsTo(m_lastChanged));
             if (diffFromLastValue > 0)
@@ -93,7 +94,7 @@ void metric::setValue(double v, bool applyGainAndOffset, bool includeZeroInStats
         return;
     }
 
-    // a non-finite value is shown, but kept out of the average, min and max: one NaN would stay in them
+    // a non-finite value is shown, but kept out of the statistics: one NaN would stay in the sum of the average
     if ((value() != 0 || includeZeroInStats) && std::isfinite(value())) {
         m_countValue++;
         m_lapCountValue++;

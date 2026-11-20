@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QSettings>
+#include <QThread>
 #include <cmath>
 
 #include "metric.h"
@@ -95,6 +96,18 @@ TEST(MetricNonFiniteTest, NanIsShownButKeptOutOfStats) {
     EXPECT_DOUBLE_EQ(resistance.lapAverage(), 15.0);
     EXPECT_DOUBLE_EQ(resistance.min(), 10.0);
     EXPECT_DOUBLE_EQ(resistance.max(), 20.0);
+}
+
+TEST(MetricNonFiniteTest, RateAfterNanStaysFinite) {
+    metric distance;
+    distance.setValue(10.0);
+    distance.setValue(20.0);
+    distance.setValue(std::nan(""));
+    // a real time step, otherwise the rate is 0 whatever the difference is
+    QThread::msleep(5);
+    distance.setValue(30.0);
+
+    EXPECT_TRUE(std::isfinite(distance.rate1s()));
 }
 
 TEST(MetricNonFiniteTest, InfinitiesAreKeptOutOfStats) {
