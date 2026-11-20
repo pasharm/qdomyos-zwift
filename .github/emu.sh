@@ -16,6 +16,9 @@
 #      base - not (the defect: the 3D page kept).
 # Case <side>f - a fresh install (no maps_type in qz.conf), modern look, dark: the first map - head 3D, base only
 #   recorded; head: the 2D segment of the dark toolbar.
+# Case <side>m, head, step 5: 2D and at once 3D (the 3D tap while 2D loads) - googlemaps/ last, 3D stored.
+# Case <side>d - the menu opened by an edge swipe over the map, Settings -> Maps Type 2D -> OK, Back to the map:
+#   head - maps2d/ requested, base - not.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -139,7 +142,8 @@ segment() {
 # Maps of settings.qml, the row label, its UiComboBox showing 3D and the OK of the row)
 settings_2d() {
   local c=$1 lab top
-  settings_open || return 1
+  # --opened: the settings page is already shown (drawer_settings)
+  [ "$2" = --opened ] || settings_open || return 1
   # the last section but one of the page: more swipes than bring_in in tap_ui makes
   scroll_to '^Maps.*' 25 --first || return 1
   tap_ui '^Maps.*' '^Maps Type:$' --first --land-below || return 1
@@ -162,6 +166,86 @@ settings_2d() {
   tap_ui '^OK$' '^Maps Type:$' --below "$top" --first || return 1
   emu_sleep 2
   shot "$c-3-saved"
+}
+
+# last_page <from line>: the page of the last map request after <from> (googlemaps or maps2d), empty - none
+last_page() {
+  tail -n +"$1" full_logcat.txt | grep -a -o -F -e '"Path" "googlemaps/maps.htm"' -e '"Path" "maps2d/maps.htm"' \
+    | tail -1 | cut -d'"' -f4 | cut -d/ -f1
+}
+
+# fast_switch <case>: head only - 2D and at once 3D, the 3D tap while the 2D page is still loading (the
+# onLoadingChanged filter of GoogleMap.qml drops the end of the cut load): the last request googlemaps, 3D
+# stored, the 3D map shown (frame)
+fast_switch() {
+  local c=$1 from st p2 p3
+  dump && find_ui '^2D$' && p2=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 2D segment"; return 1; }
+  find_ui '^3D$' && p3=$(echo "$EMU_AT" | cut -d' ' -f1,2) || { fail "$c-5: no 3D segment"; return 1; }
+  from=$(log_lines)
+  adb shell input tap $p2 < /dev/null > /dev/null 2>&1
+  adb shell input tap $p3 < /dev/null > /dev/null 2>&1
+  emu_sleep 10
+  if [ "$(last_page "$from")" = googlemaps ] && tail -n +"$from" full_logcat.txt | grep -a -q -F '"Path" "maps2d/maps.htm"'; then
+    say "check $c-5-fast: maps2d then googlemaps requested, googlemaps last: OK"
+  else
+    fail "check $c-5-fast: the last request after 2D+3D is '$(last_page "$from")', expected maps2d then googlemaps"
+  fi
+  st=$(stored)
+  if [ "$st" = "maps_type=3D" ]; then
+    say "check $c-5-stored-3d: $st: OK"
+  else
+    fail "check $c-5-stored-3d: qz.conf has '${st:-no maps_type}' after 2D+3D"
+  fi
+  shot "$c-5-map-fast-3d"
+}
+
+# drawer_settings <case>: the map page shown, the menu opened by a swipe from the left edge along the toolbar
+# (the arrow of the map page goes back, it does not open the menu), Settings -> Maps Type 2D -> OK, Back to the
+# map: the settings page is pushed over the map and its copy of Settings writes later - head: maps2d/ requested
+# (OK stores with setValue at once), base: not
+drawer_settings() {
+  local c=$1 from y st
+  start_case "$c" ui_modern=true ui_theme_mode=light maps_type=3D applewatch_fakedevice=true \
+    bluetooth_lastdevice_name=TestBike continuous_moving=true || return 1
+  gpx_run "$c" || return 1
+  from=$(log_lines)
+  map_open "$c-1-map" "$from" || return 1
+  expect_page "$c-1-3d" googlemaps "$from"
+  emu_sleep 5
+  y=${MENU#* }
+  adb shell input swipe 2 "$y" 700 "$y" 300 < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+  if ! wait_ui '^Settings$' 9 --any; then
+    shot "$c-2-no-menu"
+    fail "check $c-2-menu: the menu did not open by the edge swipe over the map"
+    back_to "$HOME_RX" 20
+    return 0
+  fi
+  say "check $c-2-menu: the menu opened over the map by the edge swipe: OK"
+  shot "$c-2-menu"
+  tap_ui '^Settings$' '^General Options$' || return 1
+  settings_2d "$c" --opened || return 1
+  st=$(stored)
+  say "$c: qz.conf before Back: ${st:-no maps_type}"
+  from=$(log_lines)
+  # one Back: the arrow of the settings page pops it (the map page below); its own Back lands on the map
+  dump && find_ui '^Back$' || { fail "$c-4: no Back on the settings page"; return 1; }
+  adb shell input tap $(echo "$EMU_AT" | cut -d' ' -f1,2) < /dev/null > /dev/null 2>&1
+  emu_sleep 3
+  dump
+  if find_ui '^General Options$' --any; then
+    fail "$c-4: still on the settings page after Back"
+    return 1
+  fi
+  if [ "$SIDE" = h ]; then
+    expect_page "$c-4-drawer-2d" maps2d "$from"
+  else
+    expect_no_page "$c-4-drawer-2d" maps2d "$from"
+  fi
+  emu_sleep 6
+  shot "$c-4-map"
+  back_to "$HOME_RX" 20
+  return 0
 }
 
 # gpx_run <case>: menu -> Open GPX -> Box Hill -> Open -> Pause -> Start, then the first ticks of the program
@@ -255,6 +339,7 @@ modern() {
         fi
         emu_sleep 5
         shot "$c-2-map-3d-again"
+        fast_switch "$c"
       else
         fail "check $c-2-switch-3d: the 3D segment not tapped"
       fi
@@ -313,6 +398,7 @@ for SIDE in b h; do
   install_apk "$apk"
   fresh "${SIDE}f"
   modern "${SIDE}m"
+  drawer_settings "${SIDE}d"
 done
 
 logcat_stop
