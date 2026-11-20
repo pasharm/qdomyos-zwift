@@ -96,7 +96,7 @@ home_clean() {
 
 # keep <side> <look>: m - modern, c - classic
 keep() {
-  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit n envs0 envs wk0 wk
+  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit n envs0 envs wk0 wk wkopen
   [ "$look" = m ] && modern=true
   # the kept page is the change: only the head in the modern look keeps the workout
   [ "$side" = h ] && [ "$look" = m ] && kept=2
@@ -114,18 +114,21 @@ keep() {
   wk0=$(grep -cF '] "{"msg":"workout"' full_logcat.txt)
   emu_sleep 10
   wk=$(( $(grep -cF '] "{"msg":"workout"' full_logcat.txt) - wk0 ))
+  wkopen=$wk
   [ "$wk" -gt 0 ]; ok=$?
   told_or "$side" $ok "$c-1-two" "the open editor takes the workout updates ($wk in 10 s)"
   home_clean "$c" "$c-2-home"
-  # at home no page takes the workout updates: the kept page is off the server while hidden
-  # (main_ws_pause of main_ws_manager.js), master and the classic look destroy it. A page that takes
-  # them logs each one (onmessage), about one a second with the fake treadmill - run 44670342156 had
-  # them all the time on the head before the pause
+  # at home the editor takes no workout updates: the kept page is off the server while hidden
+  # (main_ws_pause of main_ws_manager.js), master and the classic look destroy it. Each page that
+  # takes them logs each one (onmessage), about one a second with the fake treadmill; the home page
+  # has a web page of its own that takes them too (run 44704596642: 10 at home, 20 with the editor
+  # open, on master too) - so fewer at home than with the editor open, not none. Before the pause
+  # the kept page took them all the time (run 44670342156)
   wk0=$(grep -cF '] "{"msg":"workout"' full_logcat.txt)
   emu_sleep 10
   wk=$(( $(grep -cF '] "{"msg":"workout"' full_logcat.txt) - wk0 ))
-  [ "$wk" -eq 0 ]; ok=$?
-  told_or "$side" $ok "$c-2-home" "no workout update to a web page at home in 10 s ($wk)"
+  [ $(( wk * 3 )) -lt $(( wkopen * 2 )) ]; ok=$?
+  told_or "$side" $ok "$c-2-home" "fewer workout updates at home than with the editor open ($wk against $wkopen in 10 s)"
   if [ "$kept" = 2 ]; then
     grep -qF 'Socket is closed while the page is hidden' full_logcat.txt; ok=$?
     told_or "$side" $ok "$c-2-home" "the kept page closed its socket when hidden"
