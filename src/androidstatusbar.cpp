@@ -25,6 +25,15 @@ AndroidStatusBar::AndroidStatusBar(QObject *parent) : QObject(parent)
 {
     QMutexLocker locker(&instanceMutex);
     m_instance = this;
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    // Neither Qt nor the QML Screen object reports a new safe area (lockscreen.mm), e.g. when the
+    // status bar comes back over a full screen window on a phone without a notch: the window keeps
+    // its size then, so QML has nothing else to read it again on. UIKit calls back on the main thread
+    lockscreen::setSafeAreaChangedCallback([]() {
+        if (m_instance)
+            emit m_instance->safeAreaChanged();
+    });
+#endif
 }
 
 AndroidStatusBar::~AndroidStatusBar()
@@ -145,12 +154,13 @@ void AndroidStatusBar::setSystemBarsColor(const QColor &color, bool dark, bool m
 
 QVariantMap AndroidStatusBar::safeAreaInsets() const
 {
-    double top = 0, bottom = 0, left = 0, right = 0;
+    double top = 0, bottom = 0, left = 0, right = 0, width = 0, height = 0;
 #if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
-    lockscreen::safeAreaInsets(&top, &bottom, &left, &right);
+    lockscreen::safeAreaInsets(&top, &bottom, &left, &right, &width, &height);
 #endif
-    return QVariantMap{{QStringLiteral("top"), top}, {QStringLiteral("bottom"), bottom},
-                       {QStringLiteral("left"), left}, {QStringLiteral("right"), right}};
+    return QVariantMap{{QStringLiteral("top"), top},     {QStringLiteral("bottom"), bottom},
+                       {QStringLiteral("left"), left},   {QStringLiteral("right"), right},
+                       {QStringLiteral("width"), width}, {QStringLiteral("height"), height}};
 }
 
 QString AndroidStatusBar::systemAccentColor(bool dark) const
