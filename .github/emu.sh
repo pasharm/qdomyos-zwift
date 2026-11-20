@@ -308,6 +308,49 @@ menu_back_and_pick() {
   fi
 }
 
+# switch_offset <shot>: the middle of the "Advanced" switch (CheckBox) minus the middle of "Save & Start"
+# (Button) in px, when the two share a row (the switch starts below the top of the button and above its
+# bottom); "apart" - on rows of their own (narrow screen, long captions); "none" - a node missing. The switch
+# sat 4 dp above the buttons: the toolbar aligns by the bottom and the switch row is 48 against a button of 40
+# (T-595, the user's frame of 20.11; run 44669715920 hel-2-editor API 35: 850 against 862.5)
+switch_offset() {
+  "$EMU_PY" - "$EMU_GH" "dumps/$1.xml" << 'EOF'
+import sys
+import xml.etree.ElementTree as ET
+sys.path.insert(0, sys.argv[1])
+import emu_frame
+root = ET.parse(sys.argv[2]).getroot()
+sw = bt = None
+for n in root.iter('node'):
+    if n.get('text') == 'Advanced' and n.get('class') == 'android.widget.CheckBox':
+        sw = emu_frame.parse_bounds(n.get('bounds'))
+    if n.get('text') == 'Save & Start' and n.get('class') == 'android.widget.Button':
+        bt = emu_frame.parse_bounds(n.get('bounds'))
+if not sw or not bt:
+    print("none")
+elif sw[1] >= bt[3] or sw[3] <= bt[1]:
+    print("apart")
+else:
+    print("%g" % ((sw[1] + sw[3]) / 2.0 - (bt[1] + bt[3]) / 2.0))
+EOF
+}
+
+# want_switch_centred <side> <shot>: head - the switch on the middle of the buttons (3 px of slack: 1 dp at
+# 3.5); base - told
+want_switch_centred() {
+  local side=$1 s=$2 off
+  off=$(switch_offset "$s")
+  if [ "$side" = b ]; then
+    say "before $s: the switch against Save & Start: $off px"
+  elif [ "$off" = none ] || [ "$off" = apart ]; then
+    say "$s: the switch and Save & Start not on one row ($off) - not measured"
+  elif awk -v o="$off" 'BEGIN { exit !(o <= 3 && o >= -3) }'; then
+    say "check $s: the switch on the middle of Save & Start ($off px): OK"
+  else
+    fail "check $s: the switch $off px off the middle of Save & Start"
+  fi
+}
+
 # editor <side> <look>: the workout editor - New makes an interval for the treadmill of the app (speed 9.5,
 # incline 1.0: two charts, T-187 scenario); the top of the page, the chart card, and in the modern look the
 # device list open
@@ -322,6 +365,7 @@ editor() {
   shot "$c-2-editor"
   want_tone "$c-2-editor" "$(tone_of "$look")"
   want_look "$c-2-editor" "$look"
+  [ "$look" != c ] && want_switch_centred "$side" "$c-2-editor"
   # the title of the chart card becomes the name of the workout (workout-editor.js); "Total:" is the status
   # strip right below the card. scroll_to marks a miss itself (!! and a not-reached frame)
   if scroll_to '^Total:$' 6; then
