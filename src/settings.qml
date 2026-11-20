@@ -17875,9 +17875,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("OK")
                             enabled: mapsTypeTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            // stored at once too: the map page reads the stored type when it is shown,
-                            // the property is written only later (it may be shown from the menu over it)
-                            onClicked: { settings.maps_type = mapsTypeTextField.displayText; settings.setValue("maps_type", mapsTypeTextField.displayText); toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.maps_type = mapsTypeTextField.displayText; toast.show(qsTr("Setting saved!")); }
                         }
                     }
                     IndicatorOnlySwitch {
