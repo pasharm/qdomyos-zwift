@@ -10255,7 +10255,7 @@ void homeform::trainprogram_open_clicked(const QUrl &fileName) {
                 trainingProgram()->setVideoAvailable(false);
             }
 
-            stravaWorkoutName = QFileInfo(file.fileName()).baseName();
+            stravaWorkoutName = QFileInfo(file.fileName()).completeBaseName();
             stravaPelotonInstructorName = QStringLiteral("");
             emit workoutNameChanged(workoutName());
             emit instructorNameChanged(instructorName());
@@ -10715,7 +10715,8 @@ void homeform::gpx_open_clicked(const QUrl &fileName) {
 
     QFile file(QQmlFile::urlToLocalFileOrQrc(fileName));
 
-    stravaWorkoutName = QFileInfo(file.fileName()).baseName();
+    stravaWorkoutName = QFileInfo(file.fileName()).completeBaseName();
+    emit workoutNameChanged(workoutName());
     if (!file.fileName().isEmpty()) {
         {
             if (trainProgram) {
