@@ -550,9 +550,9 @@ ApplicationWindow {
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 
-        // Theme of the web pages in a WebView (charts, workout history, maps, workout editor):
-        // their qz-theme-bridge.js (the editor - its inline script) maps these onto CSS variables. Null in the classic look, so the pages
-        // keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
+        // Theme of the web pages in a WebView (charts, workout history, maps, workout editor and
+        // preview): their qz-theme-bridge.js maps these onto CSS variables. Null in the classic
+        // look, so the pages keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
         // reads; a translucent one would come out as "#aarrggbb", which CSS misreads.
         readonly property var webTheme: !modern ? null : ({
             modern: "1",

@@ -262,11 +262,19 @@
         },
 
         // A chart made by create() takes the config of a redraw in place (the live update of
-        // dochart.js): the new options get the chart's palette and become its patches, so
-        // refresh() and withLight() keep working on them
+        // dochart.js, new scales and datasets from qzmetriccharts.js): they get the chart's
+        // palette and become its patches, so refresh() and withLight() keep working on them.
+        // The rest of the options are the ones already themed: their patches keep the original values
         restyle: function (chart, config) {
             touchTooltip(config);
-            var list = patches(config);
+            var kept = {};
+            (chart.$qzPatches || []).forEach(function (p) {
+                kept[p.path.join('/')] = p;
+            });
+            var list = patches(config).map(function (p) {
+                var fresh = p.path[0] === 'data' || p.path[1] === 'scales';
+                return !fresh && kept[p.path.join('/')] ? kept[p.path.join('/')] : p;
+            });
             apply(config, list, chart.$qzPalette);
             chart.$qzPatches = list;
             fullscreen('prepare', chart.canvas, config.options); // a spread chart stays big

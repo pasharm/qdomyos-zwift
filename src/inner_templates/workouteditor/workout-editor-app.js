@@ -222,6 +222,9 @@
             renderIntervals();
             updateChart();
         });
+        // The interval buttons are icons in the modern look and text in the classic one: build
+        // them again when the app switches the look while the editor is open
+        window.addEventListener('qzthemechange', renderIntervals);
         bootstrap();
         if (window.QZ_OFFLINE) {
             announce(t('workoutEditor.offlineLoadSaveStartDisabled', 'Offline mode: load/save/start disabled'), true);
@@ -950,6 +953,8 @@
                         renderIntervals();
                     });
                     fieldWrap.appendChild(sel);
+                    // the box of a list takes the taps for it (workout-editor.css)
+                    fieldWrap.classList.add('field-has-select');
                 } else {
                     const inputWrapper = document.createElement('div');
                     inputWrapper.className = 'field-with-buttons';
