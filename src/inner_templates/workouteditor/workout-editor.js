@@ -21,29 +21,31 @@
     }
 
     const state = {
-        charts: null,
-        lastPayload: null
+        charts: null
     };
 
-    // The light theme of the modern look (index.html marks it with the "light" class)
+    // The light theme of the modern look (qz-theme-bridge.js marks it with the "light" class)
     function light() {
         return document.documentElement.classList.contains('light');
     }
 
-    // Chart lines and labels over the page background: white on the dark palettes, black on light
+    // Chart lines and labels over the page background: white over the dark page of the editor
+    // (the classic look and the dark theme), black over a light one
     function ink(alpha) {
         return (light() ? 'rgba(0,0,0,' : 'rgba(255,255,255,') + alpha + ')';
     }
 
-    // Axis colours over the page, and the chips: an outline in the ink of the page, the accent of
-    // the editor as the fill of a selected one
+    // Axis colours over the page (on the dark page the same as the single chart had before), and
+    // the chips: an outline in the ink of the page, the accent of the editor as the fill of a
+    // selected one
     function axisColors() {
         return {
             tick: ink(0.65),
             grid: ink(light() ? 0.08 : 0.04),
             title: ink(0.75),
             outline: ink(0.38),
-            tonal: 'rgba(53,186,246,0.24)'
+            // the accent of the theme in the modern look, the blue of the page in the classic one
+            tonal: (window.qzAccentTonal && window.qzAccentTonal(0.24)) || 'rgba(53,186,246,0.24)'
         };
     }
 
@@ -101,7 +103,6 @@
         if (!charts) {
             return;
         }
-        state.lastPayload = payload;
         const seriesList = Array.isArray(payload.series) ? payload.series : [];
         charts.update({
             totalSeconds: payload.totalSeconds,
@@ -127,22 +128,19 @@
         if (!charts) {
             return;
         }
-        state.lastPayload = null;
         charts.update({ series: [] });
-    }
-
-    // The app switched its theme while the editor is open: redraw the axes in the new colours
-    function refreshTheme() {
-        if (state.charts) {
-            state.charts.refresh();
-        }
     }
 
     window.WorkoutEditorApp = {
         update: updateChart,
-        reset,
-        refreshTheme
+        reset
     };
 
     window.addEventListener('DOMContentLoaded', ensureCharts);
+    // The app switched its theme while the editor is open: the axes and chips in the new colours
+    window.addEventListener('qzthemechange', () => {
+        if (state.charts) {
+            state.charts.refresh();
+        }
+    });
 })();
