@@ -55,7 +55,14 @@ Item {
     // saved workouts. Not at the first opening: the page is still loading and asks itself
     StackView.onActivated: {
         if (root.pageLoaded)
-            webView.runJavaScript("window.qzEditorReopened && window.qzEditorReopened()")
+            webView.runJavaScript("window.main_ws_pause && main_ws_pause(false);"
+                                  + " window.qzEditorReopened && window.qzEditorReopened()")
+    }
+    // Hidden (kept by the modern look, or under another page): off the server until shown again,
+    // or it would take every update of the workout for nothing (main_ws_manager.js)
+    StackView.onDeactivated: {
+        if (root.pageLoaded)
+            webView.runJavaScript("window.main_ws_pause && main_ws_pause(true)")
     }
 
     // a new app language: the page asks for its texts again (a reload would lose the edits)
