@@ -286,6 +286,26 @@ menu_back_and_pick() {
   else
     fail "check $c-6-bike: after Bike in the menu no Cadence field, or still Speed"
   fi
+  # the caption "Device" above the field: its label would focus the select, and iOS opens its own list on
+  # that (iOS run 44654837781) - the menu of the page opens instead. The caption is the topmost "Device"
+  if find_ui '^Device$' --first; then
+    set -- $EMU_AT
+    say "tap the caption of the device list at $1 $2"
+    adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+    still
+    shot "$c-7-caption"
+    m=$(menu_is_page "$c-7-caption")
+    if [ "$m" = page ]; then
+      say "check $c-7-caption: a tap on the caption opens the menu of the page: OK"
+    else
+      fail "check $c-7-caption: after a tap on the caption the device list is '$m', the menu of the page expected"
+    fi
+    adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+  else
+    fail "$c: the caption 'Device' not on the screen"
+  fi
 }
 
 # editor <side> <look>: the workout editor - New makes an interval for the treadmill of the app (speed 9.5,
