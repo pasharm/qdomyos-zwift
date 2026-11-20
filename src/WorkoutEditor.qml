@@ -21,6 +21,20 @@ Item {
             webView.runJavaScript(window.ui.webThemeScript())
     }
 
+    // Back (main.qml, navigateBack): in the modern look a list of the page opens as a menu of the
+    // page (qz-modern-select.js), and Back closes it first, as it closes the system list. Only the
+    // page knows whether one is open, and it answers through the callback: Back is taken here and
+    // the page is left in the answer when no menu was open
+    function handleBack() {
+        if (!window.ui.modern || !root.pageLoaded)
+            return false
+        webView.runJavaScript("window.qzMenuBack ? window.qzMenuBack() : false", function(closed) {
+            if (!closed && root.StackView.view && root.StackView.view.currentItem === root)
+                window.navigateBack(false)
+        })
+        return true
+    }
+
     Settings {
         id: settings
     }
