@@ -175,9 +175,19 @@ last_page() {
     | tail -1 | cut -d'"' -f4 | cut -d/ -f1
 }
 
+# running_page <from line>: the map page whose scripts logged last after <from> (googlemaps or maps2d) - the
+# page that runs, not the last one asked for: main_ws_manager.js of the map logs each second
+running_page() {
+  tail -n +"$1" full_logcat.txt | grep -a -o -E 'source: http://localhost:[0-9]+/(googlemaps|maps2d)/' \
+    | tail -1 | cut -d/ -f4
+}
+
 # fast_switch <case>: head only - 2D and at once 3D, the 3D tap while the 2D page is still loading (the
-# onLoadingChanged filter of GoogleMap.qml drops the end of the cut load): the last request googlemaps, 3D
-# stored, the 3D map shown (frame)
+# onLoadingChanged filter of GoogleMap.qml drops the end of the cut load): maps2d requested, the 3D page runs
+# at the end, 3D stored, the 3D map shown (frame). The 3D page need not be requested again: in 44808000624 on
+# API 30 the 2D load was cut before it drew and the old 3D page went on, no second googlemaps request (its
+# scripts kept logging, none of maps2d); on API 35 googlemaps was requested again, maps2d logged nothing either.
+# A 3D tap that did not work leaves maps2d running: its scripts log as /maps2d/ (hm-2 2D in the same run)
 fast_switch() {
   local c=$1 from st p2 p3
   dump || { fail "$c-5: no dump of the map page"; return 1; }
@@ -192,10 +202,10 @@ fast_switch() {
   adb shell input tap $p2 < /dev/null > /dev/null 2>&1
   adb shell input tap $p3 < /dev/null > /dev/null 2>&1
   emu_sleep 10
-  if [ "$(last_page "$from")" = googlemaps ] && tail -n +"$from" full_logcat.txt | grep -a -q -F '"Path" "maps2d/maps.htm"'; then
-    say "check $c-5-fast: maps2d then googlemaps requested, googlemaps last: OK"
+  if [ "$(running_page "$from")" = googlemaps ] && tail -n +"$from" full_logcat.txt | grep -a -q -F '"Path" "maps2d/maps.htm"'; then
+    say "check $c-5-fast: maps2d requested, the 3D page runs at the end (last request: $(last_page "$from")): OK"
   else
-    fail "check $c-5-fast: the last request after 2D+3D is '$(last_page "$from")', expected maps2d then googlemaps"
+    fail "check $c-5-fast: after 2D+3D the page that runs is '$(running_page "$from")', last request '$(last_page "$from")', expected maps2d requested and the 3D page running"
   fi
   st=$(stored)
   if [ "$st" = "maps_type=3D" ]; then
