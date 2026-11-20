@@ -11,6 +11,11 @@
         translations: {}
     };
 
+    // The units the speed and distance of the intervals are in now (null before the first answer
+    // of the app): a reopening converts from these, not from the units seen when it was asked -
+    // two reopenings before the replies would convert twice (qzEditorReopened)
+    let intervalsMiles = null;
+
     const selectors = {};
     const DEVICE_KEYS = ['bike', 'treadmill', 'elliptical', 'rower', 'jumprope', 'stairclimber'];
 
@@ -353,6 +358,7 @@
 
         // Then fetch environment and programs in background
         Promise.allSettled([fetchEnvironment(), refreshProgramList()]).then(() => {
+            intervalsMiles = state.miles;
             // Re-render after fetching environment (in case device changed)
             renderIntervals();
             updateChart();
@@ -369,7 +375,6 @@
         if (window.QZ_OFFLINE) {
             return;
         }
-        const miles = state.miles;
         const device = state.device;
         const envDevice = state.envDevice;
         Promise.allSettled([fetchEnvironment(), refreshProgramList()]).then(() => {
@@ -377,8 +382,9 @@
                 state.device = device;
                 selectors.device.value = device;
             }
-            if (state.miles !== miles) {
+            if (intervalsMiles !== null && state.miles !== intervalsMiles) {
                 convertIntervalUnits(state.miles ? 1 / 1.60934 : 1.60934);
+                intervalsMiles = state.miles;
             }
             renderIntervals();
             updateChart();
@@ -517,6 +523,10 @@
 
     function applyLoadedRows(rows, name, message, deviceHint) {
         state.intervals = rows.map((row, idx) => convertRow(row, idx));
+        // convertRow took the units the app gave last
+        if (intervalsMiles !== null) {
+            intervalsMiles = state.miles;
+        }
         state.device = deviceHint || detectDevice(state.intervals) || state.device;
         selectors.device.value = state.device;
         selectors.name.value = name;
