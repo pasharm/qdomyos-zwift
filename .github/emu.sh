@@ -19,9 +19,12 @@ look() {
   shift
   start_case "$c" "$@" $DEV || return 1
   shot "$c-1-home"
+  expect "$c-1-home" "$HOME_RX" "home page"
   settings_open || { shot "$c-0-no-settings" now; return 1; }
   settle
   shot "$c-2-settings"
+  # the page itself; the bars and paddings are compared frame to frame with the other side
+  expect "$c-2-settings" '^General Options$' "settings page"
 }
 
 emu_init
