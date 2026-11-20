@@ -14,6 +14,8 @@
 #      again, maps_type=3D stored; base: the map page dumped (its Back), no 2D segment;
 #   3. back home, Settings -> Maps -> Maps Type 2D -> OK, back home, the map again: head - maps2d/ requested,
 #      base - not (the defect: the 3D page kept).
+# Case <side>f - a fresh install (no maps_type in qz.conf), modern look, dark: the first map - head 3D, base only
+#   recorded; head: the 2D segment of the dark toolbar.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -162,12 +164,9 @@ settings_2d() {
   shot "$c-3-saved"
 }
 
-# modern <case>
-modern() {
-  local c=$1 from st
-  start_case "$c" ui_modern=true ui_theme_mode=light maps_type=3D applewatch_fakedevice=true \
-    bluetooth_lastdevice_name=TestBike continuous_moving=true || return 1
-  # 1. a GPX program running, the map in 3D
+# gpx_run <case>: menu -> Open GPX -> Box Hill -> Open -> Pause -> Start, then the first ticks of the program
+gpx_run() {
+  local c=$1
   say "== $c: GPX"
   open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "^$ROUTE\$" 60 && no_restore "$c" || return 1
   shot "$c-1-gpx"
@@ -176,6 +175,56 @@ modern() {
   tap_ui '^Pause$' '^Start$' && tap_ui '^Start$' '^Pause$' || return 1
   # the first ticks of the program: its GEO position (trainprogram.cpp, ticks == 1)
   emu_sleep 20
+}
+
+# fresh <case>: a fresh install - qz.conf without maps_type (put_conf writes only the keys given), dark theme.
+# Head: the first map is 3D (the default of the Settings copy, as the settings page shows it), then the 2D
+# segment in the dark toolbar. Base: which page the first map requested is only recorded (the code of master
+# reads settings.value("maps_type") - empty here - and takes 2D; not a check of this PR).
+fresh() {
+  local c=$1 from st
+  start_case "$c" ui_modern=true ui_theme_mode=dark applewatch_fakedevice=true \
+    bluetooth_lastdevice_name=TestBike continuous_moving=true || return 1
+  st=$(stored)
+  say "$c: qz.conf before the map: ${st:-no maps_type}"
+  gpx_run "$c" || return 1
+  st=$(stored)
+  say "$c: qz.conf after the GPX started: ${st:-no maps_type}"
+  from=$(log_lines)
+  map_open "$c-1-map" "$from" || return 1
+  if requested googlemaps "$from" 25; then
+    say "$c: the first map requested googlemaps/maps.htm"
+    [ "$SIDE" = h ] && say "check $c-1-first-3d: googlemaps/maps.htm requested: OK"
+  elif tail -n +"$from" full_logcat.txt | grep -a -q -F '"Path" "maps2d/maps.htm"'; then
+    say "$c: the first map requested maps2d/maps.htm"
+    [ "$SIDE" = h ] && fail "check $c-1-first-3d: maps2d/maps.htm requested on a fresh install"
+  else
+    fail "$c: no request of a map page after line $from"
+    return 1
+  fi
+  emu_sleep 8
+  shot "$c-1-map-first"
+  if [ "$SIDE" = h ]; then
+    from=$(log_lines)
+    if segment 2D; then
+      expect_page "$c-2-dark-2d" maps2d "$from"
+      emu_sleep 8
+      shot "$c-2-map-2d-dark"
+    else
+      fail "$c: no 2D segment in the dark toolbar"
+    fi
+  fi
+  back_to "$HOME_RX" 20
+  return 0
+}
+
+# modern <case>
+modern() {
+  local c=$1 from st
+  start_case "$c" ui_modern=true ui_theme_mode=light maps_type=3D applewatch_fakedevice=true \
+    bluetooth_lastdevice_name=TestBike continuous_moving=true || return 1
+  # 1. a GPX program running, the map in 3D
+  gpx_run "$c" || return 1
   from=$(log_lines)
   map_open "$c-1-map" "$from" || return 1
   expect_page "$c-1-3d" googlemaps "$from"
@@ -262,6 +311,7 @@ for SIDE in b h; do
   say "== $SIDE: start"
   wipe_files
   install_apk "$apk"
+  fresh "${SIDE}f"
   modern "${SIDE}m"
 done
 
