@@ -3273,6 +3273,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4191,6 +4195,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4656,6 +4664,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     </message>
     <message>
         <source>Services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rower</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6946,11 +6974,11 @@ Please enter it below:</source>
     </message>
     <message>
         <source>Strava Synthetic GPS Track</source>
-        <translation>Trajeto GPS sintético no Strava</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Write a synthetic GPS track to virtual activities without GPS. Strava may then show elevation, but the route is not real.</source>
-        <translation>Adiciona um trajeto GPS sintético às atividades virtuais sem GPS. O Strava pode mostrar o ganho de elevação, mas a rota não é real.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Append the Virtual Tag to the Strava Activity</source>

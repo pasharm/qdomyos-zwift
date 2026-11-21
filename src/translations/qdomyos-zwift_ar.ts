@@ -3273,6 +3273,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>لا توجد مقاييس مفعّلة</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4207,6 +4211,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>المقاييس العائمة (صورة داخل صورة)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4677,6 +4685,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Services</source>
         <translation>الخدمات</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>الجهاز المُحاكى (%1) نشط. إذا لم يكن ذلك مقصودًا، عطّله من الإعدادات.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>دراجة</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>جهاز المشي</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>جهاز التمارين البيضاوي</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>جهاز التجديف</translation>
     </message>
 </context>
 <context>

@@ -3273,6 +3273,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>कोई मेट्रिक सक्षम नहीं है</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4207,6 +4211,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>फ़्लोटिंग मेट्रिक्स (पिक्चर-इन-पिक्चर)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4677,6 +4685,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Services</source>
         <translation>सेवाएँ</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>सिम्युलेट किया गया डिवाइस (%1) सक्रिय है। यदि यह जानबूझकर नहीं किया गया, तो इसे सेटिंग्स में बंद करें।</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>साइकिल</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>ट्रेडमिल</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>एलिप्टिकल</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>रोइंग मशीन</translation>
     </message>
 </context>
 <context>

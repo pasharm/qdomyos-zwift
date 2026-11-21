@@ -3273,6 +3273,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Tidak ada metrik yang diaktifkan</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4207,6 +4211,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Metrik mengambang (gambar dalam gambar)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4677,6 +4685,26 @@ Jika memilih Tidak, QZ mengaktifkan Without Wheel Diameter Protocol (Pengaturan 
     <message>
         <source>Services</source>
         <translation>Layanan</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Perangkat simulasi (%1) aktif. Jika tidak disengaja, nonaktifkan di Pengaturan.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Sepeda</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Treadmill</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Eliptikal</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Mesin dayung</translation>
     </message>
 </context>
 <context>

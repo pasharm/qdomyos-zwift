@@ -3462,6 +3462,10 @@ Bij de eerste start kan dit even duren.</translation>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Geen meetwaarden ingeschakeld</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Snelheid (%1/h)</translation>
     </message>
@@ -4423,6 +4427,10 @@ Bij de eerste start kan dit even duren.</translation>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Zwevende meetwaarden (beeld-in-beeld)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4969,6 +4977,26 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Check for a newer build</source>
         <translation>Zoeken naar een nieuwere build</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Het gesimuleerde apparaat (%1) is actief. Schakel het uit in Instellingen als dit niet de bedoeling is.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Fiets</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Loopband</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Crosstrainer</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Roeimachine</translation>
     </message>
 </context>
 <context>

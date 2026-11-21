@@ -3458,6 +3458,10 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Nincs engedélyezett mérőszám</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Sebesség(%1/h)</translation>
     </message>
@@ -4419,6 +4423,10 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Lebegő mérőszámok (kép a képben)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4965,6 +4973,26 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Check for a newer build</source>
         <translation>Újabb verzió keresése</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>A szimulált eszköz (%1) aktív. Ha ez nem volt szándékos, kapcsold ki a Beállításokban.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Kerékpár</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Futópad</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Elliptikus tréner</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Evezőpad</translation>
     </message>
 </context>
 <context>

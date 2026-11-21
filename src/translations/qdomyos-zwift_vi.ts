@@ -3273,6 +3273,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Không có chỉ số nào được bật</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4207,6 +4211,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Chỉ số nổi (hình trong hình)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4677,6 +4685,26 @@ Nếu chọn Không, QZ sẽ bật Without Wheel Diameter Protocol (Cài đặt 
     <message>
         <source>Services</source>
         <translation>Dịch vụ</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Thiết bị mô phỏng (%1) đang hoạt động. Nếu không cố ý bật, hãy tắt trong Cài đặt.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Xe đạp</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Máy chạy bộ</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Máy tập toàn thân</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Máy chèo thuyền</translation>
     </message>
 </context>
 <context>

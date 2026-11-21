@@ -29,6 +29,7 @@ SOURCES += \
         ToolTests/qfittestsuite.cpp \
         ToolTests/metrictestsuite.cpp \
         ToolTests/treadmillrunnclosedlooptests.cpp \
+        ToolTests/ksespinclinationtests.cpp \
         ToolTests/fitshowstartspeedgatetests.cpp \
         ToolTests/testsettingstestsuite.cpp \
         ToolTests/testsettingssecuritytestsuite.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
         Devices/TestXcxBikeParser.cpp \
         Devices/TestFtmsBikeParser.cpp \
         Devices/TestRowerTargetResistance.cpp \
+        Devices/TestBkoolStandaloneResistance.cpp \
         Devices/TestPafersRowerRouting.cpp \
         Devices/TestHeartRateSensorOffer.cpp \
         Devices/TestFreebeatBoomBikeParser.cpp \

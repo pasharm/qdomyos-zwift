@@ -3462,6 +3462,10 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Aucune mesure activée</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Vitesse (%1/h)</translation>
     </message>
@@ -4435,6 +4439,10 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Mesures flottantes (image dans l’image)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4981,6 +4989,26 @@ Autoriser QZ à modifier cette valeur ?
     <message>
         <source>Check for a newer build</source>
         <translation>Rechercher une version plus récente</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>L'appareil simulé (%1) est actif. Si ce n'était pas voulu, désactivez-le dans les paramètres.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Vélo</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Tapis de course</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Vélo elliptique</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Rameur</translation>
     </message>
 </context>
 <context>

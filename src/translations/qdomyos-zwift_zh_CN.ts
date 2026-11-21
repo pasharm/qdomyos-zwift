@@ -3462,6 +3462,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>没有已启用的指标</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>速度 (%1/h)</translation>
     </message>
@@ -4436,6 +4440,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>浮动指标（画中画）</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4982,6 +4990,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Check for a newer build</source>
         <translation>检查新版本</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>模拟设备（%1）已启用。如果并非有意启用，请在设置中关闭。</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>健身车</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>跑步机</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>椭圆机</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>划船机</translation>
     </message>
 </context>
 <context>

@@ -600,9 +600,11 @@ Page {
 
         // Modern look: while nothing is connected, a short "searching" state instead of the
         // wall of text, and a short checklist cut from the same help text (already translated)
-        Flickable {
+        Loader {
             id: modernEmpty
-            visible: window.ui.modern && rootItem.labelHelp
+            // Made only in the modern look before the first connection
+            active: window.ui.modern && rootItem.labelHelp
+            visible: active
             // The scroll area starts 8 dp under the place of the two lines of the search status, as
             // the status starts 8 dp under the buttons: the scrolled checklist is cut under the
             // status, not in the middle of the empty space. Over this state the status changes
@@ -618,141 +620,151 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             width: Math.min(parent.width - 2 * window.contentSideMargin, 560)
             height: page.height - edgeTop
-            contentHeight: emptyColumn.height + 24
-            // The support button "?" shows mostly in this state ("No device connected"): room for
-            // it under the checklist, as under the tiles (Home.qml), eased when it goes
-            bottomMargin: window.supportHelpShown ? 56 + 16 : 0
-            Behavior on bottomMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
-            clip: true
-            boundsBehavior: Flickable.StopAtBounds
-            // A thin bar while the checklist moves (a large text, landscape), at the screen edge, not
-            // over the card: the list is at most 560 wide and centred. Qt places the bar only when its
-            // parent is the flickable, so x, y and height are set here
-            ScrollIndicator.vertical: ScrollIndicator {
-                visible: modernEmpty.visible
-                parent: modernEmpty.parent
-                x: mirrored ? 0 : parent.width - width
-                y: modernEmpty.y
-                height: modernEmpty.height
-            }
-
-            // qsTr inside an expression looks the text up under the context of the file that
-            // creates the page (Home), not this one: the context is given explicitly
-            Column {
-                id: emptyColumn
-                width: parent.width
-                spacing: 12
-
-                Label {
-                    width: parent.width
-                    // At rest the heading letters are about 24 dp under the place of the two
-                    // status lines (8 dp inside a group, 24 between sections): 8 dp from the
-                    // status to the edge of the area, this padding and the room above the
-                    // capitals make the 24. It scrolls with the heading
-                    topPadding: page.modernControlsShown ? 11 : 4
-                    text: page.connectingDevice !== "" ? qsTranslate("homeform", "Connecting to %1...").arg(page.connectingDevice)
-                          : page.searchStopped ? qsTranslate("HomeForm.ui", "Equipment not found") : qsTranslate("HomeForm.ui", "Looking for your equipment…")
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    color: window.ui.textMain
-                    font.pixelSize: window.ui.fontTitle
-                    font.weight: Font.DemiBold
+            sourceComponent: Flickable {
+                contentHeight: emptyColumn.height + 24
+                // The support button "?" shows mostly in this state ("No device connected"): room for
+                // it under the checklist, as under the tiles (Home.qml), eased when it goes
+                bottomMargin: window.supportHelpShown ? 56 + 16 : 0
+                Behavior on bottomMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
+                // A thin bar while the checklist moves (a large text, landscape), at the screen edge, not
+                // over the card: the list is at most 560 wide and centred. Qt places the bar only when its
+                // parent is the flickable, so x, y and height are set here (the loader's box)
+                ScrollIndicator.vertical: ScrollIndicator {
+                    visible: modernEmpty.visible
+                    parent: modernEmpty.parent
+                    x: mirrored ? 0 : parent.width - width
+                    y: modernEmpty.y
+                    height: modernEmpty.height
                 }
 
-                Label {
+                // qsTr inside an expression looks the text up under the context "HomeForm" (the file
+                // name up to the first dot), while lupdate writes "HomeForm.ui": the context is given
+                // explicitly
+                Column {
+                    id: emptyColumn
                     width: parent.width
-                    // Connecting to the picked trainer: nothing to turn on, the heading says it all
-                    visible: page.connectingDevice === ""
-                    text: page.searchStopped ? qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
-                                             : qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower: QZ connects to it automatically.")
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    color: window.ui.textMuted
-                    font.pixelSize: window.ui.fontLabel
-                }
+                    spacing: 12
 
-                Item { width: 1; height: 8 }
-
-                // "Not connecting?": a short checklist, always open, cut from the old help text
-                // (already translated): the numbered checks and the hint about the virtual device,
-                // then the rest (the e-mail, the disclaimer, the author) in small muted text.
-                // Without the lead sentence (the subtitle says it) and the bold "If it doesn't,
-                // please check" (the heading says it)
-                Rectangle {
-                    width: parent.width
-                    height: helpColumn.height + 32
-                    radius: 16
-                    color: window.ui.surface
-
-                    // [checks, rest]
-                    readonly property var helpParts: {
-                        var t = lblHelp.text
-                        var b = t.indexOf("<b>")
-                        if (b < 0)
-                            return [t, ""]
-                        t = t.substring(b)
-                        var br = t.indexOf("<br>")
-                        if (br < 0)
-                            return [t, ""]
-                        t = t.substring(br + 4)
-                        var p1 = t.indexOf("<br><br>")
-                        var p2 = p1 < 0 ? -1 : t.indexOf("<br><br>", p1 + 8)
-                        if (p2 < 0)
-                            return [t, ""]
-                        // The disclaimer is broken into short lines by hand for the wide
-                        // classic page: here it wraps by itself
-                        var rest = t.substring(p2 + 8).replace(/<i>([\s\S]*?)<\/i>/, function (m, x) {
-                            return "<i>" + x.replace(/<br\s*\/?\s*>/g, " ") + "</i>"
-                        })
-                        return [t.substring(0, p2), rest]
+                    Label {
+                        width: parent.width
+                        // At rest the heading letters are about 24 dp under the place of the two
+                        // status lines (8 dp inside a group, 24 between sections): 8 dp from the
+                        // status to the edge of the area, this padding and the room above the
+                        // capitals make the 24. It scrolls with the heading
+                        topPadding: page.modernControlsShown ? 11 : 4
+                        text: page.connectingDevice !== "" ? qsTranslate("homeform", "Connecting to %1...").arg(page.connectingDevice)
+                              : page.searchStopped ? qsTranslate("HomeForm.ui", "Equipment not found") : qsTranslate("HomeForm.ui", "Looking for your equipment…")
+                        horizontalAlignment: Text.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        color: window.ui.textMain
+                        font.pixelSize: window.ui.fontTitle
+                        font.weight: Font.DemiBold
                     }
 
-                    Column {
-                        id: helpColumn
-                        x: 16
-                        y: 16
-                        width: parent.width - 32
-                        spacing: 8
+                    Label {
+                        width: parent.width
+                        // Connecting to the picked trainer: nothing to turn on, the heading says it all
+                        visible: page.connectingDevice === ""
+                        text: page.searchStopped ? qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
+                                                 : qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower: QZ connects to it automatically.")
+                        horizontalAlignment: Text.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        color: window.ui.textMuted
+                        font.pixelSize: window.ui.fontLabel
+                    }
 
-                        Row {
-                            spacing: 10
-                            UiIcon {
-                                anchors.verticalCenter: parent.verticalCenter
-                                width: 20
-                                height: 20
-                                name: "help"
-                                color: window.ui.textMuted
+                    Item { width: 1; height: 8 }
+
+                    // "Not connecting?": a short checklist, always open, cut from the old help text
+                    // (already translated): the numbered checks and the hint about the virtual device,
+                    // then the rest (the e-mail, the disclaimer, the author) in small muted text.
+                    // Without the lead sentence (the subtitle says it) and the bold "If it doesn't,
+                    // please check" (the heading says it)
+                    Rectangle {
+                        width: parent.width
+                        height: helpColumn.height + 32
+                        radius: 16
+                        color: window.ui.surface
+
+                        // [checks, rest]
+                        readonly property var helpParts: {
+                            var t = lblHelp.text
+                            var b = t.indexOf("<b>")
+                            if (b < 0)
+                                return [t, ""]
+                            t = t.substring(b)
+                            var br = t.indexOf("<br>")
+                            if (br < 0)
+                                return [t, ""]
+                            t = t.substring(br + 4)
+                            var p1 = t.indexOf("<br><br>")
+                            var p2 = p1 < 0 ? -1 : t.indexOf("<br><br>", p1 + 8)
+                            if (p2 < 0)
+                                return [t, ""]
+                            // The disclaimer is broken into short lines by hand for the wide
+                            // classic page: here it wraps by itself, so its line breaks become spaces
+                            var rest = t.substring(p2 + 8)
+                            var i1 = rest.indexOf("<i>")
+                            var i2 = i1 < 0 ? -1 : rest.indexOf("</i>", i1 + 3)
+                            if (i2 >= 0) {
+                                var x = rest.substring(i1 + 3, i2)
+                                var breaks = ["<br>", "<br/>", "<br />", "<br/ >"]
+                                for (var k = 0; k < breaks.length; k++)
+                                    x = x.split(breaks[k]).join(" ")
+                                rest = rest.substring(0, i1 + 3) + x + rest.substring(i2)
                             }
+                            return [t.substring(0, p2), rest]
+                        }
+
+                        Column {
+                            id: helpColumn
+                            x: 16
+                            y: 16
+                            width: parent.width - 32
+                            spacing: 8
+
+                            Row {
+                                spacing: 10
+                                UiIcon {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: 20
+                                    height: 20
+                                    name: "help"
+                                    color: window.ui.textMuted
+                                }
+                                Label {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: qsTr("Not connecting?")
+                                    color: window.ui.textMain
+                                    font.pixelSize: window.ui.fontLabel
+                                    font.weight: Font.Medium
+                                }
+                            }
+
                             Label {
-                                anchors.verticalCenter: parent.verticalCenter
-                                text: qsTr("Not connecting?")
-                                color: window.ui.textMain
-                                font.pixelSize: window.ui.fontLabel
-                                font.weight: Font.Medium
+                                width: parent.width
+                                text: helpColumn.parent.helpParts[0]
+                                textFormat: Text.StyledText
+                                wrapMode: Text.WordWrap
+                                color: window.ui.textMuted
+                                font.pixelSize: window.ui.fontCaption
+                                lineHeight: 1.1
                             }
-                        }
 
-                        Label {
-                            width: parent.width
-                            text: helpColumn.parent.helpParts[0]
-                            textFormat: Text.StyledText
-                            wrapMode: Text.WordWrap
-                            color: window.ui.textMuted
-                            font.pixelSize: window.ui.fontCaption
-                            lineHeight: 1.1
-                        }
-
-                        Label {
-                            visible: text !== ""
-                            width: parent.width
-                            topPadding: 4
-                            text: helpColumn.parent.helpParts[1]
-                            textFormat: Text.StyledText
-                            wrapMode: Text.WordWrap
-                            color: window.ui.textMuted
-                            opacity: 0.75
-                            font.pixelSize: window.ui.modern ? window.ui.fontCaption : 11
-                            lineHeight: 1.1
+                            Label {
+                                visible: text !== ""
+                                width: parent.width
+                                topPadding: 4
+                                text: helpColumn.parent.helpParts[1]
+                                textFormat: Text.StyledText
+                                wrapMode: Text.WordWrap
+                                color: window.ui.textMuted
+                                opacity: 0.75
+                                font.pixelSize: window.ui.fontCaption
+                                lineHeight: 1.1
+                            }
                         }
                     }
                 }

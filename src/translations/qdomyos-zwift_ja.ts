@@ -3462,6 +3462,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>有効な指標はありません</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>速度 (%1/h)</translation>
     </message>
@@ -4432,6 +4436,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>フローティング指標（ピクチャ・イン・ピクチャ）</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4978,6 +4986,26 @@ QZ がこの値を変更することを許可しますか？
     <message>
         <source>Check for a newer build</source>
         <translation>新しいビルドを確認</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>仮想デバイス（%1）が有効です。意図した設定でない場合は、設定から無効にしてください。</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>バイク</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>トレッドミル</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>エリプティカル</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>ローイングマシン</translation>
     </message>
 </context>
 <context>
