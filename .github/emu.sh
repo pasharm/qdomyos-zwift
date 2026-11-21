@@ -18,7 +18,8 @@
 #   (the cases above ran in 44841608611; the loop below now runs only these)
 #   xg  modern light / xk classic: the settings search, the "Changed" filter on
 #   xa  modern light: English picked in the App Language list, not saved - OK stays, accent on h
-#   xp  modern light / xq classic: Template Settings > the WebServer template > its Port row and OK
+#   xp  modern light: Template Settings > the WebServer template's Port row, the TcpClient template's Host and Port
+#       rows, each with its OK
 . .github/lib.sh
 . .github/qz.sh
 
@@ -198,14 +199,24 @@ tmpl_case() {
   scroll_to '^Experimental Features$' 60 --exact || { shot "$c-0-no-section" now; return 1; }
   tap_ui '^Experimental Features$' '^Gym Mode$' --first --land-below || { shot "$c-0-closed" now; return 1; }
   scroll_to '^Template Settings$' 60 --exact || { shot "$c-0-no-templates" now; return 1; }
-  tap_ui '^Template Settings$' '.* \(WebServer\)$' --first --land-below || { shot "$c-1-no-template" now; return 1; }
-  scroll_to '.* \(WebServer\)$' 10 --exact || { shot "$c-1-no-title" now; return 1; }
+  # run 44852624449: a fresh install has user_QZWS (WebServer), user_vlc and user_qz (TcpClient); "Server Port:"
+  # of another setting is on the same screen, so the labels are named in full
+  tap_ui '^Template Settings$' '^user_QZWS \(WebServer\)$' --first --land-below || { shot "$c-1-no-template" now; return 1; }
+  scroll_to '^user_QZWS \(WebServer\)$' 10 --exact || { shot "$c-1-no-title" now; return 1; }
   shot "$c-1-title"
-  tap_ui '.* \(WebServer\)$' '.* Port:$' --first --land-below || { shot "$c-2-closed" now; return 1; }
-  scroll_to '.* Port:$' 10 --exact || { shot "$c-2-no-port" now; return 1; }
+  tap_ui '^user_QZWS \(WebServer\)$' '^user_QZWS Port:$' --first --land-below || { shot "$c-2-closed" now; return 1; }
+  scroll_to '^user_QZWS Port:$' 10 --exact || { shot "$c-2-no-port" now; return 1; }
   settle
   shot "$c-2-port"
-  row_ok "$c-2-port" '.* Port:$' 1 'the OK of the template port'
+  row_ok "$c-2-port" '^user_QZWS Port:$' 1 'the OK of the WebServer template port'
+  # TemplateTcpClient.qml: Host :39 and Port :71, each with its OK
+  scroll_to '^user_qz \(TcpClient\)$' 10 --exact || { shot "$c-3-no-tcp" now; return 1; }
+  tap_ui '^user_qz \(TcpClient\)$' '^user_qz Host:$' --first --land-below || { shot "$c-3-closed" now; return 1; }
+  scroll_to '^user_qz Port:$' 10 --exact || { shot "$c-3-no-port" now; return 1; }
+  settle
+  shot "$c-3-tcp"
+  row_ok "$c-3-tcp" '^user_qz Host:$' 1 'the OK of the TcpClient template host'
+  row_ok "$c-3-tcp" '^user_qz Port:$' 1 'the OK of the TcpClient template port'
 }
 
 emu_init
@@ -222,7 +233,8 @@ for side in b h; do
   changed_case "${side}k" "$CLASSIC"
   lang_case "${side}a"
   tmpl_case "${side}p" "$LIGHT"
-  tmpl_case "${side}q" "$CLASSIC"
+  # no classic case: the classic header of Experimental Features has no accessible name (run 44852624449, dumps
+  # xq-0-no-section: unnamed nodes after "Maps") - the dump cannot find it
 done
 
 finish
