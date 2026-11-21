@@ -3262,6 +3262,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>ไม่มีตัวชี้วัดที่เปิดใช้งาน</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4180,6 +4184,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>ตัวชี้วัดแบบลอย (ภาพซ้อนภาพ)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4650,6 +4658,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Services</source>
         <translation>บริการ</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>อุปกรณ์จำลอง (%1) เปิดใช้งานอยู่ หากไม่ได้ตั้งใจ ให้ปิดใช้งานในการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>จักรยาน</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>ลู่วิ่ง</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>เครื่องเดินวงรี</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>เครื่องกรรเชียงบก</translation>
     </message>
 </context>
 <context>

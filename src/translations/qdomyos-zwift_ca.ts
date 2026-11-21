@@ -3262,6 +3262,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Cap mètrica activada</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4180,6 +4184,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Mètriques flotants (imatge dins d’imatge)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4650,6 +4658,26 @@ Si tries No, QZ activa Without Wheel Diameter Protocol (Configuració &gt; Opcio
     <message>
         <source>Services</source>
         <translation>Serveis</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>El dispositiu simulat (%1) està actiu. Si no era intencionat, desactiva'l a Configuració.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Bicicleta</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Cinta de córrer</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>El·líptica</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Rem</translation>
     </message>
 </context>
 <context>

@@ -3447,6 +3447,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>활성화된 지표가 없습니다</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>속도 (%1/h)</translation>
     </message>
@@ -4389,6 +4393,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>플로팅 지표 (화면 속 화면)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4931,6 +4939,26 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
     <message>
         <source>QZ is closing...</source>
         <translation>QZ를 종료하는 중...</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>가상 기기(%1)가 활성화되었습니다. 의도한 설정이 아니라면 설정에서 비활성화하세요.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>자전거</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>러닝머신</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>일립티컬</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>로잉머신</translation>
     </message>
 </context>
 <context>

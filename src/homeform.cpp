@@ -7,6 +7,7 @@
 #include "ios/lockscreen.h"
 #include "ios/ios_liveactivity.h"
 #include "ios/ios_background_keepalive.h"
+#include "ios/ios_floating_metrics.h"
 #endif
 #include "localipaddress.h"
 #ifdef Q_OS_ANDROID
@@ -1390,7 +1391,9 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
         }
     });
 
-    bluetoothManager->homeformLoaded = true;
+    // The Bluetooth manager exists before this object. Start any deferred
+    // discovery/direct SPP connection only now that UI slots are connected.
+    bluetoothManager->onHomeformReady();
 }
 
 #ifdef Q_OS_ANDROID
@@ -2865,6 +2868,40 @@ void homeform::setTileNames() {
     groundContactMS->setName(tr("Ground C.(ms)"));
     verticalOscillationMM->setName(tr("Vert.Osc.(mm)"));
     stepCount->setName(tr("Step Count"));
+}
+
+bool homeform::floatingMetricsSupported() {
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    return iosFloatingMetrics::supported();
+#else
+    return false;
+#endif
+}
+
+void homeform::toggleFloatingMetrics() {
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    const bool running = iosFloatingMetrics::running();
+    const bool supported = iosFloatingMetrics::supported();
+    qDebug() << "Floating metrics: toggle requested, running" << running << "supported" << supported;
+    if (running) {
+        iosFloatingMetrics::stop();
+    } else if (supported) {
+        updateFloatingMetrics();
+        iosFloatingMetrics::start();
+    }
+#endif
+}
+
+void homeform::updateFloatingMetrics() {
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    QList<QPair<QString, QString>> metrics;
+    for (QObject *object : dataList) {
+        DataObject *tile = static_cast<DataObject *>(object);
+        if (tile->visibleItem() && !tile->largeButton() && !tile->value().isEmpty())
+            metrics.append(qMakePair(tile->name(), tile->value()));
+    }
+    iosFloatingMetrics::update(metrics, tr("No enabled metrics"));
+#endif
 }
 
 void homeform::sortTiles() {
@@ -8549,6 +8586,10 @@ void homeform::update() {
                 }
         */
 
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+        if (iosFloatingMetrics::running())
+            updateFloatingMetrics();
+#endif
         qDebug() << "homeform::update tiles updated!";
 
 #ifdef Q_OS_ANDROID
@@ -10718,6 +10759,7 @@ void homeform::gpx_open_clicked(const QUrl &fileName) {
     stravaWorkoutName = QFileInfo(file.fileName()).completeBaseName();
     emit workoutNameChanged(workoutName());
     if (!file.fileName().isEmpty()) {
+        bool hasRouteSegments = false;
         {
             if (trainProgram) {
 
@@ -10782,10 +10824,15 @@ void homeform::gpx_open_clicked(const QUrl &fileName) {
                 emit videoPathChanged(movieFileName);
                 setVideoIconVisible(true);
             }
+            hasRouteSegments = !list.isEmpty();
             trainProgram = new trainprogram(list, bluetoothManager, nullptr, nullptr, videoIconVisible());
         }
 
         trainProgramSignals();
+        if (hasRouteSegments) {
+            // Use the same QZ-only pause/resume as Start Workout, without stopping the equipment.
+            trainprogram_autostart_requested();
+        }
     }
 }
 

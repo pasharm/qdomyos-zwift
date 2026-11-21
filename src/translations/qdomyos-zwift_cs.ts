@@ -3447,6 +3447,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Žádné zapnuté metriky</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Rychlost (%1/h)</translation>
     </message>
@@ -4392,6 +4396,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Plovoucí metriky (obraz v obraze)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4934,6 +4942,26 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>QZ is closing...</source>
         <translation>QZ se zavírá...</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Simulované zařízení (%1) je aktivní. Pokud to nebylo záměrné, vypněte ho v Nastavení.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Kolo</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Běžecký pás</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Eliptický trenažér</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Veslovací trenažér</translation>
     </message>
 </context>
 <context>

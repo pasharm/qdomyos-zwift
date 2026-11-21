@@ -3443,6 +3443,10 @@ Det kan ta en stund vid första starten.</translation>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Inga mätvärden är aktiverade</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Hastighet (%1/h)</translation>
     </message>
@@ -4388,6 +4392,10 @@ Det kan ta en stund vid första starten.</translation>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Flytande mätvärden (bild i bild)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4930,6 +4938,26 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>QZ is closing...</source>
         <translation>QZ stängs…</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Den simulerade enheten (%1) är aktiv. Om det inte var avsiktligt, inaktivera den i Inställningar.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Cykel</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Löpband</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Crosstrainer</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Roddmaskin</translation>
     </message>
 </context>
 <context>

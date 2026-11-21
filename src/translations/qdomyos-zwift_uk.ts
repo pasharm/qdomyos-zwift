@@ -3447,6 +3447,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <source>No enabled metrics</source>
+        <translation>Немає увімкнених показників</translation>
+    </message>
+    <message>
         <source>Speed (%1/h)</source>
         <translation>Швидкість (%1/год)</translation>
     </message>
@@ -4392,6 +4396,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>main</name>
     <message>
+        <source>Floating Metrics (Picture in Picture)</source>
+        <translation>Плаваючі показники (картинка в картинці)</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
     </message>
@@ -4934,6 +4942,26 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>QZ is closing...</source>
         <translation>QZ закривається...</translation>
+    </message>
+    <message>
+        <source>Fake device (%1) is active. If this was unintentional, disable it in Settings.</source>
+        <translation>Віртуальний пристрій (%1) активний. Якщо це сталося ненавмисно, вимкніть його в налаштуваннях.</translation>
+    </message>
+    <message>
+        <source>Bike</source>
+        <translation>Велотренажер</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Бігова доріжка</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Еліптичний тренажер</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Гребний тренажер</translation>
     </message>
 </context>
 <context>
