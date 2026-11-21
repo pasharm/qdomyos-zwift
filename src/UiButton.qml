@@ -103,11 +103,14 @@ T.Button {
     // is about 1.1 : 1 there and the pill is not seen, so it takes textMain at 10 % (12 % in the
     // dark), like the danger pill takes the danger colour at 16 %. The classic look ignores it
     property bool cardSurface: false
-    // the accent of the same name in the opposite theme
+    // the accent of the same name in the opposite theme. The wallpaper accent of the opposite theme is taken
+    // as it is: unlike accentOf() it is not checked for contrast here (Material You pairs read on their surfaces)
     readonly property color inverseAccent: {
         const u = window.ui
         if (!modernInverse)
             return u.accent
+        if (u.accentName === "system" && u.systemAccentAvailable)
+            return u.dark ? u.systemAccentLight : u.systemAccentDark
         const set = u.dark ? u.lightAccents : u.accents
         return set[u.accentName] || set["violet"]
     }

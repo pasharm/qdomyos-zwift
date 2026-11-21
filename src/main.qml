@@ -342,13 +342,51 @@ ApplicationWindow {
                                       : (lightThemes[settings.ui_theme] || lightThemes["graphite"])
         readonly property var a: dark ? accents : lightAccents
 
-        // The system is asked only while the modern look is on
+        // Accent "system": the colour Android 12+ takes from the wallpaper (Material You), for
+        // the dark and the light page. Empty elsewhere, then the choice is not offered and a
+        // saved "system" falls back to violet. Read again on return to the foreground, since
+        // the wallpaper is changed outside the app.
+        property string systemAccentDark: ""
+        property string systemAccentLight: ""
+        readonly property bool systemAccentAvailable: systemAccentDark !== "" && systemAccentLight !== ""
+
+        // The system (night mode, wallpaper accent) is asked only while the modern look is on
         function refreshSystemTheme() {
-            if (modern)
-                systemDark = AndroidStatusBar.systemDarkMode()
+            if (!modern)
+                return
+            systemDark = AndroidStatusBar.systemDarkMode()
+            systemAccentDark = AndroidStatusBar.systemAccentColor(true)
+            systemAccentLight = AndroidStatusBar.systemAccentColor(false)
         }
         onModernChanged: refreshSystemTheme()
         Component.onCompleted: refreshSystemTheme()
+        function accentOf(name) {
+            if (name === "system" && systemAccentAvailable)
+                return readableAccent(dark ? systemAccentDark : systemAccentLight)
+            return a[name] || a["violet"]
+        }
+        // WCAG contrast ratio of two colours
+        function contrast(c1, c2) {
+            function lum(c) {
+                function ch(v) { return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+                return 0.2126 * ch(c.r) + 0.7152 * ch(c.g) + 0.0722 * ch(c.b)
+            }
+            var l1 = lum(c1), l2 = lum(c2)
+            return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+        }
+        // The wallpaper accent is not ours to vouch for (vendors ship their own palettes): if it
+        // reads below 4.5:1 on the darkest surface of the theme, darken it on a light page and
+        // lighten it on a dark one, keeping its hue
+        function readableAccent(hex) {
+            var c = Qt.lighter(hex, 1.0)  // string -> color; Qt.color() is Qt 6 only
+            var worst = Qt.lighter(t.surfaceHighest, 1.0)
+            var h = Math.max(0, c.hslHue), s = c.hslSaturation, l = c.hslLightness  // grey: hue -1
+            for (var i = 0; i < 50 && contrast(c, worst) < 4.5; i++) {
+                l = dark ? Math.min(1, l + 0.02) : Math.max(0, l - 0.02)
+                c = Qt.hsla(h, s, l, 1)
+            }
+            return c
+        }
 
         readonly property color bg: t.bg
         readonly property color surface: t.surface
@@ -357,7 +395,7 @@ ApplicationWindow {
         readonly property color outline: t.outline
         readonly property color textMain: t.textMain
         readonly property color textMuted: t.textMuted
-        readonly property color accent: a[settings.ui_accent] || a["violet"]
+        readonly property color accent: accentOf(settings.ui_accent)
         // the name of the accent: UiButton.inverse takes the one of the opposite theme
         readonly property string accentName: settings.ui_accent
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"

@@ -16538,6 +16538,7 @@
       "defaultExpression": "\"violet\"",
       "options": {
         "values": [
+          "system",
           "violet",
           "blue",
           "teal",
@@ -16546,6 +16547,7 @@
           "pink"
         ],
         "labels": [
+          "Wallpaper color",
           "Violet",
           "Blue",
           "Teal",
