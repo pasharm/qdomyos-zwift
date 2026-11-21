@@ -108,15 +108,20 @@ elif CASE == "tmpl":
         ok = bring("Template Settings", swipes=60) and tap("Template Settings", "user_")
         page("template settings", ok)
     if ok:
-        ok = bring("user_") and tap("user_", "Server addresses")
+        # by its full name: a bare "user_" is the first row, user_vlc (TcpClient) on a fresh install (44851642842)
+        ok = bring("user_QZWS (WebServer)") and tap("user_QZWS (WebServer)", "user_QZWS Port:")
         page("webserver template", ok)
     if ok:
-        t = tree()
-        port = [e for e in t if (e.get("AXLabel") or "").startswith("user_") and
-                (e.get("AXLabel") or "").endswith("Port:")]
-        ok = bool(port) and bring(port[0]["AXLabel"])
+        ok = bring("user_QZWS Port:")
         shot("tmpl")
         page("template port row", ok)
+    if ok:
+        ok = bring("user_qz (TcpClient)") and tap("user_qz (TcpClient)", "user_qz Host:")
+        page("tcpclient template", ok)
+    if ok:
+        ok = bring("user_qz Port:")
+        shot("tmpl-tcp")
+        page("tcpclient port row", ok)
 else:
     say(f"unknown case {CASE!r}")
     page(CASE, False)
