@@ -7,6 +7,7 @@ import Qt.labs.settings 1.0
 import QtMultimedia 5.15
 import QtQuick.Layouts 1.3
 import QtWebView 1.1
+import QtQuick.Window 2.2
 
 Item {
     id: pelotonAuthPage
@@ -23,9 +24,10 @@ Item {
         id: pelotonWebView
         anchors.fill: parent
         // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
-        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
-        anchors.leftMargin: drawer.position === 0 ? 0 : -window.width
-        anchors.rightMargin: drawer.position === 0 ? 0 : window.width
+        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml).
+        // As far as offScreen there: the page slides in from half its width while the drawer closes
+        anchors.leftMargin: drawer.position === 0 ? 0 : -(Screen.width + Screen.height)
+        anchors.rightMargin: drawer.position === 0 ? 0 : Screen.width + Screen.height
         height: parent.height
         width: parent.width
         visible: !rootItem.pelotonPopupVisible
