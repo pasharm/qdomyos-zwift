@@ -10541,6 +10541,12 @@ import QtQuick 2.12 as Quick212
                     Label {
                         id: garminConnectLabel
                         text: "Garmin Connect"
+                        // Modern look: a subheader of the section, as "Gear Controls" - Title Small 14 Medium in
+                        // the accent (T-641); classic: the app font of a plain label. The size with the weight: in
+                        // Qt 5 a write of the weight alone keeps the size the label inherits at that moment
+                        font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
+                        font.weight: window.ui.modern ? Font.Medium : Font.Normal
+                        color: window.ui.modern ? window.ui.accent : enabled ? Material.foreground : Material.hintTextColor // classic: as Label of the Material style
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
