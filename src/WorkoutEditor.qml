@@ -74,9 +74,7 @@ Item {
         // As far as offScreen there: the page slides in from half its width while the drawer closes
         anchors.leftMargin: drawer.position === 0 ? 0 : -(Screen.width + Screen.height)
         anchors.rightMargin: drawer.position === 0 ? 0 : Screen.width + Screen.height
-        // root.visible too: the kept page (modern look, main.qml) is only hidden when closed,
-        // and the native view does not follow the visibility of its parents by itself
-        visible: root.pageLoaded && root.visible
+        visible: root.pageLoaded
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 root.pageLoaded = true
@@ -86,6 +84,9 @@ Item {
                 busy.visible = false
                 busy.running = false
                 portPoller.stop()
+                // loaded after Back (portPoller): hidden already, so off the server at once
+                if (root.StackView.status !== StackView.Active)
+                    webView.runJavaScript("window.main_ws_pause && main_ws_pause(true)")
             } else if (loadRequest.status === WebView.LoadFailedStatus) {
                 root.pageLoaded = false
                 root.requestedPage = ""
@@ -94,6 +95,21 @@ Item {
                 portPoller.start()
             }
         }
+    }
+
+    // Shown again without a reload (the modern look keeps the page, main.qml; any look when a page
+    // above it is closed): the page asks again for the connected machine, FTP, the units and the
+    // saved workouts. Not at the first opening: the page is still loading and asks itself
+    StackView.onActivated: {
+        if (root.pageLoaded)
+            webView.runJavaScript("window.main_ws_pause && main_ws_pause(false);"
+                                  + " window.qzEditorReopened && window.qzEditorReopened()")
+    }
+    // Hidden (kept by the modern look, or under another page): off the server until shown again,
+    // or it would take every update of the workout for nothing (main_ws_manager.js)
+    StackView.onDeactivated: {
+        if (root.pageLoaded)
+            webView.runJavaScript("window.main_ws_pause && main_ws_pause(true)")
     }
 
     // a new app language: the page asks for its texts again (a reload would lose the edits)
@@ -110,9 +126,6 @@ Item {
         visible: !root.pageLoaded
         running: !root.pageLoaded
     }
-
-    // The kept page (modern look) goes back to its first parent when closed: hidden there
-    StackView.onRemoved: root.visible = false
 
     Component.onCompleted: portPoller.start()
 }

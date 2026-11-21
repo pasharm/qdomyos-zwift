@@ -211,45 +211,11 @@ ApplicationWindow {
     // The support button "?" (SupportHelpButton) is in the bottom right corner of the home page
     readonly property bool supportHelpShown: supportHelpButton.shown
     property bool settings_restart_to_apply: false
-    // Modern look: the workout editor page, made on its first opening and kept (see "editor")
+    // Modern look: the workout editor page, made on its first opening and kept while the app runs
+    // (see "editor")
     property var keptWorkoutEditor: null
-    property var keptCharts: null
-
-    // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
-    // closed, 1 minute while riding (the equipment moving: the ride needs the memory more).
-    // The equipment connecting would not do: it connects once, when the app opens
-    readonly property bool riding: typeof rootItem !== "undefined" && rootItem !== null && rootItem.currentSpeed > 0
-    onRidingChanged: {
-        if (riding && keptPagesReleaseTimer.running && keptPagesReleaseTimer.interval > 60 * 1000) {
-            keptPagesReleaseTimer.interval = 60 * 1000
-            keptPagesReleaseTimer.restart()
-        }
-    }
-    function keptInStack(item) {
-        return item && stackView.find(function(i) { return i === item }) !== null
-    }
-    function releaseKeptPages() {
-        // Not while a page is sliding out: it is off the stack already but still drawn
-        if (stackView.busy) {
-            keptPagesReleaseTimer.interval = 1000
-            keptPagesReleaseTimer.restart()
-            return
-        }
-        if (keptWorkoutEditor && !keptInStack(keptWorkoutEditor)) {
-            keptWorkoutEditor.destroy()
-            keptWorkoutEditor = null
-        }
-        if (keptCharts && !keptInStack(keptCharts)) {
-            keptCharts.destroy()
-            keptCharts = null
-        }
-    }
-    Timer {
-        id: keptPagesReleaseTimer
-        interval: 3 * 60 * 1000
-        onTriggered: releaseKeptPages()
-    }
-    // Once, not per editor made: a closure per editor would close it once for each
+    // Save & Start in the kept editor closes it, as in the classic look. One handler for the one
+    // editor: a closure connected per opening would pile up
     onTrainprogram_autostart_requested: {
         if (keptWorkoutEditor && stackView.currentItem === keptWorkoutEditor)
             keptWorkoutEditor.closeRequested()
@@ -2273,19 +2239,6 @@ ApplicationWindow {
             break
         case "charts":
             console.log(CHARTJS)
-            // Modern look: kept like the workout editor, opening it again redraws the kept page
-            // instead of starting the web view anew
-            if (CHARTJS && window.ui.modern) {
-                if (!keptCharts)
-                    keptCharts = Qt.createComponent("ChartJsTest.qml").createObject(window.contentItem, { visible: false })
-                else
-                    keptCharts.reopen()
-                if (keptCharts) {
-                    if (stackView.find(function(item) { return item === keptCharts }) === null)
-                        stackView.push(keptCharts)
-                    break
-                }
-            }
             if(CHARTJS)
                 stackView.push("ChartJsTest.qml")
             else
@@ -2315,9 +2268,9 @@ ApplicationWindow {
              });
             break
         case "editor":
-            // Modern look: the editor is made once and kept (StackView does not destroy a page it
-            // did not create), so opening it again shows it at once instead of loading the web
-            // page anew, with the workout left as it was
+            // Modern look: the editor is made once and kept - StackView does not destroy a page it
+            // did not make, and hides it when it leaves the stack, its web view too - so opening it
+            // again shows it at once, with the workout as it was left, instead of loading the page anew
             if (window.ui.modern) {
                 if (!keptWorkoutEditor) {
                     keptWorkoutEditor = Qt.createComponent("WorkoutEditor.qml").createObject(window.contentItem, { visible: false })
@@ -2329,9 +2282,13 @@ ApplicationWindow {
                     }
                 }
                 if (keptWorkoutEditor) {
-                    // Already open (the drawer swiped over it): not pushed a second time
+                    // Already in the stack: back to it - pushing it again would only warn
+                    // "nothing to push". Page by page, as Back does, so a settings page above
+                    // still asks to restart or to save the profile
                     if (stackView.find(function(item) { return item === keptWorkoutEditor }) === null)
                         stackView.push(keptWorkoutEditor)
+                    else
+                        while (stackView.currentItem !== keptWorkoutEditor && navigateBack(false)) {}
                     break
                 }
             }
@@ -2924,13 +2881,6 @@ ApplicationWindow {
                 // TEMP-LOG: QZ-NAV - the page on top of the stack
                 console.log("QZ-NAV stack depth=" + depth + " current=" + (currentItem ? (currentItem.objectName || currentItem.toString()) + " " + Math.round(currentItem.width) + "x" + Math.round(currentItem.height) : "none") + " stack " + Math.round(width) + "x" + Math.round(height) + " screen " + Screen.width + "x" + Screen.height)
                 headerToolbar.folded = false
-                // A kept page just left the stack: the countdown to giving its memory back,
-                // a minute while riding
-                if ((keptWorkoutEditor && !window.keptInStack(keptWorkoutEditor))
-                        || (keptCharts && !window.keptInStack(keptCharts))) {
-                    keptPagesReleaseTimer.interval = window.riding ? 60 * 1000 : 3 * 60 * 1000
-                    keptPagesReleaseTimer.restart()
-                }
             }
             Connections {
                 target: stackView.currentItem

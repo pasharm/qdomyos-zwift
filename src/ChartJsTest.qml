@@ -42,35 +42,6 @@ ColumnLayout {
         return true
     }
 
-    // Modern look: the page is kept (main.qml) and opened again: the charts of the workout so
-    // far are drawn anew, and the mail goes as on a fresh open. Drawn at once ("still" in the
-    // query, chart.htm): growing from zero again every block looked like a redraw. A new query
-    // loads the page anew, the fragment keeps the current theme
-    // The new load is kept off the screen like the first one, until its load ends
-    function reopen() {
-        headerToolbar.visible = true
-        if (pageLoaded) {
-            if (window.ui.modern)
-                pageShown = false
-            reloading = true
-            sentTheme = JSON.stringify(pageTheme)
-            webView.url = pageUrl("?still=" + Date.now())
-        }
-        sendMailFallback.restart()
-    }
-
-    function pageUrl(query) {
-        return "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/chart.htm" +
-               query + window.ui.webThemeFragment()
-    }
-    // A kept page is taken off the stack, not destroyed: hidden until pushed again
-    // (and the mail timer stopped: a page destroyed before its 10 s sent nothing)
-    StackView.onRemoved: {
-        handleBack() // a spread chart closed, the header back for the next page
-        sendMailFallback.stop()
-        column1.visible = false
-    }
-
     // The theme the page has, as JSON: that of the fragment of the first load, then of each script sent
     property string sentTheme: ""
     function applyTheme() {
@@ -78,13 +49,9 @@ ColumnLayout {
         webView.runJavaScript(window.ui.webThemeScript())
     }
 
-    // reopen() loads the page again: a theme change waits for the end of that load
-    // (onLoadingChanged compares sentTheme), a script sent meanwhile could reach the old document
-    property bool reloading: false
-
     // null (the modern look switched off) takes the theme off the page
     onPageThemeChanged: {
-        if (pageLoaded && !reloading)
+        if (pageLoaded)
             applyTheme()
     }
 
@@ -94,18 +61,15 @@ ColumnLayout {
     WebView {
         id: webView
         anchors.fill: parent
-        // The native view lies over everything QML draws: it goes with the page when kept
-        visible: column1.visible
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
+        visible: true
         onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
                 console.error("port " + settings.value("template_inner_QZWS_port"));
             }
-            if (loadRequest.status !== WebView.LoadStartedStatus)
-                column1.reloading = false
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
                 // A theme change during the load reached the page neither in the fragment nor in a
@@ -139,8 +103,7 @@ ColumnLayout {
 
     Timer {
         id: chartJscheckStartFromWeb
-        // Not while the kept page is off the stack: its pop would close another page
-        interval: 200; running: column1.visible; repeat: true
+        interval: 200; running: true; repeat: true
         onTriggered: {if(rootItem.startRequested) {rootItem.startRequested = false; rootItem.stopRequested = false; stackView.pop(); }}
     }
 
@@ -172,6 +135,7 @@ ColumnLayout {
 	     // Set once, not bound: the fragment is for the first load, a later theme goes
 	     // through runJavaScript
 	     sentTheme = JSON.stringify(pageTheme)
-	     webView.url = pageUrl("")
+	     webView.url = "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/chart.htm" +
+	                   window.ui.webThemeFragment()
 	 }
 }
