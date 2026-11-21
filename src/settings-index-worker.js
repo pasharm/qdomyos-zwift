@@ -94,6 +94,16 @@ function cardLevel(sections) {
     return level
 }
 
+// The key ending at `end` is a condition: "(settings.miles_unit && ...) ? lbs : kg" in the label of
+// Player Weight shows the weight, not the unit switch further down the page
+function usedAsCondition(line, end) {
+    var k = end
+    while (k < line.length && (line.charAt(k) === " " || line.charAt(k) === ")"))
+        k++
+    var next = line.substring(k, k + 2)
+    return next.charAt(0) === "?" || next === "&&" || next === "||"
+}
+
 var MAIN_PAGE = "settings.qml"
 // The pages that are on no page come after all of them
 var NO_ANCHOR = "999999"
@@ -176,8 +186,9 @@ function parse(file, source, map) {
                 var strength = SHOWS.test(line) ? 2 : (WRITES.test(line) ? 1 : 0)
                 var m
                 KEY.lastIndex = 0
+                // A key that only decides what the line shows is no more than a mention there
                 while ((m = KEY.exec(line)) !== null)
-                    record(map, m[1], file, stack, strength, i)
+                    record(map, m[1], file, stack, strength === 2 && usedAsCondition(line, KEY.lastIndex) ? 0 : strength, i)
             }
         }
         depth += braceDelta(line)
