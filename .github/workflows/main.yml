@@ -20,7 +20,7 @@ on:
         required: false
         default: '45'
       cases:
-        description: cases of ios_t643.py by spaces (empty - all of light dark classic tts inc)
+        description: cases of ios_t643.py by spaces (empty - changed tmpl; the run 44837519116 had light dark classic tts inc)
         required: false
         default: ''
 
@@ -163,7 +163,7 @@ jobs:
           FAIL=0
           xcrun simctl ui "$UDID" appearance light
           # one start per case, a fresh install each (the keys of the case only)
-          CASES="${CASES_IN:-light dark classic tts inc}"
+          CASES="${CASES_IN:-changed tmpl}"
           for CASE in $CASES; do
             MODERN=true; THEME=light
             case $CASE in
@@ -207,7 +207,7 @@ jobs:
             cat out/logs-$CASE/debug-*.log 2>/dev/null | grep -a -i -E "qml|ReferenceError|TypeError|Unable to assign" | head -600 > "out/qml-log-$CASE.txt" || true
             # warnings and JS errors of the changed files - listed, not a failure (no master side to tell an old
             # one from a new one; the reader compares with the Android runs of test/t643-emu)
-            grep -a -E "UiButton\.qml|settings-tts\.qml|settings-treadmill-inclination-override\.qml|settings\.qml" "out/qml-log-$CASE.txt" | grep -a -E "Warning:|Critical:|Fatal:|ReferenceError|TypeError|Unable to assign" > "out/changed-qml-$CASE.txt" || true
+            grep -a -E "UiButton\.qml|settings-tts\.qml|settings-treadmill-inclination-override\.qml|settings\.qml|TemplateWebServer\.qml|TemplateTcpClient\.qml" "out/qml-log-$CASE.txt" | grep -a -E "Warning:|Critical:|Fatal:|ReferenceError|TypeError|Unable to assign" > "out/changed-qml-$CASE.txt" || true
             [ -s "out/changed-qml-$CASE.txt" ] && { echo "~~ $CASE: QML warnings of the changed files:"; head -40 "out/changed-qml-$CASE.txt"; }
           done
           ls out/*.png

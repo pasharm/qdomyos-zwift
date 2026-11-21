@@ -9,6 +9,9 @@ usage: ios_t643.py <idb> <udid> <out_dir> <prefix> <case>
                  (settings-tts.qml:57) with its OK
   case inc     - modern light: Treadmill Options (:11690, first row "Treadmill as a Bike") > Inclination Overrides
                  (:12147, settings-treadmill-inclination-override.qml) > "Inclination Override Gain:" (:41) and OK
+  case changed - modern light: the settings search bar, the Changed filter on
+  case tmpl    - modern light: Experimental Features > Template Settings > the WebServer template > its Port row
+                 (TemplateWebServer.qml) and OK
 SUMMARY line and exit code by the library (tools/ios/iosnav.py).
 """
 import json
@@ -81,6 +84,39 @@ elif CASE == "inc":
             ok = bring("Inclination Override Gain:")
             shot("inc")
             page("inclination row", ok)
+elif CASE == "changed":
+    # modern light: the search bar of the settings (main.qml "Search settings"), the Changed filter on - the list
+    # title "Changed settings (N)" (settings.qml ~2708)
+    ok = tap(MENU, "Settings") and tap("Settings", "General Options")
+    page("settings", ok)
+    if ok:
+        ok = tap("Search settings", "Changed")
+        page("search bar", ok)
+    if ok:
+        ok = tap("Changed", "Changed settings")
+        shot("changed")
+        page("changed on", ok)
+elif CASE == "tmpl":
+    # modern light: Experimental Features (~17958) > Template Settings (~18907) > the WebServer template the app
+    # makes itself ("user_<id> (WebServer)", templateinfosenderbuilder.cpp:246-264) > its Port row and OK
+    ok = tap(MENU, "Settings") and tap("Settings", "General Options")
+    page("settings", ok)
+    if ok:
+        ok = tap("Experimental Features", "Gym Mode", scrolls=60)
+        page("experimental features", ok)
+    if ok:
+        ok = bring("Template Settings", swipes=60) and tap("Template Settings", "user_")
+        page("template settings", ok)
+    if ok:
+        ok = bring("user_") and tap("user_", "Server addresses")
+        page("webserver template", ok)
+    if ok:
+        t = tree()
+        port = [e for e in t if (e.get("AXLabel") or "").startswith("user_") and
+                (e.get("AXLabel") or "").endswith("Port:")]
+        ok = bool(port) and bring(port[0]["AXLabel"])
+        shot("tmpl")
+        page("template port row", ok)
 else:
     say(f"unknown case {CASE!r}")
     page(CASE, False)
