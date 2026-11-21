@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 import QtWebView 1.1
-import QtQuick.Window 2.2
 
 Item {
     signal trainprogram_zwo_loaded(string s)
@@ -35,9 +34,8 @@ Item {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
-        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml).
-        // As far as offScreen there: the page slides in from half its width while the drawer closes
-        anchors.horizontalCenterOffset: drawer.position === 0 ? 0 : -(Screen.width + Screen.height)
+        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
+        anchors.horizontalCenterOffset: drawer.position === 0 ? 0 : -window.width
         width: parent.width
 
         url: "https://whatsonzwift.com/workouts"
