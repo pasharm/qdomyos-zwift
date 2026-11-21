@@ -1322,21 +1322,6 @@ QZ 설정을 업데이트하시겠습니까?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>구매 중...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>구매 완료</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>구매 실패</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ QZ 설정을 업데이트하시겠습니까?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>케이던스가 실제의 2배로 보입니다. ‘파워 센서 옵션’에서 ‘달리기 케이던스 2배’와 ‘Strava 케이던스 절반’을 끄세요.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>구매 중...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>구매 완료</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>구매 실패</translation>
     </message>
 </context>
 <context>

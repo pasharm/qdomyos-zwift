@@ -1322,21 +1322,6 @@ Zaktualizować ustawienia QZ?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Trwa zakup...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Zakup udany</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Zakup nieudany</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ Zaktualizować ustawienia QZ?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>Kadencja wydaje się dwukrotnie wyższa od rzeczywistej. Wyłącz „Podwajanie kadencji podczas biegu” i „Połowa kadencji w serwisie Strava” w sekcji „Opcje czujnika mocy”.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Trwa zakup...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Zakup udany</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Zakup nieudany</translation>
     </message>
 </context>
 <context>

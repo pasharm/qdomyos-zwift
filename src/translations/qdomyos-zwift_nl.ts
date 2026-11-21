@@ -1322,21 +1322,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Aankoop bezig...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Aankoop geslaagd</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Aankoop mislukt</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>De cadans lijkt het dubbele van de werkelijke. Schakel ‘Cadans verdubbelen bij hardlopen’ en ‘Halve cadans naar Strava’ uit bij ‘Opties voor vermogenssensor’.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Aankoop bezig...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Aankoop geslaagd</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Aankoop mislukt</translation>
     </message>
 </context>
 <context>

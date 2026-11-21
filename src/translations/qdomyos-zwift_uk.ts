@@ -1322,21 +1322,6 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Оформлюємо покупку...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Покупку здійснено</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Не вдалося оплатити</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>Схоже, каденс удвічі більший за справжній. Вимкніть «Подвоєння каденсу для бігу» і «Половинний каденс у Strava» в розділі «Параметри датчика потужності».</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Оформлюємо покупку...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Покупку здійснено</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Не вдалося оплатити</translation>
     </message>
 </context>
 <context>

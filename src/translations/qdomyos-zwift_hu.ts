@@ -1318,21 +1318,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Vásárlás...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Sikeres vásárlás</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Sikertelen vásárlás</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1404,6 +1389,21 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>A kadencia a valódi kétszeresének tűnik. Kapcsolja ki a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Vásárlás...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Sikeres vásárlás</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Sikertelen vásárlás</translation>
     </message>
 </context>
 <context>

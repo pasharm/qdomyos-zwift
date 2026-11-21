@@ -1318,21 +1318,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Köper…</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Köpet har genomförts</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Det gick inte att genomföra köpet</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1404,6 +1389,21 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>Kadensen verkar vara dubbelt så hög som den verkliga. Inaktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Köper…</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Köpet har genomförts</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Det gick inte att genomföra köpet</translation>
     </message>
 </context>
 <context>

@@ -1322,21 +1322,6 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>正在购买...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>购买成功</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>购买失败</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>踏频似乎是实际值的两倍。请在“功率传感器选项”中关闭“跑步踏频加倍”和“Strava 踏频减半”。</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>正在购买...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>购买成功</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>购买失败</translation>
     </message>
 </context>
 <context>

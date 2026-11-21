@@ -1322,21 +1322,6 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Acquisto in corso...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Acquisto riuscito</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Acquisto non riuscito</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1408,6 +1393,21 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
     <message>
         <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
         <translation>La cadenza sembra il doppio di quella reale. Disattiva &apos;Raddoppiare la cadenza per corsa&apos; e &apos;Mezza Cadenza su Strava&apos; in &apos;Opzioni sensore di potenza&apos;.</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Acquisto in corso...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Acquisto riuscito</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Acquisto non riuscito</translation>
     </message>
 </context>
 <context>
