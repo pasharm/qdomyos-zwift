@@ -1318,21 +1318,6 @@ Vil du opdatere QZ-indstillingerne?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Gennemfører køb...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Købet er gennemført</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Købet mislykkedes</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Vil du opdatere QZ-indstillingerne?</translation>
     <message>
         <source>Open email</source>
         <translation>Åbn mail</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Gennemfører køb...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Købet er gennemført</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Købet mislykkedes</translation>
     </message>
 </context>
 <context>

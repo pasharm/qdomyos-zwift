@@ -1318,21 +1318,6 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>正在购买...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>购买成功</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>购买失败</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Open email</source>
         <translation>打开邮件</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>正在购买...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>购买成功</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>购买失败</translation>
     </message>
 </context>
 <context>

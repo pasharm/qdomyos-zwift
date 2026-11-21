@@ -1318,21 +1318,6 @@ QZ 설정을 업데이트하시겠습니까?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>구매 중...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>구매 완료</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>구매 실패</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ QZ 설정을 업데이트하시겠습니까?</translation>
     <message>
         <source>Open email</source>
         <translation>이메일 열기</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>구매 중...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>구매 완료</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>구매 실패</translation>
     </message>
 </context>
 <context>

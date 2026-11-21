@@ -1318,21 +1318,6 @@ Vil du oppdatere QZ-innstillingene?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Kjøper …</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Kjøpet er fullført</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Kan ikke fullføre kjøpet</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Vil du oppdatere QZ-innstillingene?</translation>
     <message>
         <source>Open email</source>
         <translation>Åpne e-post</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Kjøper …</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Kjøpet er fullført</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Kan ikke fullføre kjøpet</translation>
     </message>
 </context>
 <context>

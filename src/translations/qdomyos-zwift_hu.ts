@@ -1314,21 +1314,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Vásárlás...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Sikeres vásárlás</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Sikertelen vásárlás</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1389,6 +1374,21 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Open email</source>
         <translation>E-mail megnyitása</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Vásárlás...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Sikeres vásárlás</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Sikertelen vásárlás</translation>
     </message>
 </context>
 <context>

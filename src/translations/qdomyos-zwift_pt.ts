@@ -1318,21 +1318,6 @@ Deseja atualizar as configurações do QZ?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Comprando...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Compra concluída</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Falha na compra</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Deseja atualizar as configurações do QZ?</translation>
     <message>
         <source>Open email</source>
         <translation>Abrir e-mail</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Comprando...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Compra concluída</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Falha na compra</translation>
     </message>
 </context>
 <context>

@@ -1318,21 +1318,6 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Оформляем покупку...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Покупка прошла успешно</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Не удалось оплатить</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Open email</source>
         <translation>Открыть почту</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Оформляем покупку...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Покупка прошла успешно</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Не удалось оплатить</translation>
     </message>
 </context>
 <context>

@@ -1318,21 +1318,6 @@ Aktualizovat nastavení QZ?</translation>
     </message>
 </context>
 <context>
-    <name>SwagBagItem</name>
-    <message>
-        <source>Purchasing...</source>
-        <translation>Probíhá nákup...</translation>
-    </message>
-    <message>
-        <source>Purchase Succeeded</source>
-        <translation>Nákup proběhl úspěšně</translation>
-    </message>
-    <message>
-        <source>Purchase Failed</source>
-        <translation>Nákup se nezdařil</translation>
-    </message>
-</context>
-<context>
     <name>SupportHelpButton</name>
     <message>
         <source>Contact QZ support</source>
@@ -1393,6 +1378,21 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>Open email</source>
         <translation>Otevřít e-mail</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Probíhá nákup...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Nákup proběhl úspěšně</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Nákup se nezdařil</translation>
     </message>
 </context>
 <context>
