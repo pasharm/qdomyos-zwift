@@ -24,7 +24,8 @@ ColumnLayout {
     // hiding takes the view out of the window (QAndroidPlatformForeignWindow::setVisible destroys
     // its surface), the page was laid out for a wrong width and opened zoomed in
     property bool pageShown: !window.ui.modern
-    readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
+    // Off the screen too while the drawer is open or dragged: the native view lies over it (QTBUG-58365)
+    readonly property real offScreen: pageShown && drawer.position === 0 ? 0 : Screen.width + Screen.height
     // A chart spread over the page (chartjs/chartfullscreen.js): the page tells it in its title
     property bool chartFullscreen: false
     // The spread chart takes the app header's room too, as on the charts page

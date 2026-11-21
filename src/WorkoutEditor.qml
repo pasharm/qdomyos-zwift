@@ -68,6 +68,10 @@ Item {
     WebView {
         id: webView
         anchors.fill: parent
+        // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
+        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
+        anchors.leftMargin: drawer.position === 0 ? 0 : -window.width
+        anchors.rightMargin: drawer.position === 0 ? 0 : window.width
         // root.visible too: the kept page (modern look, main.qml) is only hidden when closed,
         // and the native view does not follow the visibility of its parents by itself
         visible: root.pageLoaded && root.visible

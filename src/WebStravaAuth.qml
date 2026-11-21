@@ -16,6 +16,10 @@ Item {
 
     WebView {
         anchors.fill: parent
+        // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
+        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
+        anchors.leftMargin: drawer.position === 0 ? 0 : -window.width
+        anchors.rightMargin: drawer.position === 0 ? 0 : window.width
         height: parent.height
         width: parent.width
         visible: !rootItem.generalPopupVisible
