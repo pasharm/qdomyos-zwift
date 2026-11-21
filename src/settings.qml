@@ -140,6 +140,7 @@ import QtQuick 2.12 as Quick212
             source: "settings-index-worker.js"
             onMessage: {
                 console.log("QZ-TIMING settings index: " + messageObject.keys + " settings in " + messageObject.ms + " ms")
+                // "Changed" waits for the index to list the settings in the order of the pages
                 settingsPane.settingsIndexReady(messageObject.map)
             }
         }
@@ -1101,7 +1102,8 @@ import QtQuick 2.12 as Quick212
 
         // Where a setting stands on the pages (pos of settings-index-worker.js), "" when unknown.
         // A setting made of others ("Specific Model": a picker over one switch per model) stands
-        // where the first of them does, as in jumpToSetting
+        // where the first of them on the pages does (jumpToSetting opens the first of them in the
+        // catalog: the same section)
         function pagePositionOf(entry) {
             if (!settingsIndex)
                 return ""
@@ -1127,10 +1129,10 @@ import QtQuick 2.12 as Quick212
                 return
             }
 
-            // Modern look: "Changed" is ordered and grouped by the index of the pages - shown once
-            // the index is there (onMessage of settingsIndexWorker updates the list), not in the
-            // catalog order first and re-sorted half a second later
-            if (changedOnly && window.ui.modern && !settingsIndex) {
+            // "Changed" is listed in the order of the pages (and in the modern look grouped by
+            // section), so it waits for their index (settingsIndexReady lists it then): not in the
+            // catalog order first and sorted again a moment later
+            if (changedOnly && !settingsIndex) {
                 filteredSettings = []
                 settingsSearchPending = true
                 loadSettingsIndex()
@@ -1174,31 +1176,33 @@ import QtQuick 2.12 as Quick212
                 if (results.length >= 80 && !changedOnly)
                     break
             }
-            // Modern look: grouped by section, for the section headers and their reset
-            if (changedOnly && window.ui.modern) {
-                // The order of the pages: a section where its first changed setting stands, the
-                // settings of a section as they stand in it (pos of settings-index-worker.js).
-                // Without a place on the pages (the index not built yet, a setting on no page):
-                // after the rest, by name and in the catalog order - the sort of the engine need
-                // not keep it
+            // "Changed" in the order of the pages, as the settings stand on them (pos of
+            // settings-index-worker.js). Modern look: also grouped by section, for the section
+            // headers and their reset - a section where its first changed setting stands, the
+            // settings of a section as they stand in it. Without a place (a setting on no page, a
+            // page that could not be read): after the rest, by name and in the catalog order - the
+            // sort of the engine need not keep it
+            if (changedOnly) {
+                var grouped = window.ui.modern
                 var sections = {}
                 var positions = {}
                 var sectionPositions = {}
                 var order = {}
-                var last = "~"
                 for (var r = 0; r < results.length; r++) {
                     var resultKey = results[r].key
-                    var resultSection = sectionOf(results[r])
-                    var position = pagePositionOf(results[r]) || last
-                    sections[resultKey] = resultSection
+                    var position = pagePositionOf(results[r]) || "~"
                     positions[resultKey] = position
                     order[resultKey] = r
+                    if (!grouped)
+                        continue
+                    var resultSection = sectionOf(results[r])
+                    sections[resultKey] = resultSection
                     if (sectionPositions[resultSection] === undefined || position < sectionPositions[resultSection])
                         sectionPositions[resultSection] = position
                 }
                 results.sort(function (a, b) {
                     var sa = sections[a.key], sb = sections[b.key]
-                    if (sa !== sb) {
+                    if (grouped && sa !== sb) {
                         var fa = sectionPositions[sa], fb = sectionPositions[sb]
                         if (fa !== fb)
                             return fa < fb ? -1 : 1
