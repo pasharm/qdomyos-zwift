@@ -33,9 +33,6 @@ Item {
         anchors.top: loadButton.bottom
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
-        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
-        anchors.horizontalCenterOffset: drawer.position === 0 ? 0 : -window.width
         width: parent.width
 
         url: "https://whatsonzwift.com/workouts"

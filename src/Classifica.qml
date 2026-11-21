@@ -16,10 +16,6 @@ ColumnLayout {
     WebView {
         id: webView
         anchors.fill: parent
-        // Off the screen while the drawer is open or dragged: the native view lies over it (QTBUG-58365).
-        // Moved, not hidden: a hidden native view loses its surface (see ChartJsTest.qml)
-        anchors.leftMargin: drawer.position === 0 ? 0 : -window.width
-        anchors.rightMargin: drawer.position === 0 ? 0 : window.width
         url: "http://80.211.67.253:3001/qz-classifica"
         visible: true
         onLoadingChanged: {

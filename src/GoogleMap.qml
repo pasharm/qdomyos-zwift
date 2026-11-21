@@ -18,8 +18,7 @@ ColumnLayout {
     readonly property var pageTheme: window.ui.webTheme
     property bool pageLoaded: false
     property bool pageShown: !window.ui.modern
-    // Off the screen too while the drawer is open or dragged: the native view lies over it (QTBUG-58365)
-    readonly property real offScreen: pageShown && drawer.position === 0 ? 0 : Screen.width + Screen.height
+    readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
 
     // The theme the page has, as JSON: that of the fragment of the first load, then of each script sent
     property string sentTheme: ""

@@ -842,10 +842,6 @@ ColumnLayout {
                             WebView {
                                 id: previewWebView
                                 anchors.fill: parent
-                                // Off the screen while the drawer is open or dragged: it lies over it too
-                                // (QTBUG-58365). Moved, not hidden: a hidden native view loses its surface
-                                anchors.leftMargin: drawer.position === 0 ? 0 : -window.width
-                                anchors.rightMargin: drawer.position === 0 ? 0 : window.width
                                 visible: !window.ui.modern || (pageLoaded && !deleteDialog.visible)
                                 // modern look: the page in the app theme (qz-theme-bridge.js), so the frame
                                 // merges with the page; the classic look keeps the dark frame of the page.
