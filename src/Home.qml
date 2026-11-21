@@ -735,6 +735,10 @@ HomeForm {
                     visible: identificator === "target_power" && rootItem.targetPowerReleaseVisible && !largeButton
                     anchors.top: modernValue.bottom
                     anchors.horizontalCenter: modernCard.horizontalCenter
+                    // over the touch areas of -/+ below (64 x 80 around their circles, down to
+                    // the middle of this button): a tap on its edge returns control, not a step
+                    z: 1
+                    // 32, not 48: the line between the value and the bottom of the card is 39
                     height: 32 * modernTile.zoom
                     width: Math.min(implicitWidth, modernCard.width - 16 * modernTile.zoom)
                     topInset: 0
