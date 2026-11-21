@@ -15,6 +15,10 @@
 #   xs  modern light: Female picked in the Gender list - h saves at once ("Setting saved!"), b does not
 #   xt  modern light / xu classic: TTS section, the row "Summary Each Seconds:" with its OK
 #   xi  modern light / xj classic: Treadmill Options > Inclination Overrides, "Inclination Override Gain:"
+#   (the cases above ran in 44841608611; the loop below now runs only these)
+#   xg  modern light / xk classic: the settings search, the "Changed" filter on
+#   xa  modern light: English picked in the App Language list, not saved - OK stays, accent on h
+#   xp  modern light / xq classic: Template Settings > the WebServer template > its Port row and OK
 . .github/lib.sh
 . .github/qz.sh
 
@@ -154,6 +158,56 @@ page_case() {
   row_ok "$c-1-row" "$row" 1 'the OK of the row'
 }
 
+# changed_case <case> <look keys>: the settings search bar, the "Changed" filter on (settings.qml ~2672,
+# setChangedOnly :780; the list title "Changed settings (N)" :2708) - modern: highlighted pill; classic: check bar
+changed_case() {
+  local c=$1 keys=$2
+  # shellcheck disable=SC2086 # the look keys are words
+  start_case "$c" $keys $NODEV || return 1
+  settings_open || { shot "$c-0-no-settings" now; return 1; }
+  tap_ui '^Search settings$' '^Changed$' 15 || { shot "$c-0-no-bar" now; return 1; }
+  settle
+  shot "$c-1-bar"
+  tap_ui '^Changed$' '^Changed settings \([0-9]+\)$' 15 || { shot "$c-1-no-changed" now; return 1; }
+  settle
+  shot "$c-2-on"
+  say "$c: the Changed node: $(grep -o '<node[^>]*content-desc="Changed"[^>]*>' "dumps/$c-2-on.xml" | grep -o 'check[a-z]*="[a-z]*"' | tr '\n' ' ')"
+}
+
+# lang_case <case>: modern light, a language picked in the App Language list and not saved - its OK stays
+# (applyOnSelect: false) and, with saveGated, is filled with the accent (the frame; the dump has no colour)
+lang_case() {
+  local c=$1
+  gen_open "$c" $LIGHT || return 1
+  tap_ui '^Auto \(System\)$' '^English$' 10 || { shot "$c-1-no-list" now; return 1; }
+  shot "$c-1-list"
+  tap_ui '^English$' "$LANG_LABEL" 10 || { shot "$c-1-no-pick" now; return 1; }
+  settle
+  shot "$c-2-picked"
+  row_ok "$c-2-picked" "$LANG_LABEL" 1 'App Language OK after a pick'
+}
+
+# tmpl_case <case> <look keys>: Experimental Features (settings.qml ~17958) > Template Settings (~18907) > the
+# WebServer template the app makes itself ("<id> (WebServer)", templateinfosenderbuilder.cpp:246-257) > its
+# "<id> Port:" row with the OK of TemplateWebServer.qml:56
+tmpl_case() {
+  local c=$1 keys=$2
+  # shellcheck disable=SC2086 # the look keys are words
+  start_case "$c" $keys $NODEV || return 1
+  settings_open || { shot "$c-0-no-settings" now; return 1; }
+  scroll_to '^Experimental Features$' 60 --exact || { shot "$c-0-no-section" now; return 1; }
+  tap_ui '^Experimental Features$' '^Gym Mode$' --first --land-below || { shot "$c-0-closed" now; return 1; }
+  scroll_to '^Template Settings$' 60 --exact || { shot "$c-0-no-templates" now; return 1; }
+  tap_ui '^Template Settings$' '.* \(WebServer\)$' --first --land-below || { shot "$c-1-no-template" now; return 1; }
+  scroll_to '.* \(WebServer\)$' 10 --exact || { shot "$c-1-no-title" now; return 1; }
+  shot "$c-1-title"
+  tap_ui '.* \(WebServer\)$' '.* Port:$' --first --land-below || { shot "$c-2-closed" now; return 1; }
+  scroll_to '.* Port:$' 10 --exact || { shot "$c-2-no-port" now; return 1; }
+  settle
+  shot "$c-2-port"
+  row_ok "$c-2-port" '.* Port:$' 1 'the OK of the template port'
+}
+
 emu_init
 logcat_start
 
@@ -162,16 +216,13 @@ for side in b h; do
   side_on "$side" "$apk" || continue
   say "== $side: start"
   install_apk "$apk"
-  if [ "$side" = b ]; then gok=1; else gok=0; fi
-  rows_case "${side}c" 1 $CLASSIC
-  rows_case "${side}l" "$gok" $LIGHT
-  rows_case "${side}d" "$gok" $DARK
-  weight_case "${side}w"
-  select_case "${side}s" "$side"
-  page_case "${side}t" "$LIGHT" "$TTS_SEC" "$TTS_LAND" page -- "$TTS_ROW"
-  page_case "${side}u" "$CLASSIC" "$TTS_SEC" "$TTS_LAND" page -- "$TTS_ROW"
-  page_case "${side}i" "$LIGHT" "$TM_SEC" "$TM_LAND" acc "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
-  page_case "${side}j" "$CLASSIC" "$TM_SEC" "$TM_LAND" acc "$INC_SEC" "$INC_LAND" -- "$INC_ROW"
+  # run 44841608611 (head 67d34ce32): c l d w s t u i j; this run (head ab9f857ad: + the templates, the review of
+  # the draft): the Changed filter, a pick of App Language, the template port row
+  changed_case "${side}g" "$LIGHT"
+  changed_case "${side}k" "$CLASSIC"
+  lang_case "${side}a"
+  tmpl_case "${side}p" "$LIGHT"
+  tmpl_case "${side}q" "$CLASSIC"
 done
 
 finish
