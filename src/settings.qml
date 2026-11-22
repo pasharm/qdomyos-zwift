@@ -18,7 +18,8 @@ import QtQuick 2.12 as Quick212
         // own, but on a phone it stopped following after a turn of the screen - the column grew
         // to 7254 while the page stayed 1310, a section opened after it could not be scrolled
         // Modern look: a little air after the last section, so it does not touch the screen edge
-        // Not below heldContentHeight while "Changed" is listed again after a reset (rebuildKeepingScroll)
+        // Not below heldContentHeight while the page made again after a reset goes back to where
+        // the old one was scrolled to (showChangedAfterReset)
         contentHeight: Math.max(column1.implicitHeight + (window.ui.modern ? 12 : 0), heldContentHeight)
         property real heldContentHeight: 0
         focus: true
@@ -192,98 +193,6 @@ import QtQuick 2.12 as Quick212
             return qsTranslate(pageContextOf(where.file), where.chain[where.card]) + ": " + title
         }
 
-        // Not listed among the changed settings, and so never reset with a whole section:
-        // - the accounts and passwords: the same keys QZSettings::isSensitiveSettingKey keeps
-        //   out of the logs;
-        // - the keys QZ writes by itself, without anyone touching them: the MyWhoosh link cycles
-        //   its actions with a controller button, the last gear is kept on every shift with
-        //   gears_restore_value, the detection of the equipment marks what it found
-        readonly property var privateKeyParts: ["password", "user_email", "username", "token", "cryptokey",
-                                                "garmin_device_serial", "garmin_email"]
-        readonly property var appWrittenKeys: ["mywhoosh_link_camera_value", "mywhoosh_link_emote_value",
-                                               "gears_current_value_f", "domyosbike_notfmts",
-                                               "toorxtreadmill_discovery_completed"]
-        function isPrivateSetting(entry) {
-            var key = entry.key.toLowerCase()
-            for (var i = 0; i < privateKeyParts.length; i++) {
-                if (key.indexOf(privateKeyParts[i]) >= 0)
-                    return true
-            }
-            return appWrittenKeys.indexOf(entry.key) >= 0
-        }
-
-        // From the store: what "Changed" compares with the default, and the value of a key that
-        // is not a property of this page's Settings (settingValue reads the property first). The
-        // store may give a boolean back as the string "true"
-        function storedValue(key, type, fallback) {
-            var value = isUiOption(key) ? window.ui.option(key) : settings.value(key, fallback)
-            if (type === "boolean")
-                return value === true || value === "true"
-            return value
-        }
-
-        function differsFromDefault(key, type, fallback) {
-            // No plain default in the catalog (an expression it could not work out)
-            if (fallback === null || fallback === undefined)
-                return false
-            var value = storedValue(key, type, fallback)
-            if (type === "boolean")
-                return value !== !!fallback
-            if (type === "integer" || type === "number") {
-                // A real written as a float by the C++ side reads back as 0.33000001...
-                var difference = Math.abs(Number(value) - Number(fallback))
-                return difference > 0.000001 * Math.max(1, Math.abs(Number(fallback)))
-            }
-            return String(value) !== String(fallback)
-        }
-
-        function isChanged(entry) {
-            // A picker over one switch per model: changed when one of its switches is. Not by the
-            // picked index - a switch on by default (nordictrack_10_treadmill) picks a model there
-            if (entry.catalogKind === "virtual") {
-                for (var o = 0; entry.options && o < entry.options.length; o++) {
-                    var key = entry.options[o].sets
-                    if (key && differsFromDefault(key, "boolean", settingDefaults[key]))
-                        return true
-                }
-                return false
-            }
-            return entry.catalogKind === "setting" && !isPrivateSetting(entry) &&
-                   differsFromDefault(entry.key, entry.type, entry.defaultValue)
-        }
-
-        // A model picker goes back to its default by its switches: it has no value of its own
-        function writeDefault(entry) {
-            if (entry.catalogKind !== "virtual") {
-                writeSetting(entry, entry.defaultValue)
-                return
-            }
-            for (var o = 0; entry.options && o < entry.options.length; o++) {
-                var key = entry.options[o].sets
-                if (key)
-                    writeSetting({ key: key, type: "boolean" }, settingDefaults[key])
-            }
-        }
-
-        // A setting written for a reset of several settings at once. Also
-        // straight into the store: when this page's copy is stale and already equal to the
-        // default, the property assignment alone changes nothing and writes nothing
-        function writeSetting(entry, value) {
-            var typed = value
-            if (entry.type === "boolean")
-                typed = !!value
-            else if (entry.type === "integer")
-                typed = parseInt(value)
-            else if (entry.type === "number")
-                typed = parseFloat(value)
-            if (isUiOption(entry.key)) {
-                setUiOption(entry.key, typed)
-                return
-            }
-            settings[entry.key] = typed
-            settings.setValue(entry.key, typed)
-        }
-
         // The look of the modern interface (see the declarations at the end of the Settings
         // below): kept by main.qml, which applies it at once
         readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap", "ui_state_buttons"]
@@ -301,27 +210,6 @@ import QtQuick 2.12 as Quick212
             settings[key] = value
         }
 
-        function resetSetting(entry) {
-            writeDefault(entry)
-            if (!isUiOption(entry.key))
-                window.settings_restart_to_apply = true
-            toast.show(qsTr("Setting reset"))
-            rebuildKeepingScroll()
-        }
-
-        // "Changed" listed again where it was scrolled to. A new list makes the Repeater remove all
-        // its results before it makes the new ones (QQuickRepeater::regenerate), the column shrinks
-        // with every removal (QQuickGridLayoutBase::invalidate sets its implicit size at once), and
-        // a page that gets shorter puts its contentY back into the new bounds at once
-        // (QQuickFlickable::setContentHeight, fixupY) - to the top. The results are made again
-        // before updateFilteredSettings returns (not inside an incubation, so not asynchronous):
-        // the page is kept as high as it was until then, and only gets shorter by what was reset
-        function rebuildKeepingScroll() {
-            heldContentHeight = contentHeight
-            updateFilteredSettings()
-            heldContentHeight = 0
-        }
-
         function changedIn(section) {
             var list = []
             for (var i = 0; i < searchableSettings.length; i++)
@@ -332,13 +220,9 @@ import QtQuick 2.12 as Quick212
 
         function resetSection(section) {
             var list = changedIn(section)
-            for (var i = 0; i < list.length; i++) {
-                writeDefault(list[i])
-                if (!isUiOption(list[i].key))
-                    window.settings_restart_to_apply = true
-            }
-            toast.show(qsTr("%1 settings reset").arg(list.length))
-            rebuildKeepingScroll()
+            for (var i = 0; i < list.length; i++)
+                resetEntry(list[i])
+            showResetDone(qsTr("Settings reset: %1").arg(list.length))
         }
 
         function findItem(item, predicate) {
@@ -764,11 +648,18 @@ import QtQuick 2.12 as Quick212
             scrollTimer.start()
         }
 
+        // A section that opens by itself: the open state of a section with a switch
+        // (AccordionCheckElement) is the value of its setting, which the new page reads anew
+        function isPlainSection(item) {
+            return item.isOpen !== undefined && item.accordionContent !== undefined &&
+                   item.linkedBoolSetting === undefined
+        }
+
         // The sections of a page in page order, open or not: a new page opens the same ones
         function sectionStates(item, states) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined)
+                if (isPlainSection(kids[i]))
                     states.push(kids[i].isOpen)
                 sectionStates(kids[i], states)
             }
@@ -778,7 +669,7 @@ import QtQuick 2.12 as Quick212
         function openSections(item, states, at) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined) {
+                if (isPlainSection(kids[i])) {
                     if (at < states.length && kids[i].isOpen !== states[at])
                         kids[i].isOpen = states[at]
                     at++
@@ -1255,6 +1146,181 @@ import QtQuick 2.12 as Quick212
         // are visible: false in the catalog, so neither the search nor "Changed" lists them
         readonly property var searchHiddenSettings: ({ "mywhoosh_link_camera_value": true,
                                                        "mywhoosh_link_emote_value": true })
+
+        // Not listed among the changed settings, and so never reset with a whole section:
+        // - the accounts and passwords: the same keys QZSettings::isSensitiveSettingKey keeps
+        //   out of the logs;
+        // - the keys QZ writes by itself, without anyone touching them: the MyWhoosh link cycles
+        //   its actions with a controller button, the last gear is kept on every shift with
+        //   gears_restore_value, the detection of the equipment marks what it found
+        readonly property var privateKeyParts: ["password", "user_email", "username", "token", "cryptokey",
+                                                "garmin_device_serial", "garmin_email"]
+        readonly property var appWrittenKeys: ["mywhoosh_link_camera_value", "mywhoosh_link_emote_value",
+                                               "gears_current_value_f", "domyosbike_notfmts",
+                                               "toorxtreadmill_discovery_completed"]
+        function isPrivateSetting(entry) {
+            var key = entry.key.toLowerCase()
+            for (var i = 0; i < privateKeyParts.length; i++) {
+                if (key.indexOf(privateKeyParts[i]) >= 0)
+                    return true
+            }
+            return appWrittenKeys.indexOf(entry.key) >= 0
+        }
+
+        // From the store: what "Changed" compares with the default, and the value of a key that
+        // is not a property of this page's Settings (settingValue reads the property first). The
+        // store may give a boolean back as the string "true"
+        function storedValue(key, type, fallback) {
+            var value = isUiOption(key) ? window.ui.option(key) : settings.value(key, fallback)
+            if (type === "boolean")
+                return value === true || value === "true"
+            return value
+        }
+
+        function differsFromDefault(key, type, fallback) {
+            // No plain default in the catalog (an expression it could not work out)
+            if (fallback === null || fallback === undefined)
+                return false
+            var value = storedValue(key, type, fallback)
+            if (type === "boolean")
+                return value !== !!fallback
+            if (type === "integer" || type === "number") {
+                // A real written as a float by the C++ side reads back as 0.33000001...
+                var difference = Math.abs(Number(value) - Number(fallback))
+                return difference > 0.000001 * Math.max(1, Math.abs(Number(fallback)))
+            }
+            return String(value) !== String(fallback)
+        }
+
+        function isChanged(entry) {
+            // A picker over one switch per model: changed when one of its switches is. Not by the
+            // picked index - a switch on by default (nordictrack_10_treadmill) picks a model there
+            if (entry.catalogKind === "virtual") {
+                for (var o = 0; entry.options && o < entry.options.length; o++) {
+                    var key = entry.options[o].sets
+                    if (key && differsFromDefault(key, "boolean", settingDefaults[key]))
+                        return true
+                }
+                return false
+            }
+            return entry.catalogKind === "setting" && !isPrivateSetting(entry) &&
+                   differsFromDefault(entry.key, entry.type, entry.defaultValue)
+        }
+
+        // A reset writes the default and does what the control of the setting does besides
+        // storing the value
+        function writeDefault(key, type, value) {
+            if (type === "boolean")
+                value = !!value
+            else if (type === "integer")
+                value = parseInt(value)
+            else if (type === "number")
+                value = parseFloat(value)
+            // The look of the modern interface is kept by main.qml (setUiOption)
+            if (isUiOption(key)) {
+                setUiOption(key, value)
+                return
+            }
+            // The account of one server is no good on the other
+            if (key === "garmin_domain" && value !== settings.garmin_domain)
+                rootItem.garmin_connect_logout()
+            // Into the store at once: "Changed" and the page made again read it, and this page's
+            // Settings writes a property only a moment later, or not at all when its copy already
+            // holds the default
+            settings.setValue(key, value)
+            if (settings[key] !== undefined)
+                settings[key] = value
+            if (key === "ui_text_scale" || key === "ui_text_scale_system")
+                window.setTextScaleOption(key, value)
+            else if (key === "android_notification_v2")
+                rootItem.android_notification_apply(value)
+            else if (key === "app_language")
+                rootItem.setAppLanguage(value)
+            else if (key === "heart_rate_belt_name")
+                rootItem.reconnectHeartRateBelt(value)
+            else if (key === "watt_offset" || key === "watt_gain" || key === "power_sensor_name") {
+                settings.treadmillDataPoints = ""
+                settings.ergDataPoints = ""
+                settings.setValue("treadmillDataPoints", "")
+                settings.setValue("ergDataPoints", "")
+            }
+        }
+
+        // The restart is asked for as the catalog says (restartRequired), not for every setting
+        function resetEntry(entry) {
+            if (entry.catalogKind === "virtual") {
+                // A model picker goes back by its switches: it has no value of its own
+                for (var o = 0; entry.options && o < entry.options.length; o++) {
+                    var key = entry.options[o].sets
+                    if (key && settingDefaults[key] !== undefined && settingDefaults[key] !== null)
+                        writeDefault(key, "boolean", settingDefaults[key])
+                }
+            } else {
+                writeDefault(entry.key, entry.type, entry.defaultValue)
+            }
+            if (entry.restartRequired)
+                window.settings_restart_to_apply = true
+        }
+
+        function resetSetting(entry) {
+            resetEntry(entry)
+            showResetDone(qsTr("Setting reset"))
+        }
+
+        // The settings listed now: with a text in the search field, only the ones it matches
+        function resetListedSettings() {
+            var list = filteredSettings
+            for (var i = 0; i < list.length; i++)
+                resetEntry(list[i])
+            showResetDone(qsTr("Settings reset: %1").arg(list.length))
+        }
+
+        // The page is made again, as for a new language: some controls read their setting once,
+        // when they are made (the switch of a section, the list of models, the order of the
+        // charts), and would show the old value or write it back. It opens on the same sections
+        // and on the changed settings, scrolled to where this one was
+        function showResetDone(message) {
+            var states = sectionStates(contentItem, [])
+            var snapshot = initialProfileSettingsSnapshot
+            var restartToApply = window.settings_restart_to_apply
+            var query = settingsSearchTextField.text
+            var scroll = { y: contentItem.contentY, height: contentHeight }
+            // The catalog and the index of the pages read here: the new page lists "Changed" at
+            // once with them, and can put the list where it was. Reading them again would list it
+            // only later (both are read asynchronously). The names in the list are made again: a
+            // reset of App Language changes them
+            var catalog = settingsCatalogLoaded && settingsIndex ?
+                    { catalog: settingsCatalog, index: settingsIndex } : null
+            // The context of this page goes with the replace, the new page does the rest
+            var page = stackView.replace("settings.qml", {}, StackView.Immediate)
+            page.showChangedAfterReset(states, snapshot, restartToApply, query, message, catalog, scroll)
+        }
+
+        function showChangedAfterReset(states, snapshot, restartToApply, query, message, catalog, scroll) {
+            // Set by this page when it was made: what was changed before still counts
+            initialProfileSettingsSnapshot = snapshot
+            window.settings_restart_to_apply = restartToApply
+            if (catalog) {
+                settingsCatalog = catalog.catalog
+                settingsCatalogLoaded = true
+                settingsIndex = catalog.index
+                buildSearchableSettings()
+            }
+            openSections(contentItem, states, 0)
+            settingsSearchVisible = true
+            restoringSearch = true
+            settingsSearchTextField.text = query
+            restoringSearch = false
+            // The list is made before setChangedOnly returns (the Repeater makes its items at once,
+            // outside an incubation), and a Flickable puts a contentY beyond its height back at
+            // once (QQuickFlickable::setContentHeight, fixupY): the page is kept as high as the old
+            // one while the list is made and scrolled, and only gets shorter by what was reset
+            heldContentHeight = scroll.height
+            setChangedOnly(true)
+            contentItem.contentY = scroll.y
+            heldContentHeight = 0
+            toast.show(message)
+        }
 
         // From this page's Settings: the pages opened over it (voice, tiles...) write into the same
         // object, and the card is bound to its property. Not from the store: Settings writes a
@@ -3151,27 +3217,52 @@ import QtQuick 2.12 as Quick212
                 Layout.fillWidth: true
                 Layout.preferredWidth: Math.max(1, column1.width)
 
-                Label {
-                    // The size with the weight: in Qt 5 a write of the weight alone keeps the size
-                    // the label inherits at that moment (the app font in the classic look). Modern
-                    // look: Title Small 14 Medium (T-593)
-                    font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
-                    font.weight: window.ui.modern ? Font.Medium : Font.Bold
-                    // The catalog error above says it all: no "Searching..." or "No settings found"
-                    visible: settingsCatalogError.length === 0
-                    text: settingsCatalogLoading ? qsTr("Loading settings...") :
-                          settingsSearchPending ? qsTr("Searching...") :
-                          changedOnly && filteredSettings.length > 0 ?
-                              qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
-                          // With a text the changed settings may be there, just not matching it
-                          changedOnly && settingsSearchTextField.text.trim().length === 0 ?
-                              qsTr("No changed settings") :
-                          filteredSettings.length === 0 ? qsTr("No settings found") :
-                          qsTr("Search results") + " (" + filteredSettings.length + ")"
-                    // A status line, not an error: plain muted text in the modern look
-                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
+                RowLayout {
                     Layout.fillWidth: true
-                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                    spacing: 8
+
+                    Label {
+                        // The size with the weight: in Qt 5 a write of the weight alone keeps the size
+                        // the label inherits at that moment (the app font in the classic look). Modern
+                        // look: Title Small 14 Medium (T-593)
+                        font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
+                        font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                        // The catalog error above says it all: no "Searching..." or "No settings found"
+                        visible: settingsCatalogError.length === 0
+                        text: settingsCatalogLoading ? qsTr("Loading settings...") :
+                              settingsSearchPending ? qsTr("Searching...") :
+                              changedOnly && filteredSettings.length > 0 ?
+                                  qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
+                              // With a text the changed settings may be there, just not matching it
+                              changedOnly && settingsSearchTextField.text.trim().length === 0 ?
+                                  qsTr("No changed settings") :
+                              filteredSettings.length === 0 ? qsTr("No settings found") :
+                              qsTr("Search results") + " (" + filteredSettings.length + ")"
+                        // A status line, not an error: plain muted text in the modern look
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
+                        Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                    }
+
+                    // Back to the defaults: the changed settings listed, after a confirmation
+                    UiButton {
+                        visible: changedOnly && filteredSettings.length > 0 &&
+                                 !settingsCatalogLoading && !settingsSearchPending
+                        text: qsTr("Reset all")
+                        onClicked: resetChangedDialog.open()
+                    }
+                }
+
+                // The classic look: the native dialog, as in master; the modern one: a card
+                UiMessageDialog {
+                    id: resetChangedDialog
+                    text: qsTr("Reset changed settings?")
+                    informativeText: qsTr("Settings that go back to their default values: %1").arg(settingsPane.filteredSettings.length)
+                    buttons: (MessageDialog.Yes | MessageDialog.No)
+                    yesText: qsTr("Reset")
+                    noText: qsTr("Cancel")
+                    destructive: true
+                    onYesClicked: settingsPane.resetListedSettings()
                 }
 
                 Repeater {
@@ -3535,6 +3626,19 @@ import QtQuick 2.12 as Quick212
                                     font.bold: true
                                     color: Material.color(Material.Grey)
                                     Accessible.ignored: true
+                                    Layout.alignment: Qt.AlignVCenter
+                                }
+
+                                // Over the card's MouseArea: a tap here resets, the rest of the
+                                // card still opens the setting. No insets: the card keeps nearly
+                                // its height
+                                UiButton {
+                                    visible: settingsPane.changedOnly
+                                    text: qsTr("Reset")
+                                    topInset: 0
+                                    bottomInset: 0
+                                    Accessible.name: qsTr("Reset") + ": " + window.ui.plainTitle(settingsPane.searchTitle(entry))
+                                    onClicked: settingsPane.resetSetting(entry)
                                     Layout.alignment: Qt.AlignVCenter
                                 }
                             }

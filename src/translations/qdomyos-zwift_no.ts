@@ -5372,6 +5372,30 @@ Skal QZ få endre denne verdien?
         <translation>Diagrammets plass i rekkefølgen i treningshistorikken. Rekkefølgen endres med opp- og ned-knappene i Generelle alternativer for brukergrensesnitt.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Innstillingen er tilbakestilt</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>Tilbakestilte innstillinger: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Tilbakestill alle</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Tilbakestille endrede innstillinger?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Innstillinger som går tilbake til standardverdiene: %1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Tilbakestill</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Velg Automatisk for å følge språket på enheten, eller velg et bestemt språk for QZ.</translation>
     </message>
@@ -8333,10 +8357,6 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Rosa</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation>Tilbakestill</translation>
-    </message>
-    <message>
         <source>Reset section</source>
         <translation>Tilbakestill delen</translation>
     </message>
@@ -8347,10 +8367,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>%1 innstillinger i «%2» går tilbake til standardverdiene.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>Innstillingen er tilbakestilt</translation>
     </message>
     <message>
         <source>%1 settings reset</source>

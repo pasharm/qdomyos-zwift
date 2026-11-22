@@ -5372,6 +5372,30 @@ Må QZ ændre værdien?
         <translation>Grafens plads i rækkefølgen i træningshistorikken. Rækkefølgen ændres med op- og ned-knapperne i Generelle indstillinger for brugerflade.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Indstillingen er nulstillet</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>Nulstillede indstillinger: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Nulstil alle</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Nulstil ændrede indstillinger?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Indstillinger, der nulstilles til standardværdierne: %1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Nulstil</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Vælg &quot;Automatisk (system)&quot; for at følge enhedens sprog, eller vælg et bestemt sprog til QZ.</translation>
     </message>
@@ -8333,10 +8357,6 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Pink</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation>Nulstil</translation>
-    </message>
-    <message>
         <source>Reset section</source>
         <translation>Nulstil afsnit</translation>
     </message>
@@ -8347,10 +8367,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>%1 indstillinger i "%2" nulstilles til standardværdierne.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>Indstillingen er nulstillet</translation>
     </message>
     <message>
         <source>%1 settings reset</source>

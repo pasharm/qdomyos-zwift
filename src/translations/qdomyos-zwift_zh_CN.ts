@@ -6514,6 +6514,30 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>应用语言:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>设置已重置</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>已重置的设置：%1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>全部重置</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>重置已更改的设置？</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>将恢复为默认值的设置：%1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>选择自动以匹配设备语言，或为 QZ 选择特定语言。</translation>
     </message>
@@ -8049,10 +8073,6 @@ IMPORTANT NOTES:
         <translation>“%2”中的 %1 项设置将恢复为默认值。</translation>
     </message>
     <message>
-        <source>Setting reset</source>
-        <translation>设置已重置</translation>
-    </message>
-    <message>
         <source>%1 settings reset</source>
         <translation>已重置 %1 项设置</translation>
     </message>
@@ -8872,10 +8892,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Turn on “%1” to change this setting</source>
         <translation>开启“%1”后才能更改此设置</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation>重置</translation>
     </message>
     <message>
         <source>PID HR actuator:</source>
