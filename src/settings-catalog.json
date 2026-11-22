@@ -2916,7 +2916,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "jtx_fitness_sprint_treadmill",
@@ -3900,7 +3900,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "battery_service",
@@ -4607,7 +4607,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "bike_weight",
@@ -7218,7 +7218,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "proform_hybrid_trainer_xt",
@@ -7951,7 +7951,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "gears_from_bike",
@@ -8035,7 +8035,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "tacx_neo2_peloton",
@@ -8288,7 +8288,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "kingsmith_encrypt_v5",
@@ -8986,7 +8986,7 @@
       "defaultValue": true,
       "defaultExpression": "true",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "domyos_treadmill_button_5kmh",
@@ -9000,7 +9000,7 @@
       "defaultValue": 5.0,
       "defaultExpression": "5.0",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "domyos_treadmill_button_10kmh",
@@ -9014,7 +9014,7 @@
       "defaultValue": 10.0,
       "defaultExpression": "10.0",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "domyos_treadmill_button_16kmh",
@@ -9028,7 +9028,7 @@
       "defaultValue": 16.0,
       "defaultExpression": "16.0",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "domyos_treadmill_button_22kmh",
@@ -9042,7 +9042,7 @@
       "defaultValue": 22.0,
       "defaultExpression": "22.0",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "proform_treadmill_sport_8_5",
@@ -9201,7 +9201,7 @@
       "defaultValue": 5,
       "defaultExpression": "5",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "tile_step_count_enabled",
@@ -11686,7 +11686,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "fit_file_garmin_device_training_effect_device",
@@ -13240,7 +13240,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "treadmill_direct_distance",
@@ -13398,7 +13398,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "proform_bike_325_csx_PFEX439210INT_0",
@@ -13593,7 +13593,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "gym_mode",
@@ -13723,7 +13723,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "cscbike_custom_resistance_level_1",
@@ -13793,7 +13793,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": true
+      "restartRequired": false
     },
     {
       "key": "gears_custom_table_enabled",
