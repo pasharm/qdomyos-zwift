@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQml 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
@@ -27,11 +28,16 @@ ScrollView {
     ColumnLayout {
         id: column1
         spacing: 0
-        anchors.fill: parent
+        // Modern look: no bottom anchor - the height comes from the column itself, and the
+        // ScrollView takes its content height from it (anchored to fill, the column looped on it)
+        anchors.fill: window.ui.modern ? undefined : parent
+        anchors.left: window.ui.modern ? parent.left : undefined
+        anchors.right: window.ui.modern ? parent.right : undefined
+        anchors.top: window.ui.modern ? parent.top : undefined
         // Modern look: a thin frame around every setting, as in the settings sections; the
         // column moves in by the width of the frame padding, the page clips at its edge
-        anchors.leftMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames (T-593)
-        anchors.rightMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames (T-593)
+        anchors.leftMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames
+        anchors.rightMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames
 
         UiSettingFrames {
             content: column1
@@ -49,7 +55,8 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             // Modern look: a page title like the TTS page instead of the red caption
             color: window.ui.ink(Material.color(Material.Red))
-            font.pixelSize: window.ui.modern ? window.ui.fontHeadline : (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
+            // the classic look keeps the size it inherits
+            Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontHeadline; restoreMode: Binding.RestoreBindingOrValue }
             font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
             topPadding: window.ui.modern ? 12 : 0
             bottomPadding: window.ui.modern ? 8 : 0
@@ -59,7 +66,7 @@ ScrollView {
             spacing: 10
             Label {
                 text: qsTr("Inclination Override Gain:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -86,7 +93,7 @@ ScrollView {
             spacing: 10
             Label {
                 text: qsTr("Inclination Override Offset:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -114,7 +121,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -141,7 +148,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 0.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -168,7 +175,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 1.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -195,7 +202,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 1.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -222,7 +229,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 2.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -249,7 +256,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 2.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -276,7 +283,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 3.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -303,7 +310,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 3.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -330,7 +337,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 4.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -357,7 +364,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 4.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -384,7 +391,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 5.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -411,7 +418,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 5.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -438,7 +445,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 6.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -465,7 +472,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 6.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -492,7 +499,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 7.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -519,7 +526,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 7.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -546,7 +553,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 8.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -573,7 +580,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 8.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -600,7 +607,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 9.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -627,7 +634,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 9.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -654,7 +661,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 10.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -681,7 +688,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 10.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -708,7 +715,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 11.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -735,7 +742,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 11.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -762,7 +769,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 12.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -789,7 +796,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 12.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -816,7 +823,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 13.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -843,7 +850,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 13.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -870,7 +877,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 14.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -897,7 +904,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 14.5%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
@@ -924,7 +931,7 @@ ScrollView {
             Label {
                 //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 15.0%:")
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: window.labelWrap
                 Layout.fillWidth: true
             }
             SettingsNumberField {
