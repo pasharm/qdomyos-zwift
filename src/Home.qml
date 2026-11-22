@@ -257,6 +257,7 @@ HomeForm {
             searchStopped = rootItem.bluetoothSearchStopped()
             connectingDevice = rootItem.gymModeConnectingDevice()
             bluetoothOff = rootItem.bluetoothSearchOff()
+            window.bluetoothSearchPolled()
         }
     }
 

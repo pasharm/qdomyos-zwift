@@ -4030,7 +4030,7 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
     </message>
     <message>
         <source>Connecting to %1...</source>
-        <translation>Łączenie z %1...</translation>
+        <translation>Łączenie z %1…</translation>
     </message>
     <message>
         <source>%1 found</source>
