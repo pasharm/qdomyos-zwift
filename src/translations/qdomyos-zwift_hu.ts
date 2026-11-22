@@ -5333,6 +5333,30 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>A diagram sorszáma az edzéselőzményekben. A sorrend a felület általános beállításaiban, a fel és le gombokkal módosítható.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Beállítás visszaállítva</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>Visszaállított beállítások: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Összes visszaállítása</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Visszaállítja a módosított beállításokat?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Az alapértelmezett értékre visszaálló beállítások: %1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Visszaállítás</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Az Automatikus az eszköz nyelvét követi, de konkrét nyelvet is választhat a QZ-hez.</translation>
     </message>
@@ -8290,10 +8314,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Rózsaszín</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation>Visszaállítás</translation>
-    </message>
-    <message>
         <source>Reset section</source>
         <translation>Szakasz visszaállítása</translation>
     </message>
@@ -8304,10 +8324,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>%1 beállítás visszaáll az alapértelmezett értékére itt: „%2”.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>Beállítás visszaállítva</translation>
     </message>
     <message>
         <source>%1 settings reset</source>

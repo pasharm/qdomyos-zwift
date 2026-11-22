@@ -6399,6 +6399,30 @@ QZ がこの値を変更することを許可しますか？
         <translation>アプリ言語:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>設定をリセットしました</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>リセットした設定: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>すべてリセット</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>変更した設定をリセットしますか？</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>既定値に戻る設定: %1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>リセット</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>デバイスの言語設定に従う場合は「自動（システム）」を選択するか、QZ用の特定の言語を選択してください。</translation>
     </message>
@@ -8086,10 +8110,6 @@ IMPORTANT NOTES:
         <translation>「%2」の%1個の設定が既定値に戻ります。</translation>
     </message>
     <message>
-        <source>Setting reset</source>
-        <translation>設定をリセットしました</translation>
-    </message>
-    <message>
         <source>%1 settings reset</source>
         <translation>%1個の設定をリセットしました</translation>
     </message>
@@ -8909,10 +8929,6 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     <message>
         <source>Turn on “%1” to change this setting</source>
         <translation>この設定を変更するには「%1」をオンにしてください</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation>リセット</translation>
     </message>
     <message>
         <source>PID HR actuator:</source>

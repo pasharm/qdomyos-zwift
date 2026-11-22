@@ -5334,6 +5334,30 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
         <translation>운동 기록에서 이 그래프의 순서입니다. 순서는 일반 UI 옵션의 위로/아래로 버튼으로 바꿉니다.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>설정을 초기화했습니다</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>초기화한 설정: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>모두 초기화</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>변경된 설정을 초기화하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>기본값으로 돌아갈 설정: %1</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>초기화</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>기기 언어를 따르려면 [자동(시스템)]을 선택하고, 아니면 QZ에서 쓸 언어를 직접 선택하세요.</translation>
     </message>
@@ -8303,10 +8327,6 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
         <translation>분홍</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation>초기화</translation>
-    </message>
-    <message>
         <source>Reset section</source>
         <translation>섹션 초기화</translation>
     </message>
@@ -8317,10 +8337,6 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>“%2”의 설정 %1개가 기본값으로 돌아갑니다.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>설정을 초기화했습니다</translation>
     </message>
     <message>
         <source>%1 settings reset</source>

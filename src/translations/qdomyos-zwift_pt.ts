@@ -6507,6 +6507,26 @@ Permitir que o QZ altere esse valor?
         <translation>Posição deste gráfico no histórico de treinos. A ordem é alterada com os botões para cima e para baixo em Opções gerais da interface.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Configuração redefinida</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>Configurações redefinidas: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Redefinir tudo</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Redefinir configurações alteradas?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Configurações que voltam aos valores padrão: %1</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Escolha Automático para seguir o idioma do seu dispositivo, ou selecione um idioma específico para QZ.</translation>
     </message>
@@ -8060,10 +8080,6 @@ OBSERVAÇÕES IMPORTANTES:
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>%1 configurações em “%2” voltam aos valores padrão.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>Configuração redefinida</translation>
     </message>
     <message>
         <source>%1 settings reset</source>

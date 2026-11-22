@@ -5269,6 +5269,30 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>Язык приложения:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Настройка сброшена</translation>
+    </message>
+    <message>
+        <source>Settings reset: %1</source>
+        <translation>Сброшено настроек: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Сбросить все</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Сбросить изменённые настройки?</translation>
+    </message>
+    <message>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Изменённые настройки (%1) вернутся к значениям по умолчанию.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Сбросить</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Выберите «Авто», чтобы использовать язык устройства, или задайте язык QZ вручную.</translation>
     </message>
@@ -8798,10 +8822,6 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Розовый</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation>Сбросить</translation>
-    </message>
-    <message>
         <source>Reset section</source>
         <translation>Сбросить раздел</translation>
     </message>
@@ -8812,10 +8832,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
         <translation>Настройки раздела «%2» (%1) вернутся к значениям по умолчанию.</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>Настройка сброшена</translation>
     </message>
     <message>
         <source>%1 settings reset</source>
