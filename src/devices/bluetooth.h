@@ -206,8 +206,9 @@ class bluetooth : public QObject, public SignalHandler {
     bool isSearching() const;
     qint64 nextSearchMs() const { return nextRescanMs; }
     bool searchStopped() const { return rescanStopped; }
-    // Android: Bluetooth is off; the search starts by itself as soon as it is switched on
-    bool bluetoothOff() const { return bluetoothOffPoll.isActive(); }
+    // Android: Bluetooth is off; the search starts by itself as soon as it is switched on (a search
+    // started by a tap before the poll noticed it is on means it is on already)
+    bool bluetoothOff() const { return bluetoothOffPoll.isActive() && !isSearching(); }
     // Gym mode: the trainer picked in the window, empty until then
     QString gymModeDevice() const { return gymModeSessionDevice; }
     /**
