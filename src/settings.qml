@@ -7495,8 +7495,8 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use 'usb'. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                                bottomPadding: window.ui.modern ? window.hintGap : 0
+                                font.pixelSize: window.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -7534,8 +7534,8 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                                bottomPadding: window.ui.modern ? window.hintGap : 0
+                                font.pixelSize: window.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -12623,8 +12623,8 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                        bottomPadding: window.ui.modern ? window.hintGap : 0
+                        font.pixelSize: window.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19387,8 +19387,8 @@ import QtQuick 2.12 as Quick212
                                                 text: qsTr("Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.")
                                                 font.bold: !window.ui.modern
                                                 font.italic: !window.ui.modern
-                                                font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                                                bottomPadding: window.ui.modern ? window.hintGap : 0
+                                                font.pixelSize: window.fontHint
+                                                bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
                                                 verticalAlignment: Text.AlignVCenter
@@ -19426,8 +19426,8 @@ import QtQuick 2.12 as Quick212
                                                 text: qsTr("Offset added after the gain. Default is 0.0. QZ's internal cadence display and workout metrics remain unchanged.")
                                                 font.bold: !window.ui.modern
                                                 font.italic: !window.ui.modern
-                                                font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                                                bottomPadding: window.ui.modern ? window.hintGap : 0
+                                                font.pixelSize: window.fontHint
+                                                bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
                                                 verticalAlignment: Text.AlignVCenter
@@ -19577,7 +19577,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.modern ? window.fontHint : window.fontPx(9)
-                                        bottomPadding: window.ui.modern ? window.hintGap : 0
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -20203,8 +20203,8 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don't freeze. It uses a silent audio track mixed with your music, so nothing you're listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.modern ? window.fontHint : Qt.application.font.pixelSize - 2
-                        bottomPadding: window.ui.modern ? window.hintGap : 0
+                        font.pixelSize: window.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
