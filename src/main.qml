@@ -194,6 +194,9 @@ ApplicationWindow {
     signal restart()
     // Sent by the settings page when a key of the home page copy changes (Home.qml)
     signal tileSettingChanged(string key, var value)
+    // Sent by the home page each time it reads the state of the Bluetooth search (once a second): the
+    // Gym mode window reads it on the same tick, so both show the same countdown
+    signal bluetoothSearchPolled()
     signal volumeUp()
     signal volumeDown()
     signal keyMediaPrevious()
@@ -974,20 +977,26 @@ ApplicationWindow {
             pickedDevice = ""
             // opened again after a disconnection: no row of the last pick marked in the list
             gymModeDeviceComboBox.value = ""
-            secondsLeft = refreshSeconds
+            idleSeconds = 0
+            // the search of the home page keeps its pauses at most 10 s while the window is open
+            rootItem.setGymModeWindowOpen(true)
+            if (!rootItem.bluetoothSearchOff())
+                rootItem.bluetoothSearchNow()
             pollState()
-            if (!bluetoothOff)
-                refresh_bluetooth_devices_clicked()
         }
+        onClosed: rootItem.setGymModeWindowOpen(false)
         readonly property bool modern: window.ui.modern
 
-        // The search restarts every refreshSeconds; the hint counts down to it. With Bluetooth
-        // off the search does nothing, so the window says so instead of the countdown
+        // The window shows the countdown of the search of the home page (one number on both). With
+        // Bluetooth off there is no search, so the window says so instead
         readonly property int refreshSeconds: 10
-        property int secondsLeft: refreshSeconds
+        property int secondsLeft: 0
+        // No search running or due although Bluetooth is on (a scan that failed: Location off, or any
+        // error on iOS): as before, the window starts one every refreshSeconds
+        property int idleSeconds: 0
         property bool bluetoothOff: false
         // The trainer marked in the list: Next connects to it. The list is sorted by signal and
-        // rebuilt on every search result, so a tap only marks and the name is kept apart
+        // filled again at every opening, so a tap only marks and the name is kept apart
         property string pickedDevice: ""
         // Only the found trainers: "Disabled" and "Wifi" of the settings list mean nothing here
         readonly property var devices: {
@@ -1002,21 +1011,21 @@ ApplicationWindow {
             return r
         }
         function pollState() {
-            bluetoothOff = rootItem.bluetoothSearchStatus() === qsTranslate("homeform", "Bluetooth is off")
-        }
-
-        Timer {
-            interval: 1000
-            repeat: true
-            running: popupGymMode.visible
-            onTriggered: {
-                popupGymMode.pollState()
-                if (--popupGymMode.secondsLeft > 0)
-                    return
-                popupGymMode.secondsLeft = popupGymMode.refreshSeconds
-                if (!popupGymMode.bluetoothOff)
-                    refresh_bluetooth_devices_clicked()
+            // switched on: the search starts by itself right now
+            bluetoothOff = rootItem.bluetoothSearchOff()
+            var next = rootItem.bluetoothNextSearchSeconds()
+            // connected while the window is open (a DirCon trainer): no search to wait for
+            if (bluetoothOff || next >= 0 || rootItem.hasConnectedDevice()) {
+                idleSeconds = 0
+                secondsLeft = Math.max(next, 0)
+                return
             }
+            idleSeconds++
+            secondsLeft = refreshSeconds - idleSeconds
+            if (idleSeconds < refreshSeconds)
+                return
+            idleSeconds = 0
+            rootItem.bluetoothSearchNow()
         }
 
         Column {
@@ -1040,20 +1049,23 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 8
 
-                // Bluetooth is off: the warning sign of the home page, drawn because the app
-                // font has no warning sign
+                // Bluetooth is off: a warning, not an error (the user switched it off), the sign of
+                // the home page, drawn because the app font has no warning sign
                 Rectangle {
+                    id: gymModeOffMark
                     visible: popupGymMode.bluetoothOff
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 22
-                    height: 22
-                    radius: 11
-                    color: window.ui.danger
+                    // follows the size of the sign, so the "!" stays inside with a bigger text
+                    width: Math.round(gymModeOffSign.font.pixelSize * 1.4)
+                    height: width
+                    radius: width / 2
+                    color: window.ui.warning
                     Accessible.ignored: true
                     Label {
+                        id: gymModeOffSign
                         anchors.centerIn: parent
                         text: "!"
-                        color: window.ui.dangerInk
+                        color: window.ui.warningInk
                         font.pixelSize: popupGymMode.modern ? window.ui.fontBody : window.fontPx(16)
                         font.bold: true
                         // Qt 5.15 lifts the children of an ignored item into the tree: the sign has
@@ -1063,11 +1075,12 @@ ApplicationWindow {
                 }
 
                 Label {
-                    width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 30 : 0))
+                    width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? gymModeOffMark.width + 8 : 0))
                     // Bluetooth is off: the one thing to do here, so larger and bold (modern: Title
-                    // Small, under the Title of the window, and Body of the type scale)
+                    // Small, under the Title of the window, and Body of the type scale). appFontPx: the
+                    // size of the controls this label had before (on iOS the app font is bigger)
                     font.pixelSize: popupGymMode.modern ? (popupGymMode.bluetoothOff ? window.ui.fontTitleSmall : window.ui.fontBody)
-                                    : window.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
+                                    : window.fontPx(popupGymMode.bluetoothOff ? window.appFontPx + 6 : window.appFontPx)
                     font.bold: popupGymMode.bluetoothOff
                     text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
                           : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
@@ -1078,20 +1091,38 @@ ApplicationWindow {
                 }
             }
 
-            // The search goes on every 10 seconds: the rows of the open list must stay where they
+            // The search goes on while the window is open: the rows of the open list must stay where they
             // are (DeviceComboBox, devices found while it is open go to the end). The shown text
             // follows the marked trainer, not currentIndex: the list is filled again on every opening
             DeviceComboBox {
                 id: gymModeDeviceComboBox
-                // Nothing to choose yet (Bluetooth off, nothing found): no empty box
-                visible: popupGymMode.devices.length > 0
+                // Nothing to choose (Bluetooth off, also after devices were found; nothing found yet): no
+                // box, the devices found before stay in rootItem.bluetoothDevices
+                visible: !popupGymMode.bluetoothOff && popupGymMode.devices.length > 0
                 width: parent.width
                 // "Disabled" and "Wifi" of the settings list mean nothing here
                 hidden: ["Disabled", "Wifi"]
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
-                font.pixelSize: popupGymMode.modern ? window.ui.fontBody : window.fontPx(Qt.application.font.pixelSize + 8)
+                // The size of master; a text wider than the box (a long name, a bigger text, de at 170 %
+                // was cut to "Wählen Sie ein Ge") is made smaller to fit, down to the size of the
+                // window text. The field is a TextField: it has no elide and no fontSizeMode
+                readonly property real fullPx: popupGymMode.modern ? window.ui.fontBody : window.fontPx(Qt.application.font.pixelSize + 8)
+                readonly property real textRoom: contentItem ? contentItem.width - contentItem.leftPadding - contentItem.rightPadding : 0
+                font.pixelSize: popupGymMode.modern ? window.ui.fontBody
+                    : textRoom > 0 && gymModeFieldMetrics.advanceWidth > textRoom
+                    ? Math.max(window.fontPx(window.appFontPx), Math.floor(fullPx * textRoom / gymModeFieldMetrics.advanceWidth))
+                    : fullPx
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
                 menuColor: window.ui.surface
+
+                TextMetrics {
+                    id: gymModeFieldMetrics
+                    font.family: gymModeDeviceComboBox.font.family
+                    font.weight: gymModeDeviceComboBox.font.weight
+                    font.capitalization: gymModeDeviceComboBox.font.capitalization
+                    font.pixelSize: gymModeDeviceComboBox.fullPx
+                    text: gymModeDeviceComboBox.displayText
+                }
 
                 onActivated: {
                     // Enter with no row highlighted: nothing marked
@@ -1109,7 +1140,9 @@ ApplicationWindow {
             Label {
                 width: parent.width
                 visible: !popupGymMode.bluetoothOff
-                text: qsTranslate("homeform", "Next search in %1 s").arg(popupGymMode.secondsLeft)
+                // while a search runs: the line above says "Searching for the device..." or the list
+                // fills, so no text here; an empty Label keeps its one line, the buttons stay put
+                text: popupGymMode.secondsLeft > 0 ? qsTranslate("homeform", "Next search in %1 s").arg(popupGymMode.secondsLeft) : ""
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 color: popupGymMode.modern ? window.ui.textMuted : Material.color(Material.Grey)
@@ -1134,7 +1167,7 @@ ApplicationWindow {
                     id: gymModeNextButton
                     anchors.right: parent.right
                     highlighted: true
-                    enabled: popupGymMode.pickedDevice !== ""
+                    enabled: !popupGymMode.bluetoothOff && popupGymMode.pickedDevice !== ""
                     text: qsTranslate("Wizard", "Next")
                     onClicked: {
                         var device = popupGymMode.pickedDevice
@@ -1143,6 +1176,16 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
+
+    // The countdown of the window and the state of Bluetooth, on the tick of the home page status line
+    // behind it: a timer of its own showed its number up to a second apart ("5 s" over "4 s")
+    Connections {
+        target: window
+        function onBluetoothSearchPolled() {
+            if (popupGymMode.visible)
+                popupGymMode.pollState()
         }
     }
 
