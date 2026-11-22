@@ -2068,6 +2068,8 @@ QString homeform::gymModeConnectingDevice() {
 QString homeform::bluetoothSearchStatus() {
     if (!bluetoothManager || bluetoothManager->device())
         return QString();
+    // with Bluetooth off no Bluetooth search runs: the line said "Searching for the device..." (or the
+    // start value "Connecting...") until it was switched on
     if (bluetoothManager->bluetoothOff())
         return tr("Bluetooth is off");
     // Gym mode: the trainer is picked, QZ looks for it and connects - say which one
@@ -2096,6 +2098,10 @@ QString homeform::bluetoothSearchStatus() {
 bool homeform::bluetoothSearchStopped() {
     return bluetoothManager && !bluetoothManager->device() && !bluetoothManager->isSearching() &&
            bluetoothManager->searchStopped();
+}
+
+bool homeform::bluetoothSearchOff() {
+    return bluetoothManager && !bluetoothManager->device() && bluetoothManager->bluetoothOff();
 }
 
 void homeform::bluetoothSearchNow() {

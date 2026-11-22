@@ -438,6 +438,8 @@ ApplicationWindow {
         readonly property color dangerInk: dark ? "#000000" : "#FFFFFF"
         // Notes that ask for attention but are not errors: the orange pair of the accents above
         readonly property color warning: dark ? "#FFB36B" : "#984200"
+        // Mark drawn on a warning-coloured badge ("!")
+        readonly property color warningInk: dark ? "#000000" : "#FFFFFF"
         // Dimming behind a modal popup
         readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
 
