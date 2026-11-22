@@ -966,8 +966,9 @@ ApplicationWindow {
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         width: Math.min(parent.width - 30, 720)
-        // with a bigger text the content is taller: Skip fell out
-        height: window.textScale !== 1
+        // with a bigger text the content is taller: Skip fell out. Modern: the fonts of the type scale
+        // are bigger than the classic ones, at 100 % too (Skip and Next below the window)
+        height: window.textScale !== 1 || modern
             ? Math.min(parent.height - 40, Math.max(260, gymModeColumn.implicitHeight + 36 + topPadding + bottomPadding))
             : Math.min(parent.height - 40, 260)
         modal: true
