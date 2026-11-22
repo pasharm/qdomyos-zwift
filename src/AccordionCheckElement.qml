@@ -20,6 +20,8 @@ ColumnLayout {
     default property alias accordionContent: contentPlaceholder.data
     spacing: 0
     readonly property bool modernCard: window.ui.modern && card
+    // The corners of the card; the search lights a card found in it with the same (settings.qml)
+    readonly property int cardRadius: 16
     // A card keeps a little room from the cards around it
     Layout.topMargin: modernCard ? 4 : 0
     Layout.bottomMargin: modernCard ? 4 : 0
@@ -302,7 +304,7 @@ ColumnLayout {
                 y: -cardFrame.y
                 width: parent.width
                 height: rootElement.height
-                radius: 16
+                radius: rootElement.cardRadius
                 strokeWidth: 1
                 // A tile that is on (shown on the main page) in the toned-down accent: still marked,
                 // not as bright as an open section
