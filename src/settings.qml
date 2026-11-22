@@ -18,7 +18,9 @@ import QtQuick 2.12 as Quick212
         // own, but on a phone it stopped following after a turn of the screen - the column grew
         // to 7254 while the page stayed 1310, a section opened after it could not be scrolled
         // Modern look: a little air after the last section, so it does not touch the screen edge
-        contentHeight: column1.implicitHeight + (window.ui.modern ? 12 : 0)
+        // Not below heldContentHeight while "Changed" is listed again after a reset (rebuildKeepingScroll)
+        contentHeight: Math.max(column1.implicitHeight + (window.ui.modern ? 12 : 0), heldContentHeight)
+        property real heldContentHeight: 0
         focus: true
         anchors.fill: parent
         anchors.leftMargin: (Qt.platform.os === "android" && AndroidStatusBar.hasWaterfallDisplay) ?
@@ -304,7 +306,20 @@ import QtQuick 2.12 as Quick212
             if (!isUiOption(entry.key))
                 window.settings_restart_to_apply = true
             toast.show(qsTr("Setting reset"))
+            rebuildKeepingScroll()
+        }
+
+        // "Changed" listed again where it was scrolled to. A new list makes the Repeater remove all
+        // its results before it makes the new ones (QQuickRepeater::regenerate), the column shrinks
+        // with every removal (QQuickGridLayoutBase::invalidate sets its implicit size at once), and
+        // a page that gets shorter puts its contentY back into the new bounds at once
+        // (QQuickFlickable::setContentHeight, fixupY) - to the top. The results are made again
+        // before updateFilteredSettings returns (not inside an incubation, so not asynchronous):
+        // the page is kept as high as it was until then, and only gets shorter by what was reset
+        function rebuildKeepingScroll() {
+            heldContentHeight = contentHeight
             updateFilteredSettings()
+            heldContentHeight = 0
         }
 
         function changedIn(section) {
@@ -323,7 +338,7 @@ import QtQuick 2.12 as Quick212
                     window.settings_restart_to_apply = true
             }
             toast.show(qsTr("%1 settings reset").arg(list.length))
-            updateFilteredSettings()
+            rebuildKeepingScroll()
         }
 
         function findItem(item, predicate) {
