@@ -5,9 +5,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 
 ScrollView {
-    // Modern look: the rows Body Large, as on the settings page (T-593)
+    // Modern look: the rows Body Large, the role of a settings row (window.ui.rowFont)
     font: window.ui.modern ? window.ui.rowFont : window.font
-    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    // Buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
     readonly property bool typeScalePage: true
     contentWidth: -1
     // The column with its top and bottom margins, which are not in its implicit height
@@ -140,7 +140,7 @@ ScrollView {
             text: qsTr("Each gear uses the offset below instead of the raw gear value. QZ applies it automatically to resistance, inclination, or slope depending on the trainer path. Default is linear.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: window.fontHint // modern look: Body Small, as the hints of the settings (T-593)
+            font.pixelSize: window.fontHint // modern look: Body Small, as the hints of the settings
             bottomPadding: window.hintGap
             color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
@@ -178,7 +178,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        // a plain Text does not inherit the window font: the text size while it is not 100 %; modern look: the table header and the gear number Label Large 14 (T-593)
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %; modern look: the table header and the gear number Label Large 14
                         Binding on font.pixelSize { when: window.ui.modern || window.scaledFontPx > 0; value: window.ui.modern ? window.ui.fontLabelLarge : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         // Modern look: one line inside its column, smaller if it does not fit

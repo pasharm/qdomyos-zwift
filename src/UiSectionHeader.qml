@@ -16,7 +16,7 @@ Rectangle {
     signal clicked()
 
     Layout.fillWidth: true
-    // On the margin of its page, 16 as Material 3 (T-593): the block of the section is as wide as
+    // On the margin of its page: the block of the section is as wide as
     // the cards of the page (was 8 in from them)
     Layout.leftMargin: 0
     Layout.rightMargin: 0
@@ -47,14 +47,15 @@ Rectangle {
     Label {
         id: headerTitle
         anchors.left: parent.left
-        // 16 in from the edge, as the text of the settings below it (T-593; was 18 at the top level)
+        // 16 in from the edge, as the text of a setting from the edge of its frame (was 18 at the
+        // top level)
         anchors.leftMargin: 16
         anchors.right: headerChevron.left
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
         text: window.ui.plainTitle(header.title)
         wrapMode: Text.WordWrap
-        font.pixelSize: header.nested ? window.ui.fontLabelLarge : window.ui.fontBody // nested: Title Small 14 (T-593)
+        font.pixelSize: header.nested ? window.ui.fontLabelLarge : window.ui.fontBody // nested: Title Small 14
         font.weight: Font.Medium
         color: header.isOpen ? window.ui.accent : window.ui.textMain
     }

@@ -9,7 +9,7 @@ import QtQuick.Dialogs 1.0
 UiSwitchDelegate {
     id: root
     wrapsTitle: true
-    // it wraps its title itself (configureTextItem), not by the one of UiSwitchDelegate (T-593)
+    // it wraps its title itself (configureTextItem), not by the one of UiSwitchDelegate
     pageWrap: false
 
     // Preserve Material styling while making translated setting titles responsive.
@@ -22,12 +22,11 @@ UiSwitchDelegate {
             if (item === titleText)
                 return true
             item.wrapMode = Text.WrapAtWordBoundaryOrAnywhere
-            // Modern look: the whole title, on as many lines as it takes (the ellipsis hid the
-            // end of a long translation at a large text size); classic: two lines, as it was
-            item.maximumLineCount = Qt.binding(function () { return window.ui.modern ? 100 : 2 })
+            // two lines; the modern look and a bigger text lift the limit (the Binding below)
+            item.maximumLineCount = 2
             if (item.elide !== undefined)
                 item.elide = Text.ElideRight
-            // a wrapped title of the modern look: the lines closer (UiSwitchDelegate.titleLeading, T-593)
+            // a wrapped title of the modern look: the lines closer (UiSwitchDelegate.titleLeading)
             item.lineHeight = Qt.binding(function () { return root.titleLeading })
             // last: the Bindings below start with it and keep these values to restore at 100 %
             titleText = item
@@ -80,8 +79,8 @@ UiSwitchDelegate {
             return
         if (scaledFontPx > 0) {
             // the size of the switch font: the window font (scaledFontPx) as before, Body Large
-            // on a settings page of the modern look, which sets it on its root (T-593)
-            titleText.font.pixelSize = font.pixelSize > 0 ? font.pixelSize : scaledFontPx
+            // on a settings page of the modern look, which sets it on its root
+            titleText.font.pixelSize = root.modern && font.pixelSize > 0 ? font.pixelSize : scaledFontPx
             titleFontSet = true
         } else if (titleFontSet && contentItem && contentItem.font !== undefined) {
             titleText.font = contentItem.font
@@ -91,12 +90,14 @@ UiSwitchDelegate {
     onScaledFontPxChanged: applyTitleFont()
     onFontChanged: applyTitleFont()
     onTitleTextChanged: applyTitleFont()
-    // With a bigger text a long title needs more than two lines; back to two at 100 %
+    // With a bigger text a long title needs more than two lines; back to two at 100 %. The modern
+    // look: the whole title, on as many lines as it takes (the ellipsis hid the end of a long
+    // translation at a large text size)
     Binding {
         target: root.titleText
         property: "maximumLineCount"
         value: 100
-        when: root.titleText !== null && root.textScale !== 1
+        when: root.titleText !== null && (root.textScale !== 1 || root.modern)
         restoreMode: Binding.RestoreBindingOrValue
     }
 

@@ -5,9 +5,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 
 ScrollView {
-    // Modern look: the rows Body Large, as on the settings page (T-593)
+    // Modern look: the rows Body Large, the role of a settings row (window.ui.rowFont)
     font: window.ui.modern ? window.ui.rowFont : window.font
-    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    // Buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
     readonly property bool typeScalePage: true
     id: customInclinationResistanceWindow
     contentWidth: -1
@@ -304,12 +304,13 @@ ScrollView {
             text: qsTr("Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: window.fontHint // modern look: Body Small, as the hints of the settings (T-593)
+            font.pixelSize: window.fontHint // modern look: Body Small, as the hints of the settings
             bottomPadding: window.hintGap
             color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
 
-        // Modern look: the column titles over the fields, no grid
+        // Modern look: the column titles over the fields, no grid; Label Large 14, as the headers of
+        // the gear tables (the rows of the page are Body Large)
         RowLayout {
             visible: window.ui.modern
             Layout.fillWidth: true
@@ -317,6 +318,7 @@ ScrollView {
             spacing: 8
             Label {
                 text: qsTr("Inclination (%)")
+                font.pixelSize: window.ui.fontLabelLarge
                 color: window.ui.textMuted
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
@@ -325,6 +327,7 @@ ScrollView {
             }
             Label {
                 text: qsTr("Resistance")
+                font.pixelSize: window.ui.fontLabelLarge
                 color: window.ui.textMuted
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
@@ -353,8 +356,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        // a plain Text does not inherit the window font: the text size while it is not 100 %; modern look: the column headers Label Large 14 (T-593)
-                        Binding on font.pixelSize { when: window.ui.modern || window.scaledFontPx > 0; value: window.ui.modern ? window.ui.fontLabelLarge : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
@@ -370,7 +373,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        Binding on font.pixelSize { when: window.ui.modern || window.scaledFontPx > 0; value: window.ui.modern ? window.ui.fontLabelLarge : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true
