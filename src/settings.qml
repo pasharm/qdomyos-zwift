@@ -584,7 +584,16 @@ import QtQuick 2.12 as Quick212
             yesText: qsTr("Reset")
             noText: qsTr("Cancel")
             destructive: true
-            onYesClicked: settingsPane.resetSection(settingsPane.resetSectionName)
+            // The reset makes this page again, the dialog with it: only once the dialog has closed
+            // (its dim and the focus are given back on the way), not from the answer itself
+            property bool confirmed: false
+            onYesClicked: confirmed = true
+            onClosed: {
+                if (!confirmed)
+                    return
+                confirmed = false
+                settingsPane.resetSection(settingsPane.resetSectionName)
+            }
         }
 
         // A text field keeps the focus (the cursor and the keyboard) until another control
@@ -1216,9 +1225,12 @@ import QtQuick 2.12 as Quick212
                 value = parseInt(value)
             else if (type === "number")
                 value = parseFloat(value)
-            // The look of the modern interface is kept by main.qml (setUiOption)
+            // The look of the modern interface is kept by main.qml (setUiOption). Into the store
+            // at once as well: the page made again after the reset reads it there, and its copy
+            // would write the old look back otherwise
             if (isUiOption(key)) {
                 setUiOption(key, value)
+                settings.setValue(key, value)
                 return
             }
             // The account of one server is no good on the other
@@ -3262,7 +3274,15 @@ import QtQuick 2.12 as Quick212
                     yesText: qsTr("Reset")
                     noText: qsTr("Cancel")
                     destructive: true
-                    onYesClicked: settingsPane.resetListedSettings()
+                    // As resetSectionDialog: the reset makes the page again, only once this has closed
+                    property bool confirmed: false
+                    onYesClicked: confirmed = true
+                    onClosed: {
+                        if (!confirmed)
+                            return
+                        confirmed = false
+                        settingsPane.resetListedSettings()
+                    }
                 }
 
                 Repeater {
