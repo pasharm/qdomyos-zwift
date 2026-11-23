@@ -350,7 +350,18 @@ import QtQuick 2.12 as Quick212
                 // The unit a label carries on the page ("Bike Weight (kg)") is not in the name
                 return typeof item.text === "string" && item.text.length > 0 &&
                        (names.indexOf(normalizedLabel(item.text)) >= 0 ||
+                        namedWithWideUnit(item.text) ||
                         names.indexOf(normalizedLabel(item.text.replace(/\s*\([^()]*\)\s*:?\s*$/, ""))) >= 0)
+            }
+            // Japanese and Chinese put the unit in a full-width bracket, "バイク重量（kg）". Only the
+            // unit of this setting is dropped: "ケイデンスセンサー（トレッドミル）" is another setting
+            function namedWithWideUnit(text) {
+                var unit = searchUnit(entry)
+                var bracket = text.lastIndexOf("（")
+                if (unit.length === 0 || bracket <= 0 ||
+                        normalizedLabel(text.substring(bracket)) !== normalizedLabel("（" + unit + "）"))
+                    return false
+                return names.indexOf(normalizedLabel(text.substring(0, bracket))) >= 0
             }
             var target = switchedOff ? switchedOff : findItem(container, function (item) {
                 return item.visible && named(item)
