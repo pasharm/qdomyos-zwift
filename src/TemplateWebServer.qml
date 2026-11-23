@@ -49,8 +49,15 @@ ColumnLayout {
         }
         UiTextField {
             id: textWebServerPort
+            // modern look: the narrow field of the other number fields
+            numberField: true
             text: settings.value("template_"+rootElement.templateId+"_port",6666) + '';
             horizontalAlignment: Text.AlignRight
+            // modern look: a 5-digit port at a large text size takes the inner padding, 14 down to 0,
+            // instead of losing its start; the field keeps its width, so the label does not move;
+            // the 2 is the room of the cursor
+            leftPadding: window.ui.modern ? Math.max(0, Math.min(14, (width - contentWidth - 2) / 2)) : padding
+            rightPadding: leftPadding
             Layout.fillHeight: false
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             inputMethodHints: Qt.ImhDigitsOnly
