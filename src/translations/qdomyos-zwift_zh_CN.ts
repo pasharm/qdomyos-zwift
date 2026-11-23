@@ -2377,10 +2377,6 @@ Do you want to update QZ settings?</source>
         <translation>替换</translation>
     </message>
     <message>
-        <source>Live update</source>
-        <translation>实时更新</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} 秒</translation>
     </message>
@@ -6169,14 +6165,6 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>选择在页脚显示的图表：心率和功率图表，仅心率图表，或仅功率图表。</translation>
-    </message>
-    <message>
-        <source>Live Charts During a Workout</source>
-        <translation>训练中的实时图表</translation>
-    </message>
-    <message>
-        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
-        <translation>训练进行时，图表页面每秒补充新数据。也可以在图表页面直接开关。默认关闭。</translation>
     </message>
     <message>
         <source>UI Themes</source>

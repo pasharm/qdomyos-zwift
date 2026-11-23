@@ -207,7 +207,6 @@ const WebTranslationEntry entries[] = {
     {"chart.pace10k", QT_TRANSLATE_NOOP("WebTranslations", "10K")},
     {"chart.pace5k", QT_TRANSLATE_NOOP("WebTranslations", "5K")},
     {"chart.pace1Mile", QT_TRANSLATE_NOOP("WebTranslations", "1 Mile")},
-    {"chart.liveRefresh", QT_TRANSLATE_NOOP("WebTranslations", "Live update")},
     {"chart.secondsValue", QT_TRANSLATE_NOOP("WebTranslations", "{value} s")},
     {"chart.minutesValue", QT_TRANSLATE_NOOP("WebTranslations", "{value} min")},
     {"chart.heartDistribution", QT_TRANSLATE_NOOP("WebTranslations", "Heart Rate Distribution")},

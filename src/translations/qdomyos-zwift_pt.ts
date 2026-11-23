@@ -2377,10 +2377,6 @@ Deseja atualizar as configurações do QZ?</translation>
         <translation>Substituir</translation>
     </message>
     <message>
-        <source>Live update</source>
-        <translation>Atualização ao vivo</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>
@@ -6133,14 +6129,6 @@ Permitir que o QZ altere esse valor?
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>Escolha quais gráficos exibir no rodapé: gráficos de frequência cardíaca e potência, apenas gráfico de frequência cardíaca ou apenas gráfico de potência.</translation>
-    </message>
-    <message>
-        <source>Live Charts During a Workout</source>
-        <translation>Gráficos ao vivo durante o treino</translation>
-    </message>
-    <message>
-        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
-        <translation>A página Gráficos acrescenta os novos dados a cada segundo durante um treino. Também se liga na própria página Gráficos. Padrão é desativado.</translation>
     </message>
     <message>
         <source>UI Themes</source>

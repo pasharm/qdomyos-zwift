@@ -2595,10 +2595,6 @@ Vil du opdatere QZ-indstillingerne?</translation>
         <translation>Effektkurve</translation>
     </message>
     <message>
-        <source>Live update</source>
-        <translation>Liveopdatering</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>
@@ -6256,14 +6252,6 @@ Må QZ ændre værdien?
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>Vælg, hvilke grafer der skal vises i bunden af skærmen: både puls og effekt, kun puls eller kun effekt.</translation>
-    </message>
-    <message>
-        <source>Live Charts During a Workout</source>
-        <translation>Livegrafer under træning</translation>
-    </message>
-    <message>
-        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
-        <translation>Siden "Grafer" tilføjer nye data hvert sekund under træningen. Kan også slås til på selve siden "Grafer". Standard: fra.</translation>
     </message>
     <message>
         <source>iOS Live Activity Left Metric:</source>
