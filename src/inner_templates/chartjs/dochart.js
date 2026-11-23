@@ -43,6 +43,7 @@ var liveSwitched = false; // the switch was tapped on this page
 var liveTimer = null;
 var liveLoading = false;
 var liveActive = false;
+var liveStateKnown = false; // a 'workout' push has come
 var liveFinalPending = false;
 var lastSessionLength = -1;
 var sessionCache = null; // the session so far, grown by the parts the live update asks for
@@ -93,9 +94,9 @@ function thinLines(datasets, slices) {
             let low = -1, high = -1, gap = -1;
             for (let i = from; i < to; i++) {
                 let y = row[i].y;
-                if (y === null || y === undefined) {
+                if (y === null || y === undefined || y !== y) { // y !== y: NaN
                     if (gap < 0)
-                        gap = i; // a pause in the slice (no pace while standing) stays a break
+                        gap = i; // a gap in the slice (no pace while standing, a point without a value) stays a break
                     continue;
                 }
                 if (low < 0 || y < row[low].y)
@@ -121,6 +122,11 @@ function thinLines(datasets, slices) {
 
 function updateInPlace(old, config) {
     config.options.animation = false;
+    if (lastTimeRepeats(config)) {
+        var ctx = old.ctx;
+        old.destroy();
+        return qzChartTheme.create(ctx, config);
+    }
     // keep the dataset objects: the chart's per-dataset state is bound to them
     for (var i = 0; i < config.data.datasets.length; i++)
         old.data.datasets[i].data = config.data.datasets[i].data;
@@ -130,6 +136,17 @@ function updateInPlace(old, config) {
     old.options = config.options;
     old.update('none');
     return old;
+}
+
+// with the animation off Chart.js 3.4.1 updates only the points up to the first one at the x
+// axis max; when the last points share one time (a session that stands still) the points after
+// it keep no values, and drawing the line throws. Such a chart is made anew
+function lastTimeRepeats(config) {
+    return config.data.datasets.some(function (d) {
+        var n = d.data.length;
+        return n > 1 && d.data[n - 1] !== null && typeof d.data[n - 1] === 'object' && d.data[n - 2] !== null
+            && typeof d.data[n - 2] === 'object' && d.data[n - 1].x === d.data[n - 2].x;
+    });
 }
 
 // creates a chart on ctx; on a live refresh the existing chart gets the new data and options
@@ -1660,6 +1677,8 @@ function dochart_init() {
     // the selector and the polling work only while a workout is running: device connected,
     // not paused and not stopped (stop pauses the device); state comes with the 'workout' push
     function setLiveActive(active) {
+        let firstState = !liveStateKnown;
+        liveStateKnown = true;
         if (active === liveActive)
             return;
         liveActive = active;
@@ -1667,15 +1686,18 @@ function dochart_init() {
         if (!active) {
             clearTimeout(liveTimer);
             liveTimer = null;
-            // pick up the last points before going idle; a load in flight may predate the stop
-            if (liveLoading)
+            // with the live update on, pick up the last points before going idle; a load in
+            // flight may predate the stop. Off: the page stays as it was loaded
+            if (liveEnabled && liveLoading)
                 liveFinalPending = true;
-            else if (lastSessionLength >= 0)
+            else if (liveEnabled && lastSessionLength >= 0)
                 load_workout_data();
         } else {
             // a start or a resume: the session may be a new one of any length (the app clears
-            // it on start only), so the next load takes it whole instead of appending a part
-            sessionCache = null;
+            // it on start only), so the next load takes it whole instead of appending a part.
+            // Not on the first state the page gets: the page has just loaded the session whole
+            if (!firstState)
+                sessionCache = null;
             scheduleLiveRefresh();
         }
     }
@@ -1729,7 +1751,7 @@ function dochart_init() {
         if (sessionCache)
             request.content = { from: sessionCache.length };
         let el = new MainWSQueueElement(request, function(msg) {
-            if (msg.msg === 'R_getsessionarray') {
+            if (msg.msg === 'R_getsessionarray' || msg.msg === 'R_getsessionarraypart') {
                 return msg;
             }
             return null;
