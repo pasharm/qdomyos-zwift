@@ -1355,7 +1355,6 @@ const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 const QString QZSettings::ui_text_scale = QStringLiteral("ui_text_scale");
 const QString QZSettings::ui_text_scale_system = QStringLiteral("ui_text_scale_system");
 const QString QZSettings::treadmill_direct_distance_increment = QStringLiteral("treadmill_direct_distance_increment");
-const QString QZSettings::charts_live_update = QStringLiteral("charts_live_update");
 const QString QZSettings::ui_state_buttons = QStringLiteral("ui_state_buttons");
 
 const QString QZSettings::history_chart_power_order = QStringLiteral("history_chart_power_order");
@@ -1378,7 +1377,7 @@ const QString QZSettings::resistance_compatibility = QStringLiteral("resistance_
 
 const QString QZSettings::strava_synthetic_gps_track = QStringLiteral("strava_synthetic_gps_track");
 
-const uint32_t allSettingsCount = 1064;
+const uint32_t allSettingsCount = 1063;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2450,7 +2449,6 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::ui_text_scale, QZSettings::default_ui_text_scale},
     {QZSettings::ui_text_scale_system, QZSettings::default_ui_text_scale_system},
     {QZSettings::treadmill_direct_distance_increment, QZSettings::default_treadmill_direct_distance_increment},
-    {QZSettings::charts_live_update, QZSettings::default_charts_live_update},
     {QZSettings::history_chart_power_order, QZSettings::default_history_chart_power_order},
     {QZSettings::history_chart_heart_order, QZSettings::default_history_chart_heart_order},
     {QZSettings::history_chart_resistance_order, QZSettings::default_history_chart_resistance_order},

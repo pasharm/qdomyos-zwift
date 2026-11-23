@@ -3073,7 +3073,6 @@ import QtQuick 2.12 as Quick212
             property string ui_accent: "violet"
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
-            property bool charts_live_update: false
             // Also kept by main.qml, like the ui_ keys above (uiOptionKeys)
             property bool ui_state_buttons: true
             property bool heart_rate_belt_suggest: false
@@ -8916,36 +8915,6 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.")
-                        font.bold: !window.ui.modern
-                        font.italic: !window.ui.modern
-                        font.pixelSize: window.fontHint
-                        bottomPadding: window.hintGap
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                    }
-
-                    IndicatorOnlySwitch {
-                        id: chartsLiveUpdateDelegate
-                        text: qsTr("Live Charts During a Workout")
-                        spacing: 0
-                        bottomPadding: 0
-                        topPadding: 0
-                        rightPadding: 0
-                        leftPadding: 0
-                        clip: false
-                        checked: settings.charts_live_update
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        onClicked: settings.charts_live_update = checked
-                        Accessible.onPressAction: { toggle(); clicked(); }
-                    }
-
-                    Label {
-                        text: qsTr("The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.fontHint

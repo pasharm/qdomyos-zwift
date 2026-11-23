@@ -2610,10 +2610,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Výkonová křivka</translation>
     </message>
     <message>
-        <source>Live update</source>
-        <translation>Živá aktualizace</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>
@@ -6303,14 +6299,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>Vyberte, které grafy se zobrazí v dolní části obrazovky: tep i výkon, jen tep, nebo jen výkon.</translation>
-    </message>
-    <message>
-        <source>Live Charts During a Workout</source>
-        <translation>Živé grafy během tréninku</translation>
-    </message>
-    <message>
-        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
-        <translation>Stránka Grafy během tréninku každou sekundu doplní nová data. Zapíná se i přímo na stránce Grafy. Výchozí: vypnuto.</translation>
     </message>
     <message>
         <source>iOS Live Activity Left Metric:</source>
