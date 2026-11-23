@@ -900,19 +900,7 @@ import QtQuick 2.12 as Quick212
             for (var j = 0; j < persistentSettings.length; j++) {
                 if (persistentSettings[j].control === "virtualOption")
                     continue
-                // Modern look: the settings of the Wahoo Options page. The catalog hides them
-                // (names made from the keys, no description); here they go under the titles
-                // of that page, as links only - the page sends the new values to the trainer
-                var pageOnly = window.ui.modern ? pageOnlySettings[persistentSettings[j].key] : undefined
-                if (pageOnly) {
-                    items.push({ key: persistentSettings[j].key, name: pageOnly.name,
-                                 description: pageOnly.description || null, parent: "Wahoo Options",
-                                 type: persistentSettings[j].type, catalogKind: "link" })
-                    continue
-                }
                 if (!persistentSettings[j].visible)
-                    continue
-                if (window.ui.modern && modernHiddenSettings[persistentSettings[j].key])
                     continue
                 if (settingsPane.isTileOrderSetting(persistentSettings[j]))
                     continue
@@ -950,26 +938,6 @@ import QtQuick 2.12 as Quick212
             "settings-shortcuts", "settings-treadmill-inclination-override",
             "custominclinationresistance", "homeform", "gears"
         ]
-
-        // Modern look: custom_inclination_resistance_table is the whole table as one text line;
-        // it is changed on its own page, which the search lists as a link. The settings no page
-        // shows are searchHiddenSettings, for both looks
-        readonly property var modernHiddenSettings: ({ "custom_inclination_resistance_table": true })
-
-        // The English titles and descriptions as written on gears.qml: translated through its
-        // context (the texts are extracted there, not here)
-        readonly property var pageOnlySettings: ({
-            "wahoo_without_wheel_diameter": {
-                name: "Without Wheel Diameter Protocol",
-                description: "Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false." },
-            "gear_crankset_size": {
-                name: "Chainring Size",
-                description: "Tooth count of your chainring on the bike you are currently riding on your trainer - enter 42 for Zwift Ride" },
-            "gear_cog_size": {
-                name: "Cog Size",
-                description: "Tooth count of your rear cog on your trainer - enter 14 if you have the Zwift Cog" },
-            "gear_wheel_size": { name: "Virtual Wheel Size" }
-        })
 
         // Descriptions of catalog settings without a label on any page, only here so that
         // lupdate takes them into the settings context
@@ -1139,10 +1107,6 @@ import QtQuick 2.12 as Quick212
             for (var i = 0; i < searchableSettings.length; i++) {
                 if (changedOnly && !isChanged(searchableSettings[i]))
                     continue
-                // The links to another page are of the modern look (the list is built once,
-                // the look may be switched on this very page)
-                if (searchableSettings[i].catalogKind === "link" && !window.ui.modern)
-                    continue
                 if (!changedOnly && searchHiddenSettings[searchableSettings[i].key])
                     continue
                 var matched = true
@@ -1224,9 +1188,12 @@ import QtQuick 2.12 as Quick212
         // cycles them with a controller button itself). Left out of the search by text only;
         // QZ writes them, isPrivateSetting keeps them out of "Changed". Garmin ANT+ and Peloton
         // Bike OCR are no longer offered (their switches are commented out on the pages): they
-        // are visible: false in the catalog, so neither the search nor "Changed" lists them
+        // are visible: false in the catalog, so neither the search nor "Changed" lists them.
+        // The custom inclination to resistance table is the whole table in one text, and the
+        // search already lists its page under the same name: one result is enough
         readonly property var searchHiddenSettings: ({ "mywhoosh_link_camera_value": true,
-                                                       "mywhoosh_link_emote_value": true })
+                                                       "mywhoosh_link_emote_value": true,
+                                                       "custom_inclination_resistance_table": true })
 
         // Not listed among the changed settings, and so never reset with a whole section:
         // - the accounts and passwords: the same keys QZSettings::isSensitiveSettingKey keeps
@@ -1322,6 +1289,10 @@ import QtQuick 2.12 as Quick212
                 rootItem.setAppLanguage(value)
             else if (key === "heart_rate_belt_name")
                 rootItem.reconnectHeartRateBelt(value)
+            // The Wahoo Options page stores the circumference of the wheel picked: the default
+            // wheel goes back with the default circumference, or the gears keep the old one
+            else if (key === "gear_wheel_size")
+                writeDefault("gear_circumference", "number", settingDefaults["gear_circumference"])
             else if (key === "watt_offset" || key === "watt_gain" || key === "power_sensor_name") {
                 settings.treadmillDataPoints = ""
                 settings.ergDataPoints = ""
@@ -1432,7 +1403,7 @@ import QtQuick 2.12 as Quick212
                     var picked = entry.options ? entry.options[virtualSelectedIndex(entry)] : null
                     return picked && picked.label ? translatedText(picked.label) : ""
                 }
-                if (entry.catalogKind !== "setting" && entry.catalogKind !== "link")
+                if (entry.catalogKind !== "setting")
                     return ""
                 if (isPrivateSetting(entry) || isBluetoothDeviceSetting(entry))
                     return ""
