@@ -3382,7 +3382,8 @@ import QtQuick 2.12 as Quick212
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
                         Layout.preferredWidth: width
-                        Layout.preferredHeight: implicitHeight
+                        // Classic look: from the layout's own implicitHeight, as before
+                        Layout.preferredHeight: window.ui.modern ? implicitHeight : searchResultContent.implicitHeight + 8
                         implicitWidth: width
                         // No editor in the result, only its value as text and the chevron. Modern
                         // look: the Reset button of "Changed" makes the title row 48 px high, the
