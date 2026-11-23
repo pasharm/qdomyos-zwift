@@ -33,7 +33,7 @@ UiTextField {
 
     property string format: "time"
     // an address: under the label in a settings row of the modern look (UiTextField.wideText); a
-    // time or a date is short and stays beside it
+    // time, a height is short and stays beside it
     wideText: format === "ip" || format === "host"
     property var savedText: undefined
 

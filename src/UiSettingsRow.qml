@@ -9,7 +9,8 @@ import QtQml 2.15
 // half the window (UiComboBox Layout.minimumWidth), and when the label then has less room than
 // its longest word, or the value of the list is wider than half the window, the row is stacked -
 // the label across the row, the list and the rest one line lower, the list across the free width
-// (UiComboBox Layout.fillWidth). The label spans
+// (UiComboBox Layout.fillWidth). A field for a long text (UiTextField.wideText: an e-mail, a
+// password, an address) is always stacked, across the free width as well. The label spans
 // the row with "Layout.columnSpan: parent.stackedRow ? parent.columns : 1".
 // Items with visible: false take no cell (Qt 5.15.0 QQuickLayout::shouldIgnoreItem,
 // qquicklayout.cpp:771-793; QQuickGridLayout::insertLayoutItems, qquicklinearlayout.cpp:675).
@@ -119,8 +120,8 @@ GridLayout {
                 return true
         return false
     }
-    // a field for a long text (UiTextField.wideText: an e-mail, a login, an address) - always under
-    // the label, across the row (T-593, decision 19.11)
+    // a field for a long text (UiTextField.wideText: an e-mail, a login, a password, an address) -
+    // always under the label, across the row (T-593, decision 19.11)
     readonly property bool wideField: {
         for (var i = 0; i < others.length; i++)
             if (others[i].wideText === true)
