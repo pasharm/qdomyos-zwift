@@ -5357,6 +5357,10 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Visszaállítás</translation>
     </message>
     <message>
+        <source>Settings in “%2” that go back to their default values: %1</source>
+        <translation>%1 beállítás visszaáll az alapértelmezett értékére itt: „%2”.</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Az Automatikus az eszköz nyelvét követi, de konkrét nyelvet is választhat a QZ-hez.</translation>
     </message>

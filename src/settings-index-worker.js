@@ -19,7 +19,6 @@ var ELEMENT = /\b\w*Accordion\w*Element\s*\{/
 // title: qsTr("...") or a plain title: "..."
 var TITLE = /^\s*title\s*:\s*(?:qsTr\()?"((?:[^"\\]|\\.)*)"/
 var LINKED = /^\s*linkedBoolSetting\s*:\s*"([A-Za-z0-9_]+)"/
-var CARD = /^\s*card\s*:\s*true\b/
 var KEY = /\bsettings\.([A-Za-z_][A-Za-z0-9_]*)/g
 // The line that shows the value is the control itself; an assignment comes next (a handler of
 // the control); any other mention (a visible: of some other row, say) is the weakest hint
@@ -64,6 +63,18 @@ function titlesOf(stack) {
         if (stack[i].title)
             chain.push(stack[i].title)
     return chain
+}
+
+// card: true of a section, on its own line ("card: true" or "card: true // ...")
+function isCardLine(line) {
+    var text = line.trim()
+    if (text.indexOf("card") !== 0)
+        return false
+    text = text.substring(4).trim()
+    if (text.charAt(0) !== ":")
+        return false
+    text = text.substring(1).trim()
+    return text === "true" || text.indexOf("true ") === 0 || text.indexOf("true//") === 0
 }
 
 // own: the setting is the switch in the header of the last section of its chain (linkedBoolSetting
@@ -166,7 +177,7 @@ function parse(file, source, map) {
             var title = TITLE.exec(line)
             if (title && !top.title && depth === top.depth + 1)
                 top.title = unescapeLiteral(title[1])
-            if (depth === top.depth + 1 && CARD.test(line))
+            if (depth === top.depth + 1 && isCardLine(line))
                 top.card = true
         }
         // Outside any section too: a page without sections (the voice page) has its controls

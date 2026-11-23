@@ -109,6 +109,7 @@ import QtQuick 2.12 as Quick212
         property var activeGlow: null
         // Set while back puts the old query into the field: its onTextChanged must not search
         property bool restoringSearch: false
+        // Modern look, "Changed": the section whose Reset section is being confirmed
         property string resetSectionName: ""
 
         function loadSettingsIndex() {
@@ -169,14 +170,28 @@ import QtQuick 2.12 as Quick212
             return file.slice(-4) === ".qml" ? file.slice(0, -4) : file
         }
 
-        // "Page › Section › Subsection" of a setting; the catalog's nearest group until the
-        // index is ready or when the setting is not on these pages. A section shown as a card (a
-        // tile on the Tiles page: its switch, colour, % and presets) belongs to the section above
-        // it: one block of tiles in "Changed", not a block of one card per tile; the card says
-        // which tile (modernTitle) (T-612). A switch in the header of a plain section (Enable
-        // Virtual Device) stays in that section, with the settings it turns on
+        // Modern look, the path of a result: "Page › Section › Subsection" of the setting; the
+        // catalog's nearest group until the index is ready or when the setting is not on these
+        // pages. A section shown as a card (a tile on the Tiles page: its switch, colour, % and
+        // presets) belongs to the section above it: one block of tiles in "Changed", not a block
+        // of one card per tile; the card says which tile (modernTitle). A switch in the header of
+        // a plain section (Enable Virtual Device) stays in that section, with the settings it
+        // turns on
         function sectionOf(entry) {
             var where = settingsIndex ? settingsIndex[entry.key] : null
+            // A setting made of others ("Specific Model": a picker over one switch per model) has
+            // no control of its own on the pages: the section of the first of them, where
+            // pagePositionOf puts it - not a block of its own next to its section
+            if (!where && settingsIndex) {
+                var persistent = settingsCatalog.settings || []
+                for (var v = 0; v < persistent.length; v++) {
+                    if (persistent[v].virtualParent !== entry.key)
+                        continue
+                    var part = settingsIndex[persistent[v].key]
+                    if (part && part.pos && (!where || part.pos < where.pos))
+                        where = part
+                }
+            }
             if (!where)
                 return parentDisplayName(entry)
             var context = pageContextOf(where.file)
@@ -189,8 +204,8 @@ import QtQuick 2.12 as Quick212
             return parts.length > 0 ? parts.join(" › ") : parentDisplayName(entry)
         }
 
-        // The title of a result in the modern look: inside a card section that sectionOf leaves
-        // out, the card's title before it ("METS: order index"), except for the card's own switch,
+        // Modern look, the title of a result: inside a card section that sectionOf leaves out,
+        // the card's title before it ("METS: order index"), except for the card's own switch,
         // whose title already is the card's
         function modernTitle(entry) {
             var title = searchTitle(entry)
@@ -218,11 +233,14 @@ import QtQuick 2.12 as Quick212
             settings[key] = value
         }
 
+        // Modern look, "Changed": the changed settings listed in the block of one section, and
+        // their reset. The listed ones only, as Reset all: with a text in the field the block
+        // shows the ones matching it, and a setting not shown is not reset
         function changedIn(section) {
             var list = []
-            for (var i = 0; i < searchableSettings.length; i++)
-                if (isChanged(searchableSettings[i]) && sectionOf(searchableSettings[i]) === section)
-                    list.push(searchableSettings[i])
+            for (var i = 0; i < filteredSettings.length; i++)
+                if (sectionOf(filteredSettings[i]) === section)
+                    list.push(filteredSettings[i])
             return list
         }
 
@@ -664,28 +682,6 @@ import QtQuick 2.12 as Quick212
                         }
                     }
                 }
-            }
-        }
-
-        UiMessageDialog {
-            id: resetSectionDialog
-            text: qsTr("Reset section?")
-            informativeText: qsTr("%1 settings in “%2” go back to their default values.")
-                             .arg(settingsPane.resetSectionName ? settingsPane.changedIn(settingsPane.resetSectionName).length : 0)
-                             .arg(settingsPane.resetSectionName)
-            buttons: (MessageDialog.Yes | MessageDialog.No)
-            yesText: qsTr("Reset")
-            noText: qsTr("Cancel")
-            destructive: true
-            // The reset makes this page again, the dialog with it: only once the dialog has closed
-            // (its dim and the focus are given back on the way), not from the answer itself
-            property bool confirmed: false
-            onYesClicked: confirmed = true
-            onClosed: {
-                if (!confirmed)
-                    return
-                confirmed = false
-                settingsPane.resetSection(settingsPane.resetSectionName)
             }
         }
 
@@ -3331,7 +3327,9 @@ import QtQuick 2.12 as Quick212
                     }
                 }
 
-                // The classic look: the native dialog, as in master; the modern one: a card
+                // The classic look: the native dialog, as before; the modern one: a card. The reset
+                // makes this page again, the dialog with it: only once the dialog has closed, not
+                // from the answer itself
                 UiMessageDialog {
                     id: resetChangedDialog
                     text: qsTr("Reset changed settings?")
@@ -3340,7 +3338,6 @@ import QtQuick 2.12 as Quick212
                     yesText: qsTr("Reset")
                     noText: qsTr("Cancel")
                     destructive: true
-                    // As resetSectionDialog: the reset makes the page again, only once this has closed
                     property bool confirmed: false
                     onYesClicked: confirmed = true
                     onClosed: {
@@ -3351,6 +3348,27 @@ import QtQuick 2.12 as Quick212
                     }
                 }
 
+                // Modern look, "Changed": Reset section of a block
+                UiMessageDialog {
+                    id: resetSectionDialog
+                    text: qsTr("Reset section?")
+                    informativeText: qsTr("Settings in “%2” that go back to their default values: %1")
+                                     .arg(settingsPane.resetSectionName ? settingsPane.changedIn(settingsPane.resetSectionName).length : 0)
+                                     .arg(window.ui.plainTitle(settingsPane.resetSectionName))
+                    buttons: (MessageDialog.Yes | MessageDialog.No)
+                    yesText: qsTr("Reset")
+                    noText: qsTr("Cancel")
+                    destructive: true
+                    property bool confirmed: false
+                    onYesClicked: confirmed = true
+                    onClosed: {
+                        if (!confirmed)
+                            return
+                        confirmed = false
+                        settingsPane.resetSection(settingsPane.resetSectionName)
+                    }
+                }
+
                 Repeater {
                     id: searchResultsRepeater
                     model: filteredSettings
@@ -3358,24 +3376,25 @@ import QtQuick 2.12 as Quick212
                     delegate: Item {
                         id: searchResultFrame
                         property var entry: modelData
-                        // "Changed": a header with the section and its reset above the first
-                        // setting of every section
-                        readonly property string section: settingsPane.changedOnly ? settingsPane.sectionOf(entry) : ""
-                        // Modern look: every section is a block as on its page (T-612) - the
-                        // accent outline round its header and its cards, the cards 8 in from it.
-                        // Every result draws its own piece of the outline, clipped to itself
+                        // Modern look, "Changed": every section is a block as on its page - the
+                        // accent outline round its header and its cards, the cards 8 in from it, a
+                        // header with the section and its reset above the first setting of the
+                        // section. Every result draws its own piece of the outline, clipped to itself
                         readonly property bool inBlock: settingsPane.changedOnly && window.ui.modern
+                        readonly property string section: inBlock ? settingsPane.sectionOf(entry) : ""
+                        // The length checked in both: a new, shorter list may reach these bindings
+                        // before the Repeater drops the result
                         readonly property bool firstInSection: inBlock &&
-                            (index === 0 || settingsPane.sectionOf(filteredSettings[index - 1]) !== section)
-                        // ">=": a new, shorter list may reach this binding before the Repeater drops the result
+                            (index === 0 || index - 1 >= filteredSettings.length ||
+                             settingsPane.sectionOf(filteredSettings[index - 1]) !== section)
                         readonly property bool lastInSection: inBlock &&
                             (index >= filteredSettings.length - 1 || settingsPane.sectionOf(filteredSettings[index + 1]) !== section)
                         // 16 between blocks: 8 of the spacing of the column and 8 here
                         readonly property real blockGap: firstInSection && index > 0 ? 8 : 0
                         readonly property real blockInset: inBlock ? 8 : 0
                         readonly property real blockBottom: lastInSection ? 8 : 0
-                        // The header row of the block: 48 high, the title and Reset section in its middle;
-                        // higher when a long path or a big text scale takes more (the title 12 from its edges)
+                        // The header row of the block: 48 high, the title and Reset section in its
+                        // middle; higher when a long path or a big text scale takes more
                         readonly property real headerHeight: firstInSection ? blockGap + sectionHeader.height : 0
                         width: Math.max(1, settingsSearchResults.width)
                         Layout.fillWidth: true
@@ -3450,13 +3469,13 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // The title 16 in from the block, as the text of the cards; the right
-                            // edge is the one of the cards, 8 in from the outline
+                            // The title 16 in from the outline (the text of the cards is 24 in: the
+                            // cards 8 in, their text 16 in them); the right edge is the one of the
+                            // cards, 8 in from the outline
                             anchors.leftMargin: 16
                             anchors.rightMargin: searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.blockGap
-                            // 48 for one line; 12 above and below a longer title (without them the
-                            // text touched the outline and the first card, OnePlus 12, beta-3038)
+                            // 48 for one line; 12 above and below a longer title
                             height: Math.max(48, sectionTitles.height)
                             readonly property string fullPath: window.ui.plainTitle(searchResultFrame.section)
                             readonly property int lastCut: fullPath.lastIndexOf(" › ")
@@ -3480,7 +3499,7 @@ import QtQuick 2.12 as Quick212
                                     textFormat: Text.PlainText
                                 }
                                 Label {
-                                    // Title Small 14 Medium (T-593)
+                                    // Title Small 14 Medium
                                     width: parent.width
                                     text: sectionHeader.lastCut >= 0 ? sectionHeader.fullPath.slice(sectionHeader.lastCut + 3)
                                                                      : sectionHeader.fullPath
@@ -3492,15 +3511,17 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
                             // 48 wide, the icon 16 in from the right edge of the cards: the same
-                            // column as the reset icons of the cards
-                            ToolButton {
+                            // column as the reset icons of the cards. A flat UiButton, as theirs
+                            UiButton {
                                 id: resetSectionButton
                                 anchors.right: parent.right
                                 anchors.rightMargin: 4
                                 anchors.verticalCenter: parent.verticalCenter
-                                width: 48
-                                height: 48
-                                Accessible.name: qsTr("Reset section")
+                                flat: true
+                                implicitWidth: 48
+                                leftPadding: 0
+                                rightPadding: 0
+                                Accessible.name: qsTr("Reset section") + ": " + sectionHeader.fullPath
                                 UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "restart_alt"; color: window.ui.textMuted }
                                 onClicked: {
                                     settingsPane.resetSectionName = searchResultFrame.section
@@ -3556,9 +3577,9 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // 16 in from the edge of the card, as Material 3 (T-593); without a
-                            // description in the middle of the card (its height without the header
-                            // and the bottom of a block)
+                            // 16 in from the edge of the card, as Material 3; without a description
+                            // in the middle of the card (its height without the header and the
+                            // bottom of a block)
                             anchors.leftMargin: 16 + searchResultFrame.blockInset
                             anchors.rightMargin: 16 + searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.headerHeight +
@@ -3591,10 +3612,10 @@ import QtQuick 2.12 as Quick212
                                         wrapMode: Text.WordWrap
                                     }
 
-                                    // The full path, in the accent colour as the way to the
-                                    // setting; not repeated under the header of a block
+                                    // The full path, in the accent colour as the way to the setting;
+                                    // not repeated under the header of a block of "Changed"
                                     Label {
-                                        visible: !settingsPane.changedOnly
+                                        visible: !searchResultFrame.inBlock
                                         width: parent.width
                                         text: window.ui.plainTitle(settingsPane.sectionOf(entry))
                                         color: window.ui.accent
