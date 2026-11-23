@@ -93,10 +93,17 @@ import QtQuick 2.12 as Quick212
         property var pendingReveal: null
         // The search (text and "Changed") a result was opened from: back returns to it
         property var searchReturn: null
-        // Modern look: the search bar has scrolled off the top - the toolbar shows its search
-        // button then, which brings the bar back (main.qml)
+        // Modern look: the search bar stays on top of the page; once it has scrolled off the top
+        // the toolbar shows its search button, which brings the bar back (main.qml). The bottom of
+        // the drawn box of the field, not of the row or of the field item: both end with an empty
+        // bottom inset, and a short list of results stops scrolling with only that inset in view.
+        // contentY is taken no further than the end of the content: a short page pulled up past
+        // its end goes back by itself and must not flash the button
         readonly property bool searchBarScrolledAway: window.ui.modern && contentItem !== null &&
-            contentItem.contentY > settingsSearchBar.y + settingsSearchBar.height
+            Math.min(contentItem.contentY,
+                     contentItem.originY + contentItem.contentHeight + contentItem.bottomMargin - contentItem.height) >
+                settingsSearchBar.y + settingsSearchTextField.y +
+                settingsSearchTextField.height - settingsSearchTextField.bottomInset
         // A result tapped before the index was built: opened once the index arrives
         property var pendingJump: null
         // The glow of the last jump: gone at once when back returns to the results
