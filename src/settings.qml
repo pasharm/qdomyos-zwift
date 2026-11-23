@@ -5274,9 +5274,8 @@ import QtQuick 2.12 as Quick212
 
                             IndicatorOnlySwitch {
                                 text: qsTr("Enable OpenBikeControl")
-                                // Modern look: no padding of its own, as the other switches of the settings
-                                leftPadding: window.ui.modern ? 0 : padding
-                                rightPadding: window.ui.modern ? 0 : padding
+                                leftPadding: 0
+                                rightPadding: 0
                                 checked: settings.mywhoosh_link_enabled
                                 Layout.fillWidth: true
                                 onClicked: {
@@ -5302,9 +5301,8 @@ import QtQuick 2.12 as Quick212
 
                             IndicatorOnlySwitch {
                                 text: qsTr("Override Local Gear Changes")
-                                // Modern look: no padding of its own, as the other switches of the settings
-                                leftPadding: window.ui.modern ? 0 : padding
-                                rightPadding: window.ui.modern ? 0 : padding
+                                leftPadding: 0
+                                rightPadding: 0
                                 checked: settings.mywhoosh_link_override_gears
                                 Layout.fillWidth: true
                                 onClicked: { settings.mywhoosh_link_override_gears = checked; window.settings_restart_to_apply = true; }
@@ -12606,9 +12604,8 @@ import QtQuick 2.12 as Quick212
                     IndicatorOnlySwitch {
                         id: trainprogramRandomDelegate
                         text: qsTr("Training Program Random")
-                        // Modern look: no padding of its own, as the other switches of the settings
-                        leftPadding: window.ui.modern ? 0 : padding
-                        rightPadding: window.ui.modern ? 0 : padding
+                        leftPadding: 0
+                        rightPadding: 0
                         spacing: 0
                         bottomPadding: 0
                         topPadding: 0
