@@ -33,7 +33,17 @@
         justify-content: flex-end;
         margin: 8px 0 0;
     }
+    /* the touch area is 48 px high (::after) while the button keeps 40 px in the header */
+    #live_refresh::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+    }
     #live_refresh {
+        position: relative;
         display: inline-flex;
         align-items: center;
         min-height: 40px;
