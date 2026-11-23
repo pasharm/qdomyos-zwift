@@ -3240,7 +3240,8 @@ import QtQuick 2.12 as Quick212
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        width: 44
+                        // The touch target of Material 3, 48 wide; the text stops 44 from the edge
+                        width: 48
                         Accessible.role: Accessible.Button
                         Accessible.name: qsTr("Clear")
                         // As the classic "Clear": back no longer brings the cleared results up, a result
@@ -3402,8 +3403,16 @@ import QtQuick 2.12 as Quick212
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
-                        implicitHeight: headerHeight + (window.ui.modern ? modernResultContent.height : searchResultContent.implicitHeight) +
-                                        topPad + bottomPad + blockBottom
+                        // Modern look, the heights of a Material 3 list item: two lines (the title and
+                        // the path) at least 72, the content in the middle; with a description at
+                        // least 88, the content on top. The card only, without the header and the
+                        // bottom of a block of "Changed"
+                        readonly property real minHeight: window.ui.modern ? (hasDescription ? 88 : 72) : 0
+                        implicitHeight: headerHeight +
+                                        Math.max(minHeight,
+                                                 (window.ui.modern ? modernResultContent.height : searchResultContent.implicitHeight) +
+                                                 topPad + bottomPad) +
+                                        blockBottom
 
                         // This result's piece of the outline of its block: down to the next result
                         // (over the spacing of the column) unless it is the last of the section;
@@ -3547,10 +3556,16 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // 16 in from the edge of the card, as Material 3 (T-593)
+                            // 16 in from the edge of the card, as Material 3 (T-593); without a
+                            // description in the middle of the card (its height without the header
+                            // and the bottom of a block)
                             anchors.leftMargin: 16 + searchResultFrame.blockInset
                             anchors.rightMargin: 16 + searchResultFrame.blockInset
-                            anchors.topMargin: searchResultFrame.headerHeight + searchResultFrame.topPad
+                            anchors.topMargin: searchResultFrame.headerHeight +
+                                (searchResultFrame.hasDescription ? searchResultFrame.topPad
+                                 : Math.max(searchResultFrame.topPad,
+                                            (searchResultFrame.implicitHeight - searchResultFrame.headerHeight -
+                                             searchResultFrame.blockBottom - height) / 2))
 
                             Item {
                                 id: modernResultRow
