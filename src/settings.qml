@@ -3642,11 +3642,14 @@ import QtQuick 2.12 as Quick212
                                         color: window.ui.textMuted
                                     }
 
-                                    ToolButton {
+                                    // A flat UiButton: the state layer of the modern look, no ripple
+                                    UiButton {
                                         visible: settingsPane.changedOnly
                                         anchors.verticalCenter: parent.verticalCenter
-                                        width: 48
-                                        height: 48
+                                        flat: true
+                                        implicitWidth: 48
+                                        leftPadding: 0
+                                        rightPadding: 0
                                         Accessible.name: qsTr("Reset") + ": " + window.ui.plainTitle(searchResultFrame.titleText)
                                         UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "restart_alt"; color: window.ui.textMuted }
                                         onClicked: settingsPane.resetSetting(entry)
