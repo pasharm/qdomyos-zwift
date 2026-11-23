@@ -966,14 +966,25 @@ ApplicationWindow {
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         width: Math.min(parent.width - 30, 720)
-        // with a bigger text the content is taller: Skip fell out. Modern: the fonts of the type scale
-        // are bigger than the classic ones, at 100 % too (Skip and Next below the window)
-        height: window.textScale !== 1 || modern
-            ? Math.min(parent.height - 40, Math.max(260, gymModeColumn.implicitHeight + 36 + topPadding + bottomPadding))
+        // with a bigger text the content is taller: Skip fell out. Modern: the height of the content, as a
+        // Material 3 dialog - the fonts of the type scale are bigger than the classic ones (Skip and Next
+        // fell below the window at 100 % too), and with Bluetooth off a minimum left an empty band
+        readonly property real contentFitHeight: gymModeColumn.implicitHeight + 36 + topPadding + bottomPadding
+        height: modern ? Math.min(parent.height - 40, contentFitHeight)
+            : window.textScale !== 1
+            ? Math.min(parent.height - 40, Math.max(260, contentFitHeight))
             : Math.min(parent.height - 40, 260)
+        // Modern: the window grows smoothly when the list comes (Bluetooth switched on); not at opening
+        Behavior on height {
+            enabled: popupGymMode.modern && popupGymMode.opened
+            NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+        }
         modal: true
         focus: true
         closePolicy: Popup.NoAutoClose
+        // Bluetooth off before the window comes in, not after (opened is already true in onOpened):
+        // the window enters with "Bluetooth is off", not with the search shown for a moment
+        onAboutToShow: bluetoothOff = rootItem.bluetoothSearchOff()
         onOpened: {
             pickedDevice = ""
             // opened again after a disconnection: no row of the last pick marked in the list
@@ -986,7 +997,6 @@ ApplicationWindow {
             pollState()
         }
         onClosed: rootItem.setGymModeWindowOpen(false)
-        readonly property bool modern: window.ui.modern
 
         // The window shows the countdown of the search of the home page (one number on both). With
         // Bluetooth off there is no search, so the window says so instead
@@ -1109,8 +1119,7 @@ ApplicationWindow {
                 // window text. The field is a TextField: it has no elide and no fontSizeMode
                 readonly property real fullPx: popupGymMode.modern ? window.ui.fontBody : window.fontPx(Qt.application.font.pixelSize + 8)
                 readonly property real textRoom: contentItem ? contentItem.width - contentItem.leftPadding - contentItem.rightPadding : 0
-                font.pixelSize: popupGymMode.modern ? window.ui.fontBody
-                    : textRoom > 0 && gymModeFieldMetrics.advanceWidth > textRoom
+                font.pixelSize: textRoom > 0 && gymModeFieldMetrics.advanceWidth > textRoom
                     ? Math.max(window.fontPx(window.appFontPx), Math.floor(fullPx * textRoom / gymModeFieldMetrics.advanceWidth))
                     : fullPx
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
