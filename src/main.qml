@@ -527,16 +527,17 @@ ApplicationWindow {
             }
             return (out + gap).trim()
         }
+        // Text that the classic look paints in a fixed colour (mostly white) on the page
+        // background: the theme text colour in the modern look, the old colour otherwise
+        function ink(classic) { return modern ? textMain : classic }
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
         function setOption(key, value) {
             settings[key] = value
         }
-        // ...and reads through here (the settings search): its own copy is stale after setOption
+        // ...and reads through here ("Changed" and the cards of the settings search): the copy of
+        // the window is the one that applies the look
         function option(key) { return settings[key] }
-        // Text that the classic look paints in a fixed colour (mostly white) on the page
-        // background: the theme text colour in the modern look, the old colour otherwise
-        function ink(classic) { return modern ? textMain : classic }
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 

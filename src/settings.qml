@@ -195,21 +195,27 @@ import QtQuick 2.12 as Quick212
             return qsTranslate(pageContextOf(where.file), where.chain[where.card]) + ": " + title
         }
 
-        // The look of the modern interface (see the declarations at the end of the Settings
+        // The look of the modern interface (see the declarations of the ui_ keys in the Settings
         // below): kept by main.qml, which applies it at once
         readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap", "ui_state_buttons"]
+        // Of them, the rows shown in the modern look only (General UI Options)
+        readonly property var modernOnlyUiOptions: ["ui_theme", "ui_accent", "ui_theme_mode"]
         function isUiOption(key) {
             return uiOptionKeys.indexOf(key) >= 0
         }
         // Into main.qml, which applies it at once, and into this page's copy as well: a change
         // of any setting makes this page's Settings write all its properties (Qt.labs.settings
-        // 5.15), and a stale copy would bring the old look back after a restart
+        // 5.15), and a stale copy would bring the old look back after a restart. Into the store
+        // at once too: both copies write a change only a moment later, and a page made again
+        // in between (the language, a reset in "Changed": stackView.replace) would read the old
+        // look there and write it back with its next change
         function setUiOption(key, value) {
             // "As on the phone" takes the night mode of the phone as it is now
             if (key === "ui_theme_mode")
                 window.ui.refreshSystemTheme()
             window.ui.setOption(key, value)
             settings[key] = value
+            settings.setValue(key, value)
         }
 
         function changedIn(section) {
@@ -257,7 +263,8 @@ import QtQuick 2.12 as Quick212
             var due = settingsSearchDebounceTimer.running
             settingsSearchDebounceTimer.stop()
             return { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                     results: due ? null : filteredSettings, scroll: contentItem.contentY, viaPush: viaPush }
+                     results: due ? null : filteredSettings, scroll: contentItem.contentY, viaPush: viaPush,
+                     modern: window.ui.modern }
         }
 
         // A page among the results ("Wahoo Options"): back from it lands on the results, as
@@ -416,8 +423,10 @@ import QtQuick 2.12 as Quick212
             if (window.ui.modern)
                 filteredSettings = []
             filteredSettings = back.results || []
-            // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
-            if (changedOnly || !back.results) {
+            // "Changed" may differ now (the setting just opened was edited): that list is rebuilt;
+            // so are the results when the look was switched meanwhile (the classic look leaves
+            // out the rows of the modern one)
+            if (changedOnly || !back.results || back.modern !== window.ui.modern) {
                 if (window.ui.modern)
                     filteredSettings = []
                 updateFilteredSettings()
@@ -811,7 +820,8 @@ import QtQuick 2.12 as Quick212
         function profileSettingsSnapshot() {
             var values = []
             for (var key in settings) {
-                // The look applies at once: it raises no restart question
+                // The look applies at once: a change of it alone does not bring up the reminder
+                // to save the profile
                 if (isUiOption(key))
                     continue
                 var value = settings[key]
@@ -1156,6 +1166,10 @@ import QtQuick 2.12 as Quick212
             var tokens = query.length > 0 ? query.split(/\s+/) : []
             var results = []
             for (var i = 0; i < searchableSettings.length; i++) {
+                // Appearance, Theme and Accent color are rows of the modern look only: the classic
+                // page has no row to show for them (ui_state_buttons has one in both looks)
+                if (!window.ui.modern && modernOnlyUiOptions.indexOf(searchableSettings[i].key) >= 0)
+                    continue
                 if (changedOnly && !isChanged(searchableSettings[i]))
                     continue
                 // The links to another page are of the modern look (the list is built once,
@@ -1316,12 +1330,10 @@ import QtQuick 2.12 as Quick212
                 value = parseInt(value)
             else if (type === "number")
                 value = parseFloat(value)
-            // The look of the modern interface is kept by main.qml (setUiOption). Into the store
-            // at once as well: the page made again after the reset reads it there, and its copy
-            // would write the old look back otherwise
+            // The look of the modern interface is kept by main.qml; setUiOption writes the store
+            // at once as well, which the page made again after the reset reads
             if (isUiOption(key)) {
                 setUiOption(key, value)
-                settings.setValue(key, value)
                 return
             }
             // The account of one server is no good on the other
@@ -8333,6 +8345,9 @@ import QtQuick 2.12 as Quick212
                         checked: window.ui.modern
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
+                        // in Qt 5.15 the role of a SwitchDelegate has no action: a double tap of the
+                        // screen reader did nothing
+                        Accessible.onPressAction: { toggle(); clicked(); }
                         onClicked: settingsPane.setUiOption("ui_modern", checked)
                     }
                     Label {
@@ -8354,7 +8369,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Appearance")
-                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                            wrapMode: Text.WordWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8375,7 +8390,8 @@ import QtQuick 2.12 as Quick212
                                         return i
                                 return 0
                             }
-                            onActivated: settingsPane.setUiOption("ui_theme_mode", options[index].value)
+                            // index -1: Enter in the open list with no item highlighted
+                            onActivated: if (index >= 0) settingsPane.setUiOption("ui_theme_mode", options[index].value)
                             // The row's label, which the screen reader does not join to the box itself
                             Accessible.name: qsTr("Appearance") + ": " + displayText
                         }
@@ -8388,7 +8404,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Theme")
-                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                            wrapMode: Text.WordWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8408,14 +8424,15 @@ import QtQuick 2.12 as Quick212
                                         return i
                                 return 0
                             }
-                            onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
+                            // index -1: Enter in the open list with no item highlighted
+                            onActivated: if (index >= 0) settingsPane.setUiOption("ui_theme", options[index].value)
                             // The row's label, which the screen reader does not join to the box itself
                             Accessible.name: qsTr("Theme") + ": " + displayText
                         }
                     }
 
-                    // A settings row (T-593): the swatches go under the label when its longest
-                    // word has no room beside them (130 %: "Акцентний" ran under the swatches)
+                    // The swatches go under the label when its longest word has no room beside
+                    // them (130 %: "Акцентний" ran under the swatches)
                     UiSettingsRow {
                         id: accentRow
                         visible: window.ui.modern
@@ -8433,7 +8450,6 @@ import QtQuick 2.12 as Quick212
                             // Stacked: room inside the card, as the Theme card above has (~20 dp from the
                             // frame to the glyphs). The frame keeps 8 dp around the row itself
                             // (UiSettingFrames framePadV); the row margins only move the next card
-                            // (T-593, mockup notes/mockups/t593-accent-pad-2026-11-19, decision 19.11 - variant 3)
                             topPadding: accentRow.stackedRow ? 9 : 0
                         }
                         Row {
@@ -8471,9 +8487,15 @@ import QtQuick 2.12 as Quick212
                                         name: "palette"
                                         color: window.ui.accentInk
                                     }
+                                    // 48 high, as the style guide asks; across, up to the middle of the
+                                    // gap (34): wider would overlap the next swatch, and the swatches
+                                    // spaced 48 apart would not fit beside the label
                                     MouseArea {
                                         anchors.fill: parent
-                                        anchors.margins: -4
+                                        anchors.leftMargin: -3
+                                        anchors.rightMargin: -3
+                                        anchors.topMargin: -10
+                                        anchors.bottomMargin: -10
                                         onClicked: settingsPane.setUiOption("ui_accent", modelData)
                                     }
                                 }
