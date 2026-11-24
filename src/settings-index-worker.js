@@ -24,8 +24,31 @@ var KEY = /\bsettings\.([A-Za-z_][A-Za-z0-9_]*)/g
 // the control); any other mention (a visible: of some other row, say) is the weakest hint
 var SHOWS = /^\s*(checked|text|savedText|savedIndex|currentIndex|value|displayText)\s*:/
 var WRITES = /\bsettings\.[A-Za-z0-9_]+\s*=[^=]/
-// The look of the modern interface is written through main.qml: settingsPane.setUiOption("ui_theme", ...)
-var UI_OPTION = /\bset(?:Ui)?Option\(\s*"([A-Za-z0-9_]+)"/
+
+// The look of the modern interface is written through main.qml, not through settings.<key>:
+// settingsPane.setUiOption("ui_theme", ...). The key of such a line, or "" when it has none
+function uiOptionKey(line) {
+    var call = "setUiOption("
+    var at = line.indexOf(call)
+    if (at < 0)
+        return ""
+    var i = at + call.length
+    while (i < line.length && (line.charAt(i) === " " || line.charAt(i) === "\t"))
+        i++
+    if (line.charAt(i) !== "\"")
+        return ""
+    var end = line.indexOf("\"", i + 1)
+    if (end < 0)
+        return ""
+    var key = line.substring(i + 1, end)
+    for (var k = 0; k < key.length; k++) {
+        var c = key.charAt(k)
+        var ok = (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || (c >= "0" && c <= "9") || c === "_"
+        if (!ok)
+            return ""
+    }
+    return key
+}
 
 // Braces of a line outside string literals and // comments
 function braceDelta(line) {
@@ -190,9 +213,9 @@ function parse(file, source, map) {
                 record(map, linked[1], file, stack, 3, i,
                        stack.length > 0 && depth === stack[stack.length - 1].depth + 1 &&
                        !!stack[stack.length - 1].title)
-            var uiOption = UI_OPTION.exec(line)
+            var uiOption = uiOptionKey(line)
             if (uiOption)
-                record(map, uiOption[1], file, stack, 1, i)
+                record(map, uiOption, file, stack, 1, i)
             if (line.indexOf("settings.") >= 0) {
                 var strength = SHOWS.test(line) ? 2 : (WRITES.test(line) ? 1 : 0)
                 var m
