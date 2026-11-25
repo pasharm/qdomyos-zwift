@@ -1,11 +1,10 @@
 // Full screen charts (chartjs/chart.htm and the workout history, previewchart/chart.htm, with
 // chartfullscreen.css): a button in the top-left corner of every chart card spreads the card over
-// the whole page; there the shown charts go one after another with a swipe, and the button, the
-// back key (ChartJsTest.qml, PreviewChart.qml: handleBack) or the back arrow bring the page back.
+// the whole page; there the shown charts go one after another with a swipe, and the button or the
+// back key (ChartJsTest.qml, PreviewChart.qml: handleBack) bring the page back.
 // The charts come through qzcharttheme.js (create, restyle), which calls prepare/chartChanged.
-// A CSS overlay, not the Fullscreen API: that one does not work in the app's web view.
 // The app learns the state from the page title (WebView.title): FS_TITLE while spread.
-// Plain ES5, the syntax of dochartlive.js: the web view of Android 5.1 runs it.
+// Plain ES5.
 (function () {
     var FS_TITLE = 'Line Chart #fullscreen';
     var ICON_EXPAND = 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z';
@@ -14,8 +13,15 @@
     var SWIPE_MAX_MS = 800;
     var TOAST_MS = 3000;
     var BUTTON_ROW_PX = 36; // the height of the button (chartfullscreen.css)
+    var BIG_BUTTON_PX = 48; // and on a spread chart
     var BASE_FONT_PX = 12;  // Chart.js default font size, the one the page's charts use
-    var FIRST_ANIMATION_MS = 1500; // Chart.js animates a new chart for 1000 ms
+    var LINE = 1.2;         // Chart.js default line height of the title and the labels
+    var TITLE_TOP_PX = 14;  // above the title: its text in the middle of the 36 px button
+    var TITLE_BOTTOM_PX = 12;
+    // room kept free on each side of the centred title of a spread chart: the button (48 px) on the
+    // left, the counter "i / N" (chartfullscreen.css: 20 px, 16 px from the edge) on the right
+    var TITLE_SIDE_PX = 72;
+    var measure = null;     // a 2d context to measure the title
 
     var normalTitle = document.title;
     var current = null;     // the spread card
@@ -50,8 +56,8 @@
         return 0;
     }
 
-    // a card the page shows: not inside a hidden box (display: none, or height 0 as the heart
-    // chart without a sensor), and its chart is made
+    // a card the page shows: not inside a hidden box (display: none, or height 0 as the
+    // resistance charts of the workout history without resistance), and its chart is made
     function shown(card) {
         if (card !== current && card.offsetParent === null)
             return false;
@@ -66,6 +72,12 @@
     function chartOf(card) {
         var canvas = card.querySelector('canvas');
         return canvas && window.Chart && Chart.getChart ? Chart.getChart(canvas) : null;
+    }
+
+    // the chart still grows (its first animation): the end of that animation saves its picture
+    // for the mail (animation.onComplete), and a spread chart would go there big
+    function growing(chart) {
+        return !!(chart && Chart.animator && Chart.animator.running(chart));
     }
 
     function iconSvg(path) {
@@ -93,12 +105,9 @@
             button.className = 'qz-fs-button';
             // not in the summary picture of the workout mail (html2canvas)
             button.setAttribute('data-html2canvas-ignore', 'true');
-            // not while the chart first grows: the end of that animation saves its picture for
-            // the mail (animation.onComplete), and a spread chart would go there big
-            var readyAt = Date.now() + FIRST_ANIMATION_MS;
             button.addEventListener('click', function (e) {
                 e.stopPropagation();
-                if (Date.now() < readyAt)
+                if (growing(chartOf(card)))
                     return;
                 if (current === card)
                     exit();
@@ -154,6 +163,10 @@
             if (!scale || typeof scale !== 'object')
                 return;
             setPath(options, ['scales', id, 'ticks', 'font', 'size'], tick);
+            // the big labels side by side, some skipped: turned ones (Chart.js turns what does not fit)
+            // went off the bottom edge with the negative padding below (the empty heart rate chart
+            // of the workout history: 11 labels turned by 46 degrees)
+            setPath(options, ['scales', id, 'ticks', 'maxRotation'], 0);
             // zone names drawn inside the chart (a negative padding in px) grow with the font
             var padding = scale.ticks && scale.ticks.padding; // raw options: ticks may be missing
             if (typeof padding === 'number' && padding < 0)
@@ -161,23 +174,105 @@
             if (scale.title && scale.title.display)
                 setPath(options, ['scales', id, 'title', 'font', 'size'], tick);
         });
-        setPath(options, ['plugins', 'title', 'font', 'size'], Math.round(tick * 1.2));
+        bigTitle(options, tick);
+        // the title row for the big button and the big fonts set above
+        var room = titleRoom(options, BIG_BUTTON_PX);
+        setPath(options, room.path, room.value);
         setPath(options, ['plugins', 'legend', 'labels', 'font', 'size'], tick);
         // the values under a held finger, readable as the axes
         setPath(options, ['plugins', 'tooltip', 'titleFont', 'size'], tick);
         setPath(options, ['plugins', 'tooltip', 'bodyFont', 'size'], tick);
     }
 
-    // the button sits in the title row: a taller row keeps it off the top label of the y axis
-    function roomForButton(options) {
+    // the title of the spread chart, 1.2 times the labels; one that does not fit between the button
+    // and the counter (the uk "Peloton Resistance vs Target Peloton Resistance" went under both)
+    // gets smaller, down to the size of the labels, then goes on two lines: Chart.js does not wrap it
+    function bigTitle(options, tick) {
+        var size = Math.round(tick * 1.2);
         var title = options.plugins && options.plugins.title;
-        if (title && title.display)
-            title.padding = { top: BUTTON_ROW_PX - 22, bottom: 12 };
-        else {
-            if (!options.layout)
-                options.layout = {};
-            options.layout.padding = { top: BUTTON_ROW_PX };
+        var text = title && title.display ? title.text : null;
+        if (typeof text === 'string' && text.length) {
+            var room = window.innerWidth - 2 * TITLE_SIDE_PX;
+            var font = title.font || {};
+            var family = font.family || (Chart.defaults.font && Chart.defaults.font.family) || 'sans-serif';
+            var weight = font.weight || 'bold'; // Chart.js default of the title
+            if (!measure)
+                measure = document.createElement('canvas').getContext('2d');
+            var width = function (t) {
+                measure.font = weight + ' ' + size + 'px ' + family;
+                return measure.measureText(t).width;
+            };
+            var full = width(text);
+            if (full > room)
+                size = Math.max(tick, Math.floor(size * room / full));
+            if (width(text) > room) {
+                var lines = twoLines(text, width);
+                if (lines)
+                    setPath(options, ['plugins', 'title', 'text'], lines);
+            }
         }
+        setPath(options, ['plugins', 'title', 'font', 'size'], size);
+    }
+
+    // the text split at the space that makes the longer of the two lines the shortest; null
+    // without a space
+    function twoLines(text, width) {
+        var best = null;
+        var bestWidth = 0;
+        for (var i = text.indexOf(' '); i > 0; i = text.indexOf(' ', i + 1)) {
+            var lines = [text.slice(0, i), text.slice(i + 1)];
+            var w = Math.max(width(lines[0]), width(lines[1]));
+            if (!best || w < bestWidth) {
+                best = lines;
+                bestWidth = w;
+            }
+        }
+        return best;
+    }
+
+    // The y labels drawn inside the chart (a negative padding) and aligned to the end of their tick
+    // stand above it: the top one (the zone name of the heart rate and power charts) rises over the
+    // plot area into the title row. The size of the biggest such label, 0 without any
+    function labelAbovePx(options) {
+        var scales = options.scales || {};
+        var px = 0;
+        Object.keys(scales).forEach(function (id) {
+            var scale = scales[id];
+            var ticks = scale && scale.ticks;
+            var vertical = id.charAt(0) === 'y' || scale && (scale.axis === 'y' ||
+                scale.position === 'left' || scale.position === 'right');
+            if (vertical && ticks && ticks.align === 'end' && ticks.padding < 0)
+                px = Math.max(px, ticks.font && ticks.font.size || BASE_FONT_PX);
+        });
+        return px;
+    }
+
+    // The button sits in the title row: the plot area starts one such label below the button, so
+    // the label rising from it stays clear (the empty heart rate chart put "zone 5" under the button).
+    // The values for a button of buttonPx with the fonts the options have now
+    function titleRoom(options, buttonPx) {
+        var label = labelAbovePx(options);
+        var below = label ? Math.ceil(LINE * label) + 2 : 0;
+        var title = options.plugins && options.plugins.title;
+        if (!(title && title.display))
+            return { path: ['layout', 'padding'], value: { top: buttonPx + below } };
+        var size = title.font && title.font.size || BASE_FONT_PX;
+        var lines = Array.isArray(title.text) ? title.text.length : 1;
+        var bottom = Math.max(TITLE_BOTTOM_PX,
+                              Math.ceil(buttonPx + below - TITLE_TOP_PX - LINE * size * lines));
+        return { path: ['plugins', 'title', 'padding'], value: { top: TITLE_TOP_PX, bottom: bottom } };
+    }
+
+    // the page look, set on the options as they come (every chart of the page has the button)
+    function roomForButton(options) {
+        var room = titleRoom(options, BUTTON_ROW_PX);
+        var obj = options;
+        for (var i = 0; i < room.path.length - 1; i++) {
+            if (!obj[room.path[i]])
+                obj[room.path[i]] = {};
+            obj = obj[room.path[i]];
+        }
+        obj[room.path[room.path.length - 1]] = room.value;
     }
 
     function redraw(chart) {
@@ -271,6 +366,9 @@
             return;
         var i = list.indexOf(current);
         var next = list[(i + delta + list.length) % list.length];
+        // not a chart that still grows, as the button (its picture for the mail would go big)
+        if (growing(chartOf(next)))
+            return;
         enter(next, false);
     }
 
