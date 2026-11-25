@@ -10971,71 +10971,215 @@ import QtQuick 2.12 as Quick212
                         // StackView page, Qt 5.15.0 (Android) crashes on exit while the popup is open -
                         // it repositions against the overlay already destroyed (QTBUG-84579, fixed in 5.15.1)
                         parent: Overlay.overlay
-                        anchors.centerIn: parent
-                        width: Math.min(parent.width * 0.9, 400)
+                        // The keyboard up: centred in the part of the window above it (below)
+                        anchors.centerIn: keyboardUp ? undefined : parent
+                        x: Math.round((parent.width - width) / 2)
+                        // the top of the card not above that part (the card can be taller - below)
+                        y: Math.round(insetTop + Math.max(0, (visibleBottom - insetTop - height) / 2))
+                        readonly property bool modern: window.ui.modern
+                        // Modern: the card of UiMessageDialog, 24 from the screen edges, the corner of 28
+                        width: modern ? Math.min(parent.width - 48, 440) : Math.min(parent.width * 0.9, 400)
+                        modernRadius: 28
+                        // Modern: the Material 3 dialog - 24 on every side (the buttons and the field
+                        // bring 6 of it with their insets, UiButton.qml / UiTextField.qml); classic: the
+                        // padding of the Material Popup (Popup.qml v5.15.0:52)
+                        padding: modern ? 24 : 12
+                        bottomPadding: modern ? 24 - submitButton.bottomInset : 12
+
+                        // Its own height, no taller than the room between the system bars: without it the
+                        // popup takes the height of its content, and with a large font the buttons went
+                        // below the window - the positioner shrinks the popup to the
+                        // window and the content runs out of it (qquickpopuppositioner.cpp v5.15.0:221-237).
+                        // The text scrolls instead; the field and the buttons stay on the card. With the
+                        // keyboard up the room is the part above it, and the card can be taller (below)
+                        readonly property real insetTop: visible ? window.getTopPadding() : 0
+                        readonly property real insetBottom: visible ? window.getBottomPadding() : 0
+
+                        // The keyboard comes up with the focus in the code field and covered Cancel and
+                        // Submit: the popup is centred in the part of the window above it instead.
+                        // Android: the window is not resized for a field no taller than Qt's estimate of
+                        // the part above the keyboard (3/5 of the screen in portrait before the first
+                        // keyboard): Qt sets SOFT_INPUT_ADJUST_PAN, not RESIZE (QtActivityDelegate.java
+                        // v5.15.0:270-288), and the keyboard covers its lower part. keyboardRectangle.y is
+                        // the top of the keyboard in the window (:809-817), but in physical pixels
+                        // (QTBUG-50756, the same in Qt 6): divided by the pixel ratio. Its height is not
+                        // taken - it may be wrong with the navigation bar (QTBUG-81036).
+                        // iOS: keyboardRectangle is in window coordinates (qiosinputcontext.mm
+                        // v5.15.2:429-432). Qt's scroll of the window to the cursor (:496-529) does not
+                        // happen in this build: with qt-patches/ios/5.15.2/qios-uiscene.patch the scene's
+                        // window does not exist yet when Qt adds the keyboard's gesture to it (:336-339),
+                        // so there is no view to scroll (:463-464, 486-488). Qt 6.8 adds the gesture to the
+                        // focus window instead (qtbase f480b59914): if the patch takes that, Qt scrolls
+                        // again when the cursor (with 20 pt around it) is under the keyboard (:509-528), and
+                        // the popup has to take the scroll into account. While the keyboard comes in,
+                        // its rectangle is the one it starts from (:400, animating - :421) and the popup
+                        // waits in the centre. Only a keyboard docked at the bottom (its bottom at or below
+                        // the window's: a maximized window, the classic look, ends above the home
+                        // indicator), and not in an iPad window of Split View, Slide Over or Stage Manager
+                        // (not tested there). The card is never shorter than its
+                        // smallest content (the text at the minimum height its Flickable already has -
+                        // 3 x 16 px, scaled with the text size - the field and the buttons); when the part
+                        // above the keyboard is shorter than that (landscape), the card starts at its top
+                        // and its lower part stays under the keyboard
+                        readonly property rect keyboard: Qt.inputMethod.keyboardRectangle
+                        readonly property bool ios: Qt.platform.os === "ios"
+                        readonly property bool android: Qt.platform.os === "android"
+                        readonly property real keyboardTop: android ? keyboard.y / Screen.devicePixelRatio : keyboard.y
+                        readonly property bool keyboardUp: visible && Qt.inputMethod.visible && keyboard.y > 0
+                                                           && keyboardTop < parent.height
+                                                           && (ios ? !Qt.inputMethod.animating && !window.iosMultiWindowMode
+                                                                     && keyboard.y + keyboard.height >= parent.height - 1
+                                                                   : android)
+                        readonly property real visibleBottom: keyboardUp ? keyboardTop : parent.height
+                        readonly property real room: keyboardUp
+                                                     ? visibleBottom - insetTop - (modern ? 48 : 24)
+                                                     : parent.height - 2 * Math.max(insetTop, insetBottom) - (modern ? 48 : 24)
+                        readonly property real smallestCard: topPadding + bottomPadding
+                                                             + Math.min(mfaTextColumn.implicitHeight, window.fontPx(16) * 3)
+                                                             + fieldGap.height + mfaFieldBlock.height + buttonsGap.height + mfaButtons.height
+                        height: Math.min(implicitHeight, keyboardUp ? Math.max(room, smallestCard) : room)
 
                         visible: rootItem.garminMfaRequested
 
-                        ColumnLayout {
-                            anchors.fill: parent
-                            spacing: 20
+                        contentItem: Column {
+                            // Gaps of the Material 3 dialog: the text 16 above the field, the buttons
+                            // 24 below the hint (less the insets of the field and of the buttons);
+                            // classic: 20 between all, as the ColumnLayout before
+                            Flickable {
+                                id: mfaTextFlick
+                                width: parent.width
+                                height: Math.min(mfaTextColumn.implicitHeight,
+                                                 Math.max(window.fontPx(16) * 3,
+                                                          garminMfaDialog.room - garminMfaDialog.topPadding
+                                                          - garminMfaDialog.bottomPadding - fieldGap.height
+                                                          - mfaFieldBlock.height - buttonsGap.height - mfaButtons.height))
+                                contentHeight: mfaTextColumn.implicitHeight
+                                clip: contentHeight > height
+                                boundsBehavior: Flickable.StopAtBounds
 
-                            Label {
-                                text: qsTr("Garmin MFA Required")
-                                // a long translation ("Потрібен код підтвердження Garmin") ran out of the card
-                                wrapMode: Text.WordWrap
-                                // Modern: the title of UiMessageDialog
-                                font.pixelSize: window.ui.modern ? window.ui.fontTitle : window.fontPx(18)
-                                font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
-                                color: window.ui.ink(Material.foreground)
-                                Layout.fillWidth: true
-                                horizontalAlignment: Text.AlignHCenter
-                            }
+                                Column {
+                                    id: mfaTextColumn
+                                    width: parent.width
+                                    spacing: garminMfaDialog.modern ? 16 : 20
 
-                            Label {
-                                text: qsTr("Garmin has sent a verification code to your email.\nPlease enter it below:")
-                                wrapMode: Text.WordWrap
-                                font.pixelSize: window.ui.modern ? window.ui.fontBody : (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
-                                color: window.ui.ink(Material.foreground)
-                                Layout.fillWidth: true
-                                horizontalAlignment: Text.AlignHCenter
-                            }
-
-                            Label {
-                                text: qsTr("If you don't receive the code, please enable 2FA in your Garmin profile privacy settings.")
-                                wrapMode: Text.WordWrap
-                                Layout.fillWidth: true
-                                horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(12)
-                                font.italic: !window.ui.modern
-                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
-                            }
-
-                            UiTextField {
-                                id: mfaCodeTextField
-                                placeholderText: qsTr("Enter MFA code")
-                                horizontalAlignment: Text.AlignHCenter
-                                Layout.fillWidth: true
-                                // Modern: the height and the font of UiTextField
-                                Layout.preferredHeight: window.ui.modern ? -1 : window.fontPx(40)
-                                font.pixelSize: window.ui.modern ? window.ui.fontBase : window.fontPx(16)
-
-                                onAccepted: {
-                                    if (text.length > 0) {
-                                        rootItem.garmin_submit_mfa_code(text);
-                                        text = "";
+                                    Label {
+                                        width: parent.width
+                                        text: qsTr("Garmin MFA Required")
+                                        // Modern: a long translation ("Потрібен код підтвердження Garmin") in the
+                                        // larger title font ran out of the card; classic: one line (NoWrap of Label)
+                                        wrapMode: garminMfaDialog.modern ? Text.Wrap : Text.NoWrap
+                                        // Modern: the title of UiMessageDialog, at the start as in a Material 3 dialog
+                                        font.pixelSize: garminMfaDialog.modern ? window.ui.fontTitle : window.fontPx(18)
+                                        font.weight: garminMfaDialog.modern ? Font.DemiBold : Font.Bold
+                                        color: garminMfaDialog.modern ? window.ui.textMain : window.ui.ink(Material.foreground)
+                                        horizontalAlignment: garminMfaDialog.modern ? Text.AlignLeft : Text.AlignHCenter
                                     }
+
+                                    Label {
+                                        width: parent.width
+                                        text: qsTr("Garmin has sent a verification code to your email.\nPlease enter it below:")
+                                        wrapMode: Text.WordWrap
+                                        // Modern: the body text of UiMessageDialog; classic: the font of the style
+                                        Binding on font.pixelSize { when: garminMfaDialog.modern; value: window.ui.fontBody; restoreMode: Binding.RestoreBindingOrValue }
+                                        lineHeight: garminMfaDialog.modern ? 1.15 : 1
+                                        // Modern: room for the scroll bar when the text scrolls (UiMessageDialog)
+                                        rightPadding: garminMfaDialog.modern ? 12 : 0
+                                        color: garminMfaDialog.modern ? window.ui.textMuted : window.ui.ink(Material.foreground)
+                                        horizontalAlignment: garminMfaDialog.modern ? Text.AlignLeft : Text.AlignHCenter
+                                    }
+
+                                    // Classic: the hint above the field (modern: under it, mfaHintModern)
+                                    Label {
+                                        width: parent.width
+                                        visible: !garminMfaDialog.modern
+                                        text: qsTr("If you don't receive the code, please enable 2FA in your Garmin profile privacy settings.")
+                                        wrapMode: Text.WordWrap
+                                        horizontalAlignment: Text.AlignHCenter
+                                        font.pixelSize: window.fontPx(12)
+                                        font.italic: true
+                                        color: Material.color(Material.Grey)
+                                    }
+                                }
+                                ScrollIndicator.vertical: ScrollIndicator {
+                                    active: mfaTextFlick.contentHeight > mfaTextFlick.height
                                 }
                             }
 
-                            RowLayout {
-                                Layout.fillWidth: true
-                                spacing: 10
+                            Item {
+                                id: fieldGap
+                                width: 1
+                                height: garminMfaDialog.modern ? 16 - mfaCodeTextField.topInset : 20
+                            }
+
+                            Item {
+                                id: mfaFieldBlock
+                                width: parent.width
+                                height: mfaHintModern.visible ? mfaHintModern.y + mfaHintModern.height : mfaCodeTextField.height
+
+                                UiTextField {
+                                    id: mfaCodeTextField
+                                    width: parent.width
+                                    // Modern: the height and the font of UiTextField
+                                    height: garminMfaDialog.modern ? implicitHeight : window.fontPx(40)
+                                    placeholderText: qsTr("Enter MFA code")
+                                    horizontalAlignment: garminMfaDialog.modern ? Text.AlignLeft : Text.AlignHCenter
+                                    font.pixelSize: garminMfaDialog.modern ? window.ui.fontBase : window.fontPx(16)
+
+                                    onAccepted: {
+                                        if (text.length > 0) {
+                                            rootItem.garmin_submit_mfa_code(text);
+                                            text = "";
+                                        }
+                                    }
+                                }
+
+                                // Modern: the supporting text of the field in Material 3 - 4 under the box,
+                                // 16 in from its start
+                                Label {
+                                    id: mfaHintModern
+                                    visible: garminMfaDialog.modern
+                                    x: 16
+                                    y: mfaCodeTextField.height - mfaCodeTextField.bottomInset + 4
+                                    width: parent.width - 32
+                                    text: qsTr("If you don't receive the code, please enable 2FA in your Garmin profile privacy settings.")
+                                    wrapMode: Text.Wrap
+                                    font.pixelSize: window.ui.fontCaption
+                                    color: window.ui.textMuted
+                                }
+                            }
+
+                            Item {
+                                id: buttonsGap
+                                width: 1
+                                height: garminMfaDialog.modern ? 24 - submitButton.topInset : 20
+                            }
+
+                            // Modern: the buttons at the end, 8 apart, one under the other when a translation
+                            // with a large font does not fit one row (Material 3); classic: two halves, as before
+                            GridLayout {
+                                id: mfaButtons
+                                width: parent.width
+                                // two gaps: the spacer is a column of its own; the layout rounds the widths up
+                                // (qquicklayout.cpp v5.15.0:1081)
+                                readonly property bool oneRow: Math.ceil(cancelButton.implicitWidth) + Math.ceil(submitButton.implicitWidth)
+                                                               + 2 * columnSpacing <= width
+                                columns: !garminMfaDialog.modern ? 2 : oneRow ? 3 : 1
+                                columnSpacing: garminMfaDialog.modern ? 8 : 10
+                                rowSpacing: 8 - submitButton.topInset - submitButton.bottomInset
+
+                                // pushes the buttons to the end (an invisible item is out of the layout,
+                                // qquicklayout.cpp v5.15.0:776)
+                                Item {
+                                    visible: garminMfaDialog.modern && mfaButtons.oneRow
+                                    Layout.fillWidth: true
+                                }
 
                                 UiButton {
+                                    id: cancelButton
                                     text: qsTr("Cancel")
                                     cardSurface: true
-                                    Layout.fillWidth: true
+                                    Layout.fillWidth: !garminMfaDialog.modern
+                                    Layout.alignment: Qt.AlignRight
                                     onClicked: {
                                         mfaCodeTextField.text = "";
                                         rootItem.garminMfaRequested = false;
@@ -11043,9 +11187,11 @@ import QtQuick 2.12 as Quick212
                                 }
 
                                 UiButton {
+                                    id: submitButton
                                     text: qsTr("Submit")
-                                    Layout.fillWidth: true
                                     highlighted: true
+                                    Layout.fillWidth: !garminMfaDialog.modern
+                                    Layout.alignment: Qt.AlignRight
                                     onClicked: {
                                         rootItem.garmin_submit_mfa_code(mfaCodeTextField.text);
                                         mfaCodeTextField.text = "";
