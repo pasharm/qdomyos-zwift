@@ -268,7 +268,7 @@ function process_arr(arr) {
     // ones after the first kept their old place on a resize (full screen, a turn of the phone).
     // The lines keep the first point of that second
     let lines = [watts, reqpower, reqcadence, heart, cadence, resistance, reqresistance,
-                 pelotonresistance, pelotonreqresistance, speed, inclination];
+                 pelotonresistance, pelotonreqresistance, speed, inclination, pace];
     while (watts.length > 1 && watts[watts.length - 2].x === maxEl) {
         for (let line of lines)
             line.pop();
@@ -1225,6 +1225,7 @@ function drawHeartDistribution(distribution, backgroundFill) {
         options: {
             responsive: true,
             aspectRatio: 1.5,
+            animation: false,
             plugins: {
                 title: {
                     display: true,
@@ -1323,6 +1324,7 @@ function drawPowerCurve(wattsRow, backgroundFill) {
         options: {
             responsive: true,
             aspectRatio: 1.5,
+            animation: false,
             plugins: {
                 title: {
                     display: true,
@@ -1379,6 +1381,7 @@ function drawPace(pace, maxEl, backgroundFill) {
         options: {
             responsive: true,
             aspectRatio: 1.5,
+            animation: false,
             plugins: {
                 title: {
                     display: true,
