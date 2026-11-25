@@ -1377,7 +1377,10 @@ const QString QZSettings::resistance_compatibility = QStringLiteral("resistance_
 
 const QString QZSettings::strava_synthetic_gps_track = QStringLiteral("strava_synthetic_gps_track");
 
-const uint32_t allSettingsCount = 1063;
+const QString QZSettings::ui_modern_new_install_checked = QStringLiteral("ui_modern_new_install_checked");
+const QString QZSettings::ui_modern_offer_pending = QStringLiteral("ui_modern_offer_pending");
+
+const uint32_t allSettingsCount = 1065;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2467,6 +2470,8 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::proform_use_console_gears, QZSettings::default_proform_use_console_gears},
     {QZSettings::resistance_compatibility, QZSettings::default_resistance_compatibility},
     {QZSettings::strava_synthetic_gps_track, QZSettings::default_strava_synthetic_gps_track},
+    {QZSettings::ui_modern_new_install_checked, QZSettings::default_ui_modern_new_install_checked},
+    {QZSettings::ui_modern_offer_pending, QZSettings::default_ui_modern_offer_pending},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

@@ -3095,6 +3095,8 @@ import QtQuick 2.12 as Quick212
             property bool resistance_compatibility: false
             // Keep newly added properties at the end to preserve settings order on iOS.
             property bool strava_synthetic_gps_track: false
+            property bool ui_modern_new_install_checked: false
+            property bool ui_modern_offer_pending: false
 
         }
 
