@@ -12,6 +12,35 @@
     var NEUTRAL = ['black', '#000', '#000000', '#666', '#666666', 'rgb(0,0,0)'];
     var charts = [];
 
+    // A touch that scrolls the page is not a look at a chart. Chart.js shows the tooltip on
+    // touchmove (and on the mousemove and click of a tap) and hides it only on mouseout, so a
+    // swipe across a chart left the tooltip of the last point under the finger, and a live
+    // redraw (an update in place replays the last event) kept it. Once the page scrolls, the
+    // charts drop their tooltip and last event the way a mouse leaving does and skip the rest of
+    // the touch, up to the next first finger; a tap and a held finger show it as before
+    var touchScrolled = false;
+    document.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1)
+            touchScrolled = false;
+    }, { capture: true, passive: true });
+    document.addEventListener('scroll', function () {
+        if (touchScrolled)
+            return;
+        touchScrolled = true;
+        charts.forEach(function (chart) {
+            if (chart.canvas)
+                chart.canvas.dispatchEvent(new MouseEvent('mouseout'));
+        });
+    }, true);
+    var scrollGuard = {
+        id: 'qzScrollGuard',
+        beforeEvent: function (chart, args) {
+            var e = args.event.native;
+            if (touchScrolled && e && e.type.indexOf('touch') === 0)
+                return false;
+        }
+    };
+
     // Sport pictures of the summary (a lime drawing on a grey disc) and the icons of the
     // app's set (Material Symbols Rounded, the paths of ShapeIcon.qml) drawn instead in the modern look
     var SPORT_ICONS = {
@@ -186,71 +215,17 @@
         }
     }
 
-    // The charts of dochart.js ask for their tooltip the Chart.js 2 way (plugins.tooltips: mode
-    // index, no intersect), which Chart.js 3 ignores: a held finger showed the values only right
-    // on a point, and the lines draw none. The same the Chart.js 3 way, the time of the point in
-    // the title of a line chart (its x axis counts seconds) and in the bars of a distribution
-    function touchTooltip(config) {
-        var options = config.options;
-        var old = options && options.plugins && options.plugins.tooltips;
-        if (!old || options.interaction)
-            return;
-        options.interaction = { mode: old.mode, intersect: old.intersect };
-        var tooltip = options.plugins.tooltip = options.plugins.tooltip || {};
-        var callbacks = tooltip.callbacks = tooltip.callbacks || {};
-        if (config.type === 'line' && !callbacks.title)
-            callbacks.title = function (items) { return items.length ? clock(items[0].parsed.x) : ''; };
-        else if (config.type === 'bar' && !callbacks.label)
-            callbacks.label = function (item) { return clock(item.parsed.y); };
-    }
-
-    // A touch that scrolls the page is not a look at a chart. Chart.js shows the tooltip on
-    // touchmove (and on the mousemove and click of a tap) and hides it only on mouseout, so a
-    // swipe across a chart left the tooltip of the last point under the finger, and a live
-    // redraw (an update in place replays the last event) kept it. Once the page scrolls, the
-    // charts drop their tooltip and last event the way a mouse leaving does and skip the rest of
-    // the touch, up to the next first finger; a tap and a held finger show it as before
-    var touchScrolled = false;
-    document.addEventListener('touchstart', function (e) {
-        if (e.touches.length === 1)
-            touchScrolled = false;
-    }, { capture: true, passive: true });
-    document.addEventListener('scroll', function () {
-        if (touchScrolled)
-            return;
-        touchScrolled = true;
-        charts.forEach(function (chart) {
-            if (chart.canvas)
-                chart.canvas.dispatchEvent(new MouseEvent('mouseout'));
-        });
-    }, true);
-    var scrollGuard = {
-        id: 'qzScrollGuard',
-        beforeEvent: function (chart, args) {
-            var e = args.event.native;
-            if (touchScrolled && e && e.type.indexOf('touch') === 0)
-                return false;
-        }
-    };
-
-    function clock(seconds) {
-        var s = Math.round(seconds), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60);
-        function two(n) { return (n < 10 ? '0' : '') + n; }
-        return (h ? h + ':' + two(m) : m) + ':' + two(s % 60);
-    }
-
     function rootOf(chart) {
         return { options: chart.config.options, data: chart.config.data };
     }
 
     window.qzChartTheme = {
         create: function (ctx, config) {
-            touchTooltip(config);
             var list = patches(config);
+            config.plugins = (config.plugins || []).concat(scrollGuard);
             var pal = palette();
             apply(config, list, pal);
             fullscreen('prepare', ctx.canvas, config.options);
-            config.plugins = (config.plugins || []).concat(scrollGuard);
             var chart = new Chart(ctx, config);
             chart.$qzPatches = list;
             chart.$qzPalette = pal;
@@ -266,7 +241,6 @@
         // palette and become its patches, so refresh() and withLight() keep working on them.
         // The rest of the options are the ones already themed: their patches keep the original values
         restyle: function (chart, config) {
-            touchTooltip(config);
             var kept = {};
             (chart.$qzPatches || []).forEach(function (p) {
                 kept[p.path.join('/')] = p;
