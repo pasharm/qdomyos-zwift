@@ -870,15 +870,15 @@ ApplicationWindow {
                 stackView.currentItem.profileSaveReminderNeeded()
         var activeProfileName = settings.profile_name
 
-        // Modern look: not when the settings are back as they were at the opening of the page
-        // (a setting switched on and off again)
-        var restartNeeded = window.settings_restart_to_apply === true &&
-                !(window.ui.modern && stackView.currentItem &&
-                  typeof stackView.currentItem.settingsChangedSinceOpen === "function" &&
-                  !stackView.currentItem.settingsChangedSinceOpen())
         if (window.settings_restart_to_apply === true) {
             window.settings_restart_to_apply = false;
-            if (restartNeeded)
+            // Not when the settings are back as they were at the opening of the settings page (a
+            // setting switched on and off again). That page may be under the current one (Tiles
+            // Options...): those pages change the same settings
+            var settingsPage = stackView.find(function(item) {
+                return typeof item.settingsChangedSinceOpen === "function"
+            })
+            if (settingsPage === null || settingsPage.settingsChangedSinceOpen())
                 popupRestartApp.visible = true;
         }
 
