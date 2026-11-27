@@ -17,23 +17,30 @@ count_log() { grep -a -c -F -- "$1" full_logcat.txt; }
 
 # search <look>: the settings search finds the new setting
 search() {
-  local look=$1 c="s$1" modern=false
+  # names start with h: qml_quiet reads the head pid by "^pid h"
+  local look=$1 c="hs$1" modern=false rc
   [ "$look" = m ] && modern=true
+  # the settings search is not on API 30 (settings_search skips it there)
+  [ "$EMU_API" = 30 ] && { say "$c: no settings search on API 30 - skipped"; return 1; }
   start_case "$c" ui_modern=$modern ui_theme_mode=light bluetooth_lastdevice_name=TestBike || return 1
-  settings_search "$c" "Smooth" '^Smooth Chart Lines.*' || { back_to "$HOME_RX" 20; return 1; }
-  expect "$c-1-results" '^Smooth Chart Lines.*' "the search finds the setting"
+  rc=0
+  settings_search "$c" "Smooth" '^Smooth Chart Lines(: .*)?$' || rc=$?
+  if [ "$rc" = 2 ]; then
+    fail "check $c: the settings search found nothing for Smooth"
+  fi
+  [ "$rc" = 0 ] || { back_to "$HOME_RX" 20; return 1; }
+  expect "$c-1-results" '^Smooth Chart Lines(: .*)?$' "the search finds the setting"
   back_to "$HOME_RX" 20
 }
 
 # charts <value>: the Charts page while the fake bike runs, then Stop and the pictures of the mail
 charts() {
-  local v=$1 c="c$1" n0 live0 live saved0 saved loads0 i
+  local v=$1 c="hc$1" live0 live mark saved last loads0 i
   HOME_READY_RX=
   start_case "$c" ui_modern=false ui_theme_mode=light applewatch_fakedevice=true bluetooth_lastdevice_name=TestBike \
     chart_smooth_lines=$v confirm_stop_workout=false || return 1
   # the fake bike starts the session: some seconds of points before the page opens
   emu_sleep 20
-  loads0=$(count_log '"Path" "chartjs/chart.htm"')
   open_drawer '^Charts$' && tap_ui '^Charts$' '^◄$' 30 || { fail "$c: Charts did not open"; return 1; }
   wait_log '"Path" "chartjs/chart.htm"' 60 || return 1
   emu_sleep 6
@@ -51,7 +58,8 @@ charts() {
   back_to "$HOME_RX" 20 || return 1
   emu_sleep 5
   loads0=$(count_log '"Path" "chartjs/chart.htm"')
-  saved0=$(count_log 'savechart')
+  # the line of the log from which the replies to savechart of this Stop are counted
+  mark=$(( $(wc -l < full_logcat.txt) + 1 ))
   # by hand: what comes after Stop (the RPE question or the Charts page) is judged by the log below
   still
   if dump && find_ui '^Stop$' --first; then
@@ -79,26 +87,35 @@ charts() {
     fail "check $c-3: the Charts page did not open after Stop"
     return 1
   fi
-  # the pictures are taken at the end of the first animation of each chart
-  emu_sleep 30
+  # the pictures are taken at the end of the first animation of each chart: the names of the pictures the app
+  # answered (R_savechart), counted once each, until the count stays the same 10 s (at most 90 s). The answer is
+  # indented JSON (QJsonDocument::toJson), one logcat line per line: "name" is two lines above "msg"
+  # (notes/emu/t642-44933490375-r2, api30 full_logcat.grep.txt:5005-5009)
+  last=-1 saved=0
+  for i in $(seq 1 9); do
+    emu_sleep 10
+    saved=$(tail -n +"$mark" full_logcat.txt | grep -a -B2 -F '"msg": "R_savechart"' | grep -a -o '"name": "[^"]*"' \
+      | sort -u | wc -l)
+    [ "$saved" -gt 0 ] && [ "$saved" = "$last" ] && break
+    last=$saved
+  done
   still
   shot "$c-3-end"
-  saved=$(( $(count_log 'savechart') - saved0 ))
-  say "count $c-3-end: savechart lines after Stop (chart_smooth_lines=$v): $saved"
+  say "count $c-3-end: pictures saved after Stop (chart_smooth_lines=$v): $saved"
   echo "$v $saved" >> saved.txt
   back_to "$HOME_RX" 20
 }
 
-# saved_same: the same number of savechart lines after Stop with every value, and not 0
+# saved_same: the same number of saved pictures (R_savechart names) after Stop with every value, and not 0
 saved_same() {
   local first="" v n ok=1
   [ -s saved.txt ] || { fail "check saved: no Stop case counted"; return 1; }
   while read -r v n; do
     [ "${n:-0}" -gt 0 ] || { fail "check saved: no savechart after Stop with chart_smooth_lines=$v"; ok=0; }
     [ -z "$first" ] && first=$n
-    [ "$n" = "$first" ] || { fail "check saved: $n savechart lines with chart_smooth_lines=$v, $first with the first value"; ok=0; }
+    [ "$n" = "$first" ] || { fail "check saved: $n saved pictures with chart_smooth_lines=$v, $first with the first value"; ok=0; }
   done < saved.txt
-  [ "$ok" = 1 ] && say "check saved: the same $first savechart lines after Stop with $(cut -d' ' -f1 saved.txt | tr '\n' ' '): OK"
+  [ "$ok" = 1 ] && say "check saved: the same $first saved pictures after Stop with $(cut -d' ' -f1 saved.txt | tr '\n' ' '): OK"
 }
 
 # js_quiet: no uncaught JS error of dochart.js in the log
