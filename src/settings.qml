@@ -8587,7 +8587,7 @@ import AndroidStatusBar 1.0
                         Layout.topMargin: 8
                         Layout.bottomMargin: 12
                         // Wraps instead of running under the swatches: inside the frames of the
-                        // section the row is narrower than the six swatches and a long name
+                        // section the row is narrower than the seven swatches and a long name
                         Label {
                             Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Accent color")
