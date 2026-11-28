@@ -8754,6 +8754,10 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
         <translation>강조 색상</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>배경화면 색상</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>보라</translation>
     </message>

@@ -7338,6 +7338,10 @@ Please enter it below:</source>
         <translation>Акцентный цвет</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Цвет обоев</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Фиолетовый</translation>
     </message>

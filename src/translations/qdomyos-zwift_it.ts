@@ -7450,6 +7450,10 @@ NOTE IMPORTANTI:
         <translation>Colore di accento</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Colore dello sfondo</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Viola</translation>
     </message>

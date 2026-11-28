@@ -8605,26 +8605,38 @@ import AndroidStatusBar 1.0
                             bottomPadding: accentRow.stackedRow ? 13 : 0
                             Layout.alignment: (accentRow.stackedRow ? Qt.AlignLeft : Qt.AlignRight) | Qt.AlignVCenter
                             Repeater {
-                                model: ["violet", "blue", "teal", "green", "orange", "pink"]
+                                // "system" first, where Android offers the wallpaper colour (API 31+)
+                                model: (window.ui.systemAccentAvailable ? ["system"] : [])
+                                       .concat(["violet", "blue", "teal", "green", "orange", "pink"])
                                 // UiFrame: a Rectangle.border ring breaks up on Android
                                 delegate: UiFrame {
                                     width: 28
                                     height: 28
                                     radius: 14
-                                    fill: window.ui.a[modelData]
+                                    fill: window.ui.accentOf(modelData)
                                     strokeWidth: window.ui.accentName === modelData ? 3 : 0
                                     stroke: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
                                     // The same names as in settings-catalog.json (ui_accent): the search shows them
-                                    Accessible.name: ({ violet: qsTr("Violet"), blue: qsTr("Blue"),
+                                    Accessible.name: ({ system: qsTr("Wallpaper color"), violet: qsTr("Violet"), blue: qsTr("Blue"),
                                                         teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
                                                         pink: qsTr("Pink") })[modelData] || modelData
                                     Accessible.checked: window.ui.accentName === modelData
                                     // Qt 5.15: a double tap of the screen reader does not reach the MouseArea
                                     Accessible.onPressAction: settingsPane.setUiOption("ui_accent", modelData)
+                                    // The wallpaper colour is marked, so it does not pass for one
+                                    // more fixed colour
+                                    UiIcon {
+                                        visible: modelData === "system"
+                                        anchors.centerIn: parent
+                                        width: 18
+                                        height: 18
+                                        name: "palette"
+                                        color: window.ui.accentInk
+                                    }
                                     // 48 high, as the style guide asks; across, up to the middle of the
-                                    // gap (34): wider would overlap the next swatch, and the six spaced
-                                    // 48 apart would not fit beside the label
+                                    // gap (34): wider would overlap the next swatch, and the swatches
+                                    // spaced 48 apart would not fit beside the label
                                     MouseArea {
                                         anchors.fill: parent
                                         anchors.leftMargin: -3

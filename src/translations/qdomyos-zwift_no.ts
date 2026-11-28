@@ -8706,6 +8706,10 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Aksentfarge</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Farge fra bakgrunnsbildet</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Fiolett</translation>
     </message>

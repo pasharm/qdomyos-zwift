@@ -6483,6 +6483,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>强调色</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>壁纸颜色</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>紫色</translation>
     </message>

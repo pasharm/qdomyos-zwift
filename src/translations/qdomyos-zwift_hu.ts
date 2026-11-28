@@ -8706,6 +8706,10 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Kiemelőszín</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Háttérkép színe</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Ibolya</translation>
     </message>

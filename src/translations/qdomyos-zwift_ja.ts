@@ -7398,6 +7398,10 @@ Please enter it below:</source>
         <translation>アクセントカラー</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>壁紙の色</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>バイオレット</translation>
     </message>

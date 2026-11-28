@@ -6423,6 +6423,10 @@ Permitir que o QZ altere esse valor?
         <translation>Cor de destaque</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Cor do papel de parede</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Violeta</translation>
     </message>

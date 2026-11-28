@@ -8754,6 +8754,10 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Vurgu rengi</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Duvar kâğıdı rengi</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Mor</translation>
     </message>

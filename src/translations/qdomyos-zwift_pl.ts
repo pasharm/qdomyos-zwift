@@ -8754,6 +8754,10 @@ Domyślnie: A = -0.96, B = 1.33</translation>
         <translation>Kolor akcentu</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Kolor tapety</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Fioletowy</translation>
     </message>

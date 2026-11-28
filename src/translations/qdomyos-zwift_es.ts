@@ -7370,6 +7370,10 @@ Por favor, ingrésalo a continuación:</translation>
         <translation>Color de acento</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Color del fondo de pantalla</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Violeta</translation>
     </message>

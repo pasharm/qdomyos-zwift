@@ -7338,6 +7338,10 @@ Please enter it below:</source>
         <translation>Акцентний колір</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Колір шпалер</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Фіолетовий</translation>
     </message>

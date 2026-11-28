@@ -7354,6 +7354,10 @@ Bitte geben Sie ihn unten ein:</translation>
         <translation>Akzentfarbe</translation>
     </message>
     <message>
+        <source>Wallpaper color</source>
+        <translation>Hintergrundfarbe</translation>
+    </message>
+    <message>
         <source>Violet</source>
         <translation>Violett</translation>
     </message>
