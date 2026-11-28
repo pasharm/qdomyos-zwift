@@ -6,7 +6,8 @@
 #   base (b): origin/master 768f306a4 (test/t647-master) - six swatches, "system" unknown: no swatch marked
 # Cases (DEV keeps the wizard closed; the light look unless said):
 #   s - ui_accent=system saved: head API 31+ - "Wallpaper color" shown and marked, Violet not; Blue tapped -
-#       Blue marked; "Wallpaper color" tapped - marked, qz.conf ui_accent=system after a restart and marked again.
+#       Blue marked, qz.conf ui_accent=blue after a restart; "Wallpaper color" tapped - marked, ui_accent=system after a
+#       restart and marked again.
 #       head API 30 - no "Wallpaper color", Violet marked (the fix of F1). base - no "Wallpaper color", and
 #       Violet NOT marked: the defect the head fixes (a base with Violet marked did not reproduce it - red)
 #   d - the same in the dark look: the mark, the frame (the colour of the swatch and of the page accent - for the eye)
@@ -16,7 +17,7 @@
 #       (settings.qml searchValueText, accentName); base - printed only
 # Anchors: settings.qml of d231ba5aa - section "General UI Options" (8476), label "Accent color" (8596), swatches
 # RadioButton (8622) named "Wallpaper color", "Violet" ... "Pink" (8626); master 768f306a4 - the same without
-# "Wallpaper color" (Accessible.name of the swatch, settings.qml:8617)
+# "Wallpaper color" (Accessible.name of the swatch, settings.qml:8619)
 # One job for both sides: qml_quiet compares the warnings of the head with the base
 . .github/lib.sh
 . .github/qz.sh
@@ -85,6 +86,12 @@ saved() {
   local c=$1 mode=$2
   start_case "$c" ui_modern=true ui_theme_mode="$mode" ui_accent=system $DEV || return 1
   accent_row "$c" "$c-1-open" || return 1
+  # the height of the label at the text size of the system (100 %): the proof of 170 % in the case l
+  if [ "$mode" = light ] && find_ui '^Accent color$' --first; then
+    read -r -a ACC_AT <<< "$EMU_AT"
+    ACC_H=$((ACC_AT[7] - ACC_AT[5]))
+    say "$c: the label 'Accent color' ${ACC_H} px high at 100 %"
+  fi
   if palette "$c"; then
     expect "$c-1-open" '^Wallpaper color$' "the wallpaper swatch where Android gives the palette"
     marked "$c" "$c-1-open" 'Wallpaper color' true "the saved wallpaper colour marked"
@@ -94,7 +101,8 @@ saved() {
     if [ "${c:0:1}" = h ]; then
       marked "$c" "$c-1-open" 'Violet' true "the saved wallpaper colour with no palette shown as Violet"
     else
-      # master: accentName is the raw "system", no swatch has that name (settings.qml:8611 of 768f306a4)
+      # master: accentName is the raw "system" (main.qml:385 of 768f306a4), Accessible.checked compares the swatch
+      # names with it (settings.qml:8622), none is "system"
       marked "$c" "$c-1-open" 'Violet' false "master reproduces the defect: no swatch marked"
     fi
   fi
@@ -105,18 +113,30 @@ saved() {
   shot "$c-2-blue"
   marked "$c" "$c-2-blue" 'Blue' true "Blue marked after the tap"
   marked "$c" "$c-2-blue" 'Wallpaper color' false "the wallpaper swatch not marked after Blue"
-  pick "$c" 'Wallpaper color' || return 1
-  shot "$c-3-wallpaper"
-  marked "$c" "$c-3-wallpaper" 'Wallpaper color' true "the wallpaper swatch marked after the tap"
+  # each pick written and read back with a value other than the one the case started with (put_conf system):
+  # a write that does nothing would keep system and fail the first check
   restart "$c-r1" || return 1
-  conf_is "$c-r1" ui_accent system
-  accent_row "$c" "$c-4-restart" || return 1
-  marked "$c" "$c-4-restart" 'Wallpaper color' true "the wallpaper colour kept after the restart"
+  conf_is "$c-r1" ui_accent blue
+  accent_row "$c" "$c-3-restart" || return 1
+  marked "$c" "$c-3-restart" 'Blue' true "Blue kept after the restart"
+  pick "$c" 'Wallpaper color' || return 1
+  dump
+  shot "$c-4-wallpaper"
+  marked "$c" "$c-4-wallpaper" 'Wallpaper color' true "the wallpaper swatch marked after the tap"
+  restart "$c-r2" || return 1
+  conf_is "$c-r2" ui_accent system
+  accent_row "$c" "$c-5-restart" || return 1
+  marked "$c" "$c-5-restart" 'Wallpaper color' true "the wallpaper colour kept after the restart"
+}
+
+# bounds_of <dump> <name>: x1 y1 x2 y2 of the node content-desc="<name>" as the dump has it
+bounds_of() {
+  grep -o "content-desc=\"$2\"[^>]*bounds=\"[^\"]*\"" "$1" | head -n 1 | sed 's/.*bounds="//; s/"$//; s/\]\[/ /; s/[][]//g; s/,/ /g'
 }
 
 # large <case>: text at 170 %, the row of swatches on the screen whole
 large() {
-  local c=$1 n=0 s want first w h lab sw last
+  local c=$1 n=0 s want lab ref pk lh
   start_case "$c" ui_modern=true ui_theme_mode=light ui_accent=system ui_text_scale_system=false ui_text_scale=170 $DEV || return 1
   accent_row "$c" "$c-1-open" || return 1
   dump || return 1
@@ -127,22 +147,31 @@ large() {
   if palette "$c"; then want=7; else want=6; fi
   [ "$n" = "$want" ] && say "check $c-1-open: $n swatches on the screen at 170 %: OK" \
     || fail "check $c-1-open: $n swatches on the screen at 170 %, expected $want"
+  # 170 % in effect: the label taller than at 100 % in the case s of this side (put_conf checks the key only)
   find_ui '^Accent color$' --first || { fail "check $c-1-open: no label 'Accent color' ($EMU_WHY)"; return 1; }
   read -r -a lab <<< "$EMU_AT"
-  if palette "$c"; then first='Wallpaper color'; else first=Violet; fi
-  find_ui "^$first\$" --first || { fail "check $c-1-open: no swatch '$first' ($EMU_WHY)"; return 1; }
-  read -r -a sw <<< "$EMU_AT"
-  # the label beside the swatches (its right edge left of the first) or above them (its bottom above their top)
-  if [ "${lab[6]}" -le "${sw[4]}" ] || [ "${lab[7]}" -le "${sw[5]}" ]; then
-    say "check $c-1-open: the label [${lab[4]},${lab[5]}][${lab[6]},${lab[7]}] clear of '$first' [${sw[4]},${sw[5]}][${sw[6]},${sw[7]}]: OK"
+  lh=$((lab[7] - lab[5]))
+  if [ -n "$ACC_H" ]; then
+    [ $((lh * 10)) -ge $((ACC_H * 14)) ] && say "check $c-1-open: the label ${lh} px against ${ACC_H} px at 100 %: 170 % in effect: OK" \
+      || fail "check $c-1-open: the label ${lh} px against ${ACC_H} px at 100 % - 170 % not in effect, the run proves nothing"
   else
-    fail "check $c-1-open: the label [${lab[4]},${lab[5]}][${lab[6]},${lab[7]}] over '$first' [${sw[4]},${sw[5]}][${sw[6]},${sw[7]}]"
+    near scale "$c: no height at 100 % (case s skipped) - the label ${lh} px, 170 % not proven"
   fi
-  find_ui '^Pink$' --first || { fail "check $c-1-open: no swatch Pink ($EMU_WHY)"; return 1; }
-  read -r -a last <<< "$EMU_AT"
-  read -r w h <<< "$(frame_wh)"
-  [ "${last[6]}" -le "$w" ] && say "check $c-1-open: Pink ends at ${last[6]} of $w: OK" \
-    || fail "check $c-1-open: Pink ends at ${last[6]}, past the screen $w"
+  # Pink whole: the dump bounds are clipped to the screen, so a swatch cut by the edge is narrower than Violet
+  read -r -a ref <<< "$(bounds_of "dumps/$c-1-open.xml" Violet)"
+  read -r -a pk <<< "$(bounds_of "dumps/$c-1-open.xml" Pink)"
+  if [ ${#ref[@]} = 4 ] && [ ${#pk[@]} = 4 ]; then
+    if [ $((pk[2] - pk[0] - ref[2] + ref[0])) -ge -2 ]; then
+      say "check $c-1-open: Pink ${pk[0]}..${pk[2]} as wide as Violet ${ref[0]}..${ref[2]}: whole: OK"
+    else
+      fail "check $c-1-open: Pink ${pk[0]}..${pk[2]} narrower than Violet ${ref[0]}..${ref[2]}: cut by the edge"
+    fi
+  else
+    fail "check $c-1-open: no bounds of Violet/Pink in the dump"
+  fi
+  # the label against the swatches: their nodes are cells of UiSettingsRow and never overlap, the ink of a long
+  # label may - by the frame only, for the eye
+  say "$c: the label and the row at 170 % - on the frame $c-1-open.png"
 }
 
 # changed <case>: the list "Changed" of the settings search, the card of the accent
@@ -178,5 +207,5 @@ for side in h b; do
   changed "${side}g"
 done
 
-qml_quiet 'settings|main|UiButton|UiSettingFrames'
+qml_quiet 'settings|main|UiButton|UiSettingFrames|UiIcon|UiFrame'
 finish
