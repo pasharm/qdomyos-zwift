@@ -687,26 +687,21 @@ public class CustomQtActivity extends QtActivity {
         return manager != null && manager.isEnabled();
     }
 
-    // Set once Qt has started in this process. Qt 5.15.0 ends the process when the activity is
-    // destroyed (QtActivityDelegate.onDestroy), except when Android recreates it for a config change
-    // the manifest does not list (onRetainNonConfigurationInstance keeps Qt running). So a second
-    // onCreate in the same process is always such a recreation.
-    private static boolean qtStarted = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // A recreated activity gets a blank window in Qt 5.15.0: Qt keeps drawing into the old one,
         // and the next config change crashes with SuperNotCalledException (QTBUG-38971). configChanges
-        // in AndroidManifest.xml avoids the recreation for the changes Android names, but OxygenOS
-        // also sends a bit of its own (0x04000000) with a system color change. Qt 6.8 restarts the
-        // whole app in this case (qtbase 7602f71aa6, QTBUG-124786); the same here.
-        if (qtStarted) {
+        // in AndroidManifest.xml avoids the recreation for the changes Android names, but OnePlus
+        // (OxygenOS) also sends a bit of its own (0x04000000) with a system color change. Qt 6.8
+        // restarts the whole app in this case (qtbase 7602f71aa6, QTBUG-124786); the same here.
+        // A non-null last non-configuration instance is how Qt 5.15.0 itself tells a recreation
+        // (QtActivityLoader.onCreate): Qt kept running in this process for the new activity.
+        if (getLastNonConfigurationInstance() != null) {
             Log.w(TAG, "onCreate: activity recreated while Qt runs, restarting the app");
             startActivity(Intent.makeRestartActivityTask(getComponentName()));
             Runtime.getRuntime().exit(0);
         }
         super.onCreate(savedInstanceState);
-        qtStarted = true;
         Log.d(TAG, "onCreate: CustomQtActivity initialized");
         dispatchOAuthCallback(getIntent());
         AgeSignalsHelper.requestAgeSignals(this);
