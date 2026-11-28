@@ -29,6 +29,7 @@
 #include <QString>
 
 #include "treadmill.h"
+#include "paragonxtelemetry.h"
 
 #ifdef Q_OS_IOS
 #include "ios/lockscreen.h"
@@ -54,6 +55,10 @@ class horizontreadmill : public treadmill {
     void startDiscover();
     void btinit();
     void setDirectDistance(double treadmillDistance, bool increment);
+    // Shared production path exercised by the Bluetooth replay integration tests.
+    friend class ParagonXNotificationTestAccess;
+    ParagonXTelemetry::NotificationResult processParagonNotification(const QByteArray &newValue);
+    void applyParagonTelemetry(const ParagonXTelemetry::Metrics &metrics);
 
     QTimer *refresh;
 
@@ -72,6 +77,8 @@ class horizontreadmill : public treadmill {
     uint8_t sec1Update = 0;
     QByteArray lastPacket;
     QByteArray lastPacketComplete;
+    ParagonXTelemetry::NotificationAssembler paragonPacketAssembler;
+    ParagonXTelemetry::SessionState paragonSessionState;
     QDateTime lastRefreshCharacteristicChanged = QDateTime::currentDateTime();
     bool firstDistanceCalculated = false;
     double lastDirectDistance = -1;
@@ -108,6 +115,10 @@ class horizontreadmill : public treadmill {
     bool sole_s77_treadmill = false;
     bool anplus_treadmill = false;
     bool run_bt_treadmill = false;
+    // RUN BT- does not report the very first console Start via FTMS 0x2ADA.
+    // Permit exactly one speed-based recording start, after seeing the belt at rest.
+    bool runBtInitialStartPending = true;
+    bool runBtSeenZeroSpeed = false;
     bool tunturi_t60_treadmill = false;
     bool trx3500_treadmill = false;
     bool sole_f85_treadmill = false;

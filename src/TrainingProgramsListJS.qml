@@ -82,7 +82,7 @@ ColumnLayout {
         isSearching = true
 
         // Call C++ FileSearcher for fast recursive search
-        var results = fileSearcher.searchRecursively(folderUrl, filter, ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr"])
+        var results = fileSearcher.searchRecursively(folderUrl, filter, ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr", "*.fit", "*.FIT"])
 
         // Populate search results model
         for (var i = 0; i < results.length; i++) {
@@ -98,7 +98,7 @@ ColumnLayout {
                 id: fileDialog
                 title: qsTr("Please choose a file")
                 folder: shortcuts.home
-                nameFilters: [qsTr("Training programs (*.xml *.zwo *.mrc *.erg *.json *.xsr)"), qsTr("All files (*)")]
+                nameFilters: [qsTr("Training programs") + " (*.xml *.zwo *.mrc *.erg *.json *.xsr *.fit *.FIT)", qsTr("All files (*)")]
                 visible: true
                 onAccepted: {
                     var chosenFile = fileDialog.fileUrl || fileDialog.file || (fileDialog.fileUrls && fileDialog.fileUrls.length > 0 ? fileDialog.fileUrls[0] : "")
@@ -218,7 +218,7 @@ ColumnLayout {
                                 isSearching = false
                             } else {
                                 // Trigger recursive C++ search
-                                var baseFolder = "file://" + rootItem.getWritableAppDir() + 'training'
+                                var baseFolder = rootItem.getWritableAppDir() + 'training'
                                 searchRecursively(baseFolder, text)
                             }
                         }
@@ -298,8 +298,8 @@ ColumnLayout {
 
                         FolderListModel {
                             id: folderModel
-                            nameFilters: ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr"]
-                            folder: "file://" + rootItem.getWritableAppDir() + 'training'
+                            nameFilters: ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr", "*.fit", "*.FIT"]
+                            folder: rootItem.localFileUrl(rootItem.getWritableAppDir() + 'training')
                             showDotAndDotDot: false
                             showDirs: true
                             sortField: "Name"

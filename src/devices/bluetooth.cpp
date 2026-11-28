@@ -324,13 +324,15 @@ void bluetooth::finished() {
             const qint64 now = QDateTime::currentMSecsSinceEpoch();
             if (!rescanStartedMs)
                 rescanStartedMs = now;
-            if (now - rescanStartedMs > 10 * 60 * 1000) {
+            // the Gym mode window is open: the user waits there for the trainer, the search goes on
+            // with pauses of at most 10 s (the window restarted it every 10 s on its own before)
+            if (!gymModeWindowOpen && now - rescanStartedMs > 10 * 60 * 1000) {
                 debug(QStringLiteral("BTLE scanning stopped, no device found in 10 minutes"));
                 nextRescanMs = 0;
                 rescanStopped = true;
                 return;
             }
-            const int delayMs = qMin(3000 << qMin(rescanCount, 5), 60000);
+            const int delayMs = qMin(3000 << qMin(rescanCount, 5), gymModeWindowOpen ? 10000 : 60000);
             rescanCount++;
             nextRescanMs = now + delayMs;
             rescanTimer.start(delayMs);
@@ -1056,6 +1058,9 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
     bool iconsole_elliptical = settings.value(QZSettings::iconsole_elliptical, QZSettings::default_iconsole_elliptical).toBool();
     bool iconsole_rower = settings.value(QZSettings::iconsole_rower, QZSettings::default_iconsole_rower).toBool();
     bool trx_route_key = settings.value(QZSettings::trx_route_key, QZSettings::default_trx_route_key).toBool();
+#ifndef Q_OS_IOS
+    bool trixter_xdream_bike = settings.value(QZSettings::trixter_xdream_bike_enabled, QZSettings::default_trixter_xdream_bike_enabled).toBool();
+#endif
 
     if (!heartRateBeltFound) {
 
@@ -1104,6 +1109,20 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
         eliteSterzoSmartFound = eliteSterzoSmartAvaiable();
     }
+
+
+#ifndef Q_OS_IOS
+    if(trixter_xdream_bike && !this->trixterXDreambike &&
+            (this->trixterXDreambike = trixterxdreambike::tryCreate(noWriteResistance, noHeartService, false))) {
+        emit deviceConnected(this->trixterXDreambike->bluetoothDevice);
+        connect(this->trixterXDreambike, &bluetoothdevice::connectedAndDiscovered, this, &bluetooth::connectedAndDiscovered);
+        if (this->discoveryAgent && !this->discoveryAgent->isActive()) {
+            emit searchingStop();
+        }
+        this->signalBluetoothDeviceConnected(this->trixterXDreambike);
+        return;
+    }
+#endif
 
 #ifdef Q_OS_IOS
     // Schwinn bikes on iOS allows to be connected to several instances, so in this way
@@ -1210,6 +1229,9 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
                 filter = (b.name().compare(effectiveFilterDevice, Qt::CaseInsensitive) == 0);
             }
+            // only until it is connected: the search goes on afterwards for the accessories
+            if (!gymModeSessionDevice.isEmpty() && filter && !this->device())
+                debug(QStringLiteral("gym mode: \"%1\" matches the selected device").arg(b.name()));
             const QString deviceName = b.name();
             const QString upperDeviceName = deviceName.toUpper();
             // Some Hammer Speed Race S bikes advertise a four-digit prefix, e.g. "4864 RACER S".
@@ -4455,6 +4477,7 @@ void bluetooth::heartRate(uint8_t heart) { Q_UNUSED(heart) }
 void bluetooth::selectGymModeDevice(const QString &deviceName) {
     QString normalizedDeviceName = deviceName.trimmed();
     normalizedDeviceName.remove(QRegularExpression(QStringLiteral(" \\(\\d+%\\)$")));
+    debug(QStringLiteral("gym mode: device selected \"%1\", searching %2").arg(normalizedDeviceName).arg(isSearching()));
 
     if (normalizedDeviceName.isEmpty() ||
         !normalizedDeviceName.compare(QStringLiteral("Disabled"), Qt::CaseInsensitive) ||
@@ -5502,6 +5525,12 @@ void bluetooth::restart() {
         delete eliteSterzoSmart;
         eliteSterzoSmart = nullptr;
     }
+#ifndef Q_OS_IOS
+    if (trixterXDreambike) {
+        delete trixterXDreambike;
+        trixterXDreambike = nullptr;
+    }
+#endif
     if (wahooDirconBike) {
         delete wahooDirconBike;
         wahooDirconBike = nullptr;
@@ -5782,6 +5811,10 @@ bluetoothdevice *bluetooth::device() {
 #endif
     } else if (freebeatBoomBike) {
         return freebeatBoomBike;
+#ifndef Q_OS_IOS
+    } else if (trixterXDreambike){
+        return trixterXDreambike;
+#endif
     }
     return nullptr;
 }
