@@ -4,7 +4,7 @@ on-screen keyboard goes (TapHandler on the Flickable of settings.qml, branch fix
 usage: ios_t716.py <idb> <udid> <out_dir> <prefix> <case> <side>
   case classic | modern - the look (the menu button: "◄" in the classic look, "Main menu" in the modern one)
   side head | base - head: the keyboard goes after the tap on empty space; base (master): it stays (the defect)
-Steps: Settings -> the search button of the header -> "Changed" (the list of the changed settings: a short list,
+Steps: Settings -> the search button of the header (classic; the modern look has the bar on the page) -> "Changed" (the list of the changed settings: a short list,
 the page below it is empty) -> a tap on the search field: the on-screen keyboard is up -> a tap on empty space
 between the field and the keyboard (no element of the tree under x 200 there) -> the keyboard by the side ->
 "Changed" again: the sections come back (a control over the handler still takes its tap).
@@ -110,15 +110,20 @@ def walk():
     if not ok:
         return
     t = tree()
-    named = [e for e in t if isinstance(e, dict) and (e.get("AXLabel") or "") == SEARCH and "frame" in e]
-    if not named:
-        page("the search button", False)
-        return
-    x, y = middle(min(named, key=lambda e: e["frame"]["y"]))
-    ok = tap_at(x, y, CHANGED, "the search button")
-    page("the search bar open", ok)
-    if not ok:
-        return
+    # the modern look shows the search bar on the page and no header button for it (main.qml: shown =
+    # !modern || searchBarScrolledAway; run 45097940077, head-light-01-open: Back, Load, Save only)
+    if on_exact(CHANGED, t) is None:
+        named = [e for e in t if isinstance(e, dict) and (e.get("AXLabel") or "") == SEARCH and "frame" in e]
+        if not named:
+            page("the search button", False)
+            return
+        x, y = middle(min(named, key=lambda e: e["frame"]["y"]))
+        ok = tap_at(x, y, CHANGED, "the search button")
+        page("the search bar open", ok)
+        if not ok:
+            return
+    else:
+        say("the search bar is on the page already (no header button needed)")
     shot("search-open")
     # the list of the changed settings: the plist of the run has changed a few, the page below them is empty
     c = on_exact(CHANGED)
