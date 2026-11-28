@@ -280,6 +280,15 @@ import AndroidStatusBar 1.0
             }
         }
 
+        // A tap on empty space of the page (between the sections, beside a description) drops the
+        // focus too, as in other apps: nothing there ever takes it. The handler sits on the Flickable
+        // of the page and only gets the touches no control has grabbed (qquicksinglepointhandler.cpp,
+        // wantsPointerEvent), so a tap on a switch, a field or a section works as before; its grab
+        // is passive, a drag still scrolls the page.
+        Handlers.TapHandler {
+            onTapped: settingsPane.dropTextFocus()
+        }
+
         function currentSearch(viaPush) {
             return { query: settingsSearchTextField.text, changedOnly: changedOnly,
                      results: filteredSettings, scroll: contentItem.contentY, viaPush: viaPush,
