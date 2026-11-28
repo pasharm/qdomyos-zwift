@@ -138,7 +138,9 @@ for side in b h; do
   install_apk "$apk"
   focus_case $side m
   focus_case $side c
-  qml_quiet 'settings' 'settings'
 done
+# after both sides: it compares the warnings of the head pids with the base ones (run 46105242668 called it per side -
+# "no head pid" after the base side)
+qml_quiet 'settings' 'settings'
 
 finish

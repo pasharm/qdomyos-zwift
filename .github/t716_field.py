@@ -3,10 +3,9 @@
 #
 #   t716_field.py <dump.xml>
 #       the search field of the settings page: the widest node named "Search settings" (the classic look has
-#       the header button of that name too, the modern one only the field). The focus is on the field node or on a
-#       nameless node with the same bounds (the edit part: T-324 run 45034402883, a-1-changed.xml - "Search
-#       settings" [42,270][892,406] focused=false, "" [42,269][892,405] focused=true), so every node within
-#       4 px of the field counts. Prints "focused=<true|false> x y" or "none"; exit 0 / 1.
+#       the header button of that name too, the modern one only the field). The focus - the focused flag of
+#       that node only: a nameless node of the same bounds stays focused after the field lost the focus (run
+#       46105242668). Prints "focused=<true|false> x y" or "none"; exit 0 / 1.
 #
 #   t716_field.py <dump.xml> --gap X YLO YHI
 #       empty space of the page under x = X between YLO and YHI: the middle of the tallest run of y where no
@@ -16,7 +15,6 @@
 import sys
 import xml.etree.ElementTree as ET
 
-SLACK = 4
 MIN_GAP = 6
 
 
@@ -35,16 +33,15 @@ def field(nodes):
     # the field - the widest of them: the header button is a square, and the modern look has no header
     # button while the search bar is on the page (main.qml: shown = !modern || searchBarScrolledAway; T-647
     # run 46091320164, hg-1-card.xml - one node [56,280][1032,447])
-    named = [bounds(n) for n in nodes if (n.get("content-desc") or n.get("text") or "") == "Search settings"]
-    named = [b for b in named if b is not None]
+    named = [(bounds(n), n) for n in nodes if (n.get("content-desc") or n.get("text") or "") == "Search settings"]
+    named = [(b, n) for b, n in named if b is not None]
     if not named:
         return None
-    f = max(named, key=lambda b: b[2] - b[0])
-    focused = False
-    for n in nodes:
-        b = bounds(n)
-        if n.get("focused") == "true" and b and all(abs(b[i] - f[i]) <= SLACK for i in range(4)):
-            focused = True
+    f, node = max(named, key=lambda bn: bn[0][2] - bn[0][0])
+    # the focus - of the field node itself: the nameless android.view.View of the same bounds (the input
+    # view of Qt) stays focused=true after the field lost it, on master as well (run 46105242668, htm-2-tapped
+    # and btm-2-tapped; the 6T the same, T-716 journal 2026-11-28)
+    focused = node.get("focused") == "true"
     return "focused=%s %d %d" % ("true" if focused else "false", (f[0] + f[2]) // 2, (f[1] + f[3]) // 2)
 
 
