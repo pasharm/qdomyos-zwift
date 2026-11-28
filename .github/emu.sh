@@ -82,6 +82,18 @@ next_color() {
   if [ "$LAST_COLOR" = FFB3261E ]; then LAST_COLOR=FF1875F5; else LAST_COLOR=FFB3261E; fi
 }
 
+# anr_traces: after an ANR of QZ the stacks Android wrote (/data/anr, root only) to dumps/anr/ of the artifact - the
+# main thread at the ANR. Last, before finish: adb root restarts adbd and the logcat with it (lib.sh tb_on)
+anr_traces() {
+  adb logcat -d < /dev/null 2>/dev/null | grep -a -q "ANR in $PKG" || return 0
+  adb root >> "$STEPLOG" 2>&1
+  timeout 120 adb wait-for-device < /dev/null >> "$STEPLOG" 2>&1 || { near adb "wait-for-device: no device in 120 s"; return 0; }
+  emu_sleep 3
+  mkdir -p dumps/anr
+  adb pull /data/anr dumps/anr < /dev/null >> "$STEPLOG" 2>&1
+  say "== ANR traces: $(find dumps/anr -type f | wc -l) files in dumps/anr"
+}
+
 emu_init
 logcat_start
 OVL_WAS=$(adb shell settings get secure $OVL < /dev/null | tr -d '\r')
@@ -104,4 +116,5 @@ if [ "${EMU_API:-35}" -ge 31 ]; then
 fi
 
 qml_quiet 'main|Home|HomeForm'
+anr_traces
 finish
