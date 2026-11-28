@@ -425,7 +425,7 @@ ApplicationWindow {
         // palette (Android 11 and older, iOS, settings brought from another phone) and an unknown
         // name are violet, as the accent itself
         readonly property string accentName: (settings.ui_accent === "system" && systemAccentAvailable)
-                                             || a[settings.ui_accent] !== undefined
+                                             || a.hasOwnProperty(settings.ui_accent)
                                              ? settings.ui_accent : "violet"
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"

@@ -111,7 +111,8 @@ T.Button {
     // dark), like the danger pill takes the danger colour at 16 %. The classic look ignores it
     property bool cardSurface: false
     // the accent of the same name in the opposite theme. The wallpaper one is checked for contrast as
-    // the accent of the page is, here on the inverse surface it lies on (light on a dark page)
+    // the accent of the page is, here on inverseSurface: the lighter of the inverse fills (a bar under
+    // inverse buttons may take textMain, darker in the light theme), so it reads on both
     readonly property color inverseAccent: {
         const u = window.ui
         if (!modernInverse)
