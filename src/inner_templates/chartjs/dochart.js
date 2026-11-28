@@ -32,6 +32,11 @@ var ftpZones = [];
 var maxHeartRate = 190;
 var heartZones = [];
 var miles = 1;
+// the Smooth Chart Lines setting (chart_smooth_lines): the index in its list in settings.qml –
+// Off, Auto, then the moving average windows in seconds (Auto: -1, see smoothWindow)
+var SMOOTH_WINDOWS = [0, -1, 3, 5, 10, 15, 30];
+var smoothSetting = 0;
+var drawnSmoothWindow = 0; // the window of the lines drawn last
 
 // live update during a workout: the new points of the session are asked for once a second and
 // the charts are updated in place, only while a workout is running (see setLiveActive)
@@ -74,7 +79,7 @@ function thinLines(datasets, slices) {
     });
     datasets.forEach(function (d) {
         if (isPointRow(d.data) && d.data.length === length)
-            rows.push(d.data);
+            rows.push(pickingRow(d.data));
     });
     if (length <= slices * 2)
         return;
@@ -107,9 +112,15 @@ function thinLines(datasets, slices) {
         keep = keep.concat(picked);
     }
     datasets.forEach(function (d) {
-        if (rows.indexOf(d.data) >= 0)
+        if (rows.indexOf(pickingRow(d.data)) >= 0)
             d.data = keep.map(function (i) { return d.data[i]; });
     });
+}
+
+// the points a line takes part in thinLines with: a smoothed line (smoothRow) by its raw values,
+// so the points kept, and so the other lines of the chart (the targets), are the same as unsmoothed
+function pickingRow(data) {
+    return data && data.rawRow ? data.rawRow : data;
 }
 
 function updateInPlace(old, config) {
@@ -246,18 +257,59 @@ function ensureHeartZones() {
     }
 }
 
-// centered moving average over `window` points (one point a second) for the power, cadence and
-// speed lines, like the training services do: the raw values are a saw. Only the line is smoothed,
-// averages, maximums, zones and the power curve use the raw values
-function smoothRow(row, window, digits) {
-    let half = Math.floor(window / 2);
-    return row.map(function (p, i) {
-        let from = Math.max(0, i - half), to = Math.min(row.length - 1, i + half), sum = 0;
-        for (let j = from; j <= to; j++)
-            sum += row[j].y;
-        let k = Math.pow(10, digits || 0);
-        return { x: p.x, y: Math.round(sum / (to - from + 1) * k) / k };
+// The window of the moving average of the power, cadence and speed lines in seconds, 0: the raw
+// lines. Auto: 3 s while the workout runs (the page polls it); otherwise (after Stop, and so in the
+// charts of the email) 3 s and 2 s more for every full 30 minutes of the workout, up to 15 s.
+// seconds: the elapsed time of the last point
+function smoothWindow(seconds) {
+    let w = SMOOTH_WINDOWS[smoothSetting] || 0;
+    if (w >= 0)
+        return w;
+    if (livePolling())
+        return 3;
+    return Math.min(15, 3 + 2 * Math.floor((seconds || 0) / 1800));
+}
+
+// the elapsed time of the last point of the session, in seconds
+function sessionSeconds(arr) {
+    let el = arr.length ? arr[arr.length - 1] : null;
+    return el ? el.elapsed_s + el.elapsed_m * 60 + el.elapsed_h * 3600 : 0;
+}
+
+function isValue(y) {
+    return typeof y === 'number' && y === y; // y === y: not NaN
+}
+
+// The power, cadence and speed lines as a centered moving average over a window of `seconds` of
+// the elapsed time (x), without the second-by-second jitter: the points from x - back to x + ahead,
+// back + ahead + 1 = seconds (an even window takes the extra second ahead). Only the lines: the
+// averages, maximums, zones and the power distribution are counted on the raw values before this.
+// A point without a value stays as it is and is not counted. Rounded to `digits` decimals
+function smoothRow(row, seconds, digits) {
+    if (!(seconds > 1))
+        return row;
+    let back = Math.floor((seconds - 1) / 2), ahead = seconds - 1 - back;
+    let k = Math.pow(10, digits || 0), from = 0, to = 0;
+    let smoothed = row.map(function (p, i) {
+        if (!isValue(p.y))
+            return p;
+        while (from < i && row[from].x < p.x - back)
+            from++;
+        if (to < i)
+            to = i;
+        while (to + 1 < row.length && row[to + 1].x <= p.x + ahead)
+            to++;
+        let sum = 0, count = 0;
+        for (let j = from; j <= to; j++) {
+            if (isValue(row[j].y)) {
+                sum += row[j].y;
+                count++;
+            }
+        }
+        return { x: p.x, y: Math.round(sum / count * k) / k };
     });
+    smoothed.rawRow = row; // thinLines picks the points by the raw values (pickingRow)
+    return smoothed;
 }
 
 // time axis: m:ss in the first hour (h:mm showed 00:00 on every tick there), h:mm later; a round step,
@@ -421,6 +473,7 @@ function process_arr(arr) {
         let speedUnit = el.speed * miles;
         pace.push({x: time, y: el.speed >= 3 ? 60 / speedUnit : null});
     }
+    drawnSmoothWindow = smoothWindow(sessionSeconds(arr));
 
     $('.workoutName').text(workoutName);
     $('.workoutStartDate').text(workoutStartDate);
@@ -472,7 +525,7 @@ function process_arr(arr) {
                 backgroundColor: window.chartColors.red,
                 borderColor: window.chartColors.red,
                 cubicInterpolationMode: 'monotone',
-                data: smoothRow(watts, 5),
+                data: smoothRow(watts, drawnSmoothWindow),
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 2,
@@ -1156,8 +1209,8 @@ function process_arr(arr) {
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
                     label: t('workoutEditor.cadence', 'Cadence'),
-                    cubicInterpolationMode: 'monotone',
-                    data: smoothRow(cadence, 5),
+                    //cubicInterpolationMode: 'monotone',
+                    data: smoothRow(cadence, drawnSmoothWindow),
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 2,
@@ -1267,6 +1320,8 @@ function process_arr(arr) {
         }
     };
 
+    if (drawnSmoothWindow > 1)
+        config.data.datasets[0].cubicInterpolationMode = 'monotone'; // the smoothed line, as the power one
     ctx = document.getElementById('canvasCadence').getContext('2d');
     var cadenceChart = makeChart(ctx, config);
 
@@ -1365,8 +1420,8 @@ function process_arr(arr) {
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
                     label: miles === 1 ? t('workoutEditor.speedKmh', 'Speed (km/h)') : t('workoutEditor.speedMph', 'Speed (mph)'),
-                    cubicInterpolationMode: 'monotone',
-                    data: smoothRow(speed, 5, 1),
+                    //cubicInterpolationMode: 'monotone',
+                    data: smoothRow(speed, drawnSmoothWindow, 1),
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 2,
@@ -1479,6 +1534,8 @@ function process_arr(arr) {
 
     // a bike that sends no speed: an empty chart with a lone 0–5 scale; hidden by height (not display) like the heart box
     $('#speedBox').css({ height: speed.some(function (p) { return p.y > 0; }) || inclination.some(function (p) { return !!p.y; }) ? '' : '0', overflow: 'hidden' });
+    if (drawnSmoothWindow > 1)
+        config.data.datasets[0].cubicInterpolationMode = 'monotone'; // the smoothed speed line
     ctx = document.getElementById('canvasSpeedInclination').getContext('2d');
     var speedInclinationChart = makeChart(ctx, config);
 
@@ -1711,7 +1768,7 @@ function drawPace(pace, maxEl, backgroundFill) {
 }
 
 function dochart_init() {
-    keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value']
+    keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value', 'chart_smooth_lines']
 
     function scheduleLiveRefresh() {
         clearTimeout(liveTimer);
@@ -1798,8 +1855,9 @@ function dochart_init() {
             if (arr)
                 sessionCache = arr;
             // redraw only when the session grew: after stop the array stays the same,
-            // so the end-of-workout screenshots are taken just once
-            if (arr && arr.length !== lastSessionLength) {
+            // so the end-of-workout screenshots are taken just once. Or when the Auto window of
+            // the smoothed lines changed: 3 s while the workout runs, by its length after Stop
+            if (arr && (arr.length !== lastSessionLength || smoothWindow(sessionSeconds(arr)) !== drawnSmoothWindow)) {
                 liveRefresh = lastSessionLength >= 0;
                 lastSessionLength = arr.length;
                 process_arr(arr);
@@ -1863,6 +1921,10 @@ function dochart_init() {
                     } else if (key === 'miles_unit') {
                         if(msg.content[key] === true || msg.content[key] === 'true')
                             miles = 0.621371;
+                    } else if (key === 'chart_smooth_lines') {
+                        // an index of SMOOTH_WINDOWS; not saved yet (null) or unknown: Off
+                        let index = parseInt(msg.content[key], 10);
+                        smoothSetting = index >= 0 && index < SMOOTH_WINDOWS.length ? index : 0;
                     }
                 }
                 if(heart_max_override_enable) {
