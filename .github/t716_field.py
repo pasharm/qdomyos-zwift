@@ -2,8 +2,8 @@
 # Test only (T-716).
 #
 #   t716_field.py <dump.xml>
-#       the search field of the settings page. Two nodes are named "Search settings": the header button
-#       (first in the tree) and the field of the search bar after it. The focus is on the field node or on a
+#       the search field of the settings page: the widest node named "Search settings" (the classic look has
+#       the header button of that name too, the modern one only the field). The focus is on the field node or on a
 #       nameless node with the same bounds (the edit part: T-324 run 45034402883, a-1-changed.xml - "Search
 #       settings" [42,270][892,406] focused=false, "" [42,269][892,405] focused=true), so every node within
 #       4 px of the field counts. Prints "focused=<true|false> x y" or "none"; exit 0 / 1.
@@ -32,12 +32,14 @@ def bounds(node):
 
 
 def field(nodes):
-    named = [n for n in nodes if (n.get("content-desc") or n.get("text") or "") == "Search settings"]
-    if len(named) < 2:
+    # the field - the widest of them: the header button is a square, and the modern look has no header
+    # button while the search bar is on the page (main.qml: shown = !modern || searchBarScrolledAway; T-647
+    # run 46091320164, hg-1-card.xml - one node [56,280][1032,447])
+    named = [bounds(n) for n in nodes if (n.get("content-desc") or n.get("text") or "") == "Search settings"]
+    named = [b for b in named if b is not None]
+    if not named:
         return None
-    f = bounds(named[-1])
-    if f is None:
-        return None
+    f = max(named, key=lambda b: b[2] - b[0])
     focused = False
     for n in nodes:
         b = bounds(n)

@@ -1,6 +1,9 @@
 #!/bin/bash
 # Test only (T-716): a tap on empty space of the settings page drops the focus of a text field and hides the
-# keyboard (TapHandler on the Flickable of settings.qml, branch fix/settings-tap-drops-focus).
+# keyboard (an item of the Flickable of settings.qml behind the content with a TapHandler, branch
+# fix/settings-tap-drops-focus). The empty space is the tallest free run above the keyboard: in the classic look
+# that is below the short list of changed settings, out of the content (a handler on the content item missed
+# it - T-716 journal), in the modern look a gap between the cards.
 # Two sides, the same steps, both looks (m - modern, c - classic):
 #   head - the tap on empty space hides the keyboard and takes the focus from the search field;
 #   base (origin/master) - the same tap leaves both (nothing on master drops them there) - the defect side.
