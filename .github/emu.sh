@@ -1,153 +1,141 @@
 #!/bin/bash
-# Test only (T-720): Smooth Chart Lines (chart_smooth_lines: 0 Off, 1 Auto, 2..6 - 3/5/10/15/30 s) - the PR branch
-# feat/chart-smooth-lines. The head only (Off = master is proved by tests/test_chart_smoothing.py and the stand).
-# Checks:
-#   - the settings search finds "Smooth Chart Lines" (the catalog entry), both looks
-#   - the Charts page (chartjs/dochart.js) with Off, Auto and 5 s opens on the WebView of the API while the fake bike
-#     runs, and the page keeps polling (getsessionarray) - the smoothed lines do not break the live redraw
-#   - Stop (classic look): the app opens the Charts page again and it sends its pictures for the mail (savechart);
-#     the count is the same with Off, Auto and 5 s - the smoothing takes no picture more or less
-#   - no uncaught JS error of dochart.js, no QML warning of ChartJsTest.qml (settings.qml - printed)
+# Test only (T-716): a tap on empty space of the settings page drops the focus of a text field and hides the
+# keyboard (TapHandler on the Flickable of settings.qml, branch fix/settings-tap-drops-focus).
+# Two sides, the same steps, both looks (m - modern, c - classic):
+#   head - the tap on empty space hides the keyboard and takes the focus from the search field;
+#   base (origin/master) - the same tap leaves both (nothing on master drops them there) - the defect side.
+# The field: the search field of the settings page (settings_search_bar), the list: "Changed" (the changed
+# settings - no typing, so API 30 too: typing into this field by adb fails there, qz.sh settings_search).
+# Then on both sides the same:
+#   - a tap on "Changed" (a button over the TapHandler) still toggles the list: the handler takes no
+#     touch a control has taken (qquicksinglepointhandler.cpp v5.15.0, wantsPointerEvent: !exclusiveGrabber);
+#   - a drag of the page that starts on empty space (between sections or below them) still scrolls it
+#     (QTBUG-75223: TapHandlers in a Flickable could stop the flick on touch in 5.15 - the 6T beta 3769 with
+#     the same handler scrolled 8/8, T-716 journal 2026-11-28).
+# APKs: inputs head and base (fdroid-android-trial), downloaded by main.yml to apk-head/ and apk-base/.
+# One job for both sides: qml_quiet compares the warnings of the head with the base.
 
 . .github/lib.sh
 . .github/qz.sh
 
-# count_log <text>: lines of full_logcat.txt with the text
-count_log() { grep -a -c -F -- "$1" full_logcat.txt; }
+CHANGED_LIST_RX='^Changed settings \([0-9]+\)$'
+# the keyboard of Nexus 6 starts below y 1400 (T-510): taps and drags stay above it
+KB_TOP=1350
 
-# search <look>: the settings search finds the new setting
-search() {
-  # names start with h: qml_quiet reads the head pid by "^pid h"
-  local look=$1 c="hs$1" modern=false rc
-  [ "$look" = m ] && modern=true
-  # the settings search is not on API 30 (settings_search skips it there)
-  [ "$EMU_API" = 30 ] && { say "$c: no settings search on API 30 - skipped"; return 1; }
-  start_case "$c" ui_modern=$modern ui_theme_mode=light bluetooth_lastdevice_name=TestBike || return 1
-  rc=0
-  settings_search "$c" "Smooth" '^Smooth Chart Lines(: .*)?$' || rc=$?
-  if [ "$rc" = 2 ]; then
-    fail "check $c: the settings search found nothing for Smooth"
-  fi
-  [ "$rc" = 0 ] || { back_to "$HOME_RX" 20; return 1; }
-  expect "$c-1-results" '^Smooth Chart Lines(: .*)?$' "the search finds the setting"
-  back_to "$HOME_RX" 20
+# field_state <shot>: "focused=<true|false> x y" of the search field in dumps/<shot>.xml
+field_state() { "$EMU_PY" .github/t716_field.py "dumps/$1.xml"; }
+
+# kb_state: shown / hidden
+kb_state() { if ime_shown; then echo shown; else echo hidden; fi; }
+
+# record <shot>: frame and dump, "keyboard X, field Y" to steps.log; KB, FIELD
+record() {
+  shot "$1"
+  KB=$(kb_state); FIELD=$(field_state "$1")
+  say "record $1: keyboard $KB, field $FIELD"
 }
 
-# charts <value>: the Charts page while the fake bike runs, then Stop and the pictures of the mail
-charts() {
-  local v=$1 c="hc$1" live0 live mark saved last loads0 i
-  HOME_READY_RX=
-  start_case "$c" ui_modern=false ui_theme_mode=light applewatch_fakedevice=true bluetooth_lastdevice_name=TestBike \
-    chart_smooth_lines=$v confirm_stop_workout=false || return 1
-  # the fake bike starts the session: some seconds of points before the page opens
-  emu_sleep 20
-  open_drawer '^Charts$' && tap_ui '^Charts$' '^◄$' 30 || { fail "$c: Charts did not open"; return 1; }
-  wait_log '"Path" "chartjs/chart.htm"' 60 || return 1
-  emu_sleep 6
-  still
-  shot "$c-1-page"
-  live0=$(count_log '"msg":"getsessionarray')
-  emu_sleep 10
-  live=$(( $(count_log '"msg":"getsessionarray') - live0 ))
-  if [ "$live" -gt 0 ]; then
-    say "check $c-1-page: the page asked the session $live times in 10 s (chart_smooth_lines=$v): OK"
-  else
-    fail "check $c-1-page: no getsessionarray in 10 s (chart_smooth_lines=$v) - no live redraw"
-  fi
-  shot "$c-2-live"
-  back_to "$HOME_RX" 20 || return 1
-  emu_sleep 5
-  loads0=$(count_log '"Path" "chartjs/chart.htm"')
-  # the line of the log from which the replies to savechart of this Stop are counted
-  mark=$(( $(wc -l < full_logcat.txt) + 1 ))
-  # by hand: what comes after Stop (the RPE question or the Charts page) is judged by the log below
-  still
-  if dump && find_ui '^Stop$' --first; then
-    say "tap Stop at $EMU_AT"
-    adb shell input tap $EMU_AT < /dev/null > /dev/null 2>&1
-  else
-    shot "$c-3-no-stop" now
-    fail "$c: no Stop on the home page"
+# tap_field <case> <shot>: a tap on the search field as the user does; the keyboard and the focus must come
+tap_field() {
+  local c=$1 st
+  dump || return 1
+  mkdir -p dumps
+  cp ui.xml "dumps/$2-pre.xml"
+  st=$(field_state "$2-pre") || { fail "$c: the search field not in the dump"; return 1; }
+  set -- ${st#* }
+  say "tap the field at $1 $2 ($st)"
+  adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+}
+
+# focus_case <side> <look>
+focus_case() {
+  local side=$1 look=$2 c="${1}t$2" modern=false g y h st0 st1 y0 y1
+  [ "$look" = m ] && modern=true
+  start_case "$c" ui_modern=$modern ui_theme_mode=light bluetooth_lastdevice_name=TestBike || return 1
+  settings_search_bar "$c" || return 1
+  # the list of changed settings: put_conf has changed some (log_debug, ui_modern...), so cards and gaps
+  tap_ui '^Changed$' "$CHANGED_LIST_RX" 15 || return 1
+  settle
+  tap_field "$c" "$c-1" || return 1
+  record "$c-1-focused"
+  if [ "$KB" != shown ] || [ "${FIELD%% *}" != focused=true ]; then
+    fail "$c: keyboard $KB / field $FIELD after the tap on the field - the case proves nothing"
     return 1
   fi
-  # the RPE question after Stop (rpeFeelPopupEnabled) - skipped when shown
-  if wait_ui '^Skip$' 8; then
-    still
-    if dump && find_ui '^Skip$' --first; then
-      say "tap Skip of the RPE question at $EMU_AT"
-      adb shell input tap $EMU_AT < /dev/null > /dev/null 2>&1
+  expect "$c-1-focused" "$CHANGED_LIST_RX" 'the list of changed settings under the field'
+  # empty space: a gap between the cards of the list or the page below them, above the keyboard
+  g=$("$EMU_PY" .github/t716_field.py "dumps/$c-1-focused.xml" --gap 720 560 "$KB_TOP") || {
+    fail "$c: no empty space under x 720 between y 560 and $KB_TOP - the case proves nothing"
+    return 1
+  }
+  set -- $g
+  y=$1 h=$2
+  say "tap empty space $c at 720 $y (free $h px)"
+  adb shell input tap 720 "$y" < /dev/null > /dev/null 2>&1
+  emu_sleep 3
+  record "$c-2-tapped"
+  # the list still there: the tap opened no card
+  expect "$c-2-tapped" "$CHANGED_LIST_RX" 'the list still there after the tap on empty space'
+  if [ "$side" = h ]; then
+    if [ "$KB" = hidden ] && [ "${FIELD%% *}" = focused=false ]; then
+      say "check $c-2-tapped: the tap on empty space hid the keyboard and took the focus from the field: OK"
+    else
+      fail "check $c-2-tapped: after the tap on empty space keyboard $KB, field $FIELD (want hidden, focused=false)"
+    fi
+  else
+    if [ "$KB" = shown ] && [ "${FIELD%% *}" = focused=true ]; then
+      say "check $c-2-tapped: master keeps the keyboard and the focus after the tap on empty space (the defect): OK"
+    else
+      fail "check $c-2-tapped: master after the tap keyboard $KB, field $FIELD - the defect not shown, the head side proves nothing"
     fi
   fi
-  for i in $(seq 1 30); do
-    [ "$(count_log '"Path" "chartjs/chart.htm"')" -gt "$loads0" ] && break
-    emu_sleep 2
-  done
-  if [ "$(count_log '"Path" "chartjs/chart.htm"')" -le "$loads0" ]; then
-    shot "$c-3-no-end-page" now
-    fail "check $c-3: the Charts page did not open after Stop"
-    return 1
-  fi
-  # the pictures are taken at the end of the first animation of each chart: the names of the pictures the app
-  # answered (R_savechart), counted once each, until the count stays the same 10 s (at most 90 s). The answer is
-  # indented JSON (QJsonDocument::toJson), one logcat line per line: "name" is two lines above "msg"
-  # (notes/emu/t642-44933490375-r2, api30 full_logcat.grep.txt:5005-5009)
-  last=-1 saved=0
-  for i in $(seq 1 9); do
-    emu_sleep 10
-    saved=$(tail -n +"$mark" full_logcat.txt | grep -a -B2 -F '"msg": "R_savechart"' | grep -a -o '"name": "[^"]*"' \
-      | sort -u | wc -l)
-    [ "$saved" -gt 0 ] && [ "$saved" = "$last" ] && break
-    last=$saved
-  done
-  still
-  shot "$c-3-end"
-  say "count $c-3-end: pictures saved after Stop (chart_smooth_lines=$v): $saved"
-  echo "$v $saved" >> saved.txt
-  back_to "$HOME_RX" 20
-}
-
-# saved_same: the same number of saved pictures (R_savechart names) after Stop with every value, and not 0
-saved_same() {
-  local first="" v n ok=1
-  [ -s saved.txt ] || { fail "check saved: no Stop case counted"; return 1; }
-  while read -r v n; do
-    [ "${n:-0}" -gt 0 ] || { fail "check saved: no savechart after Stop with chart_smooth_lines=$v"; ok=0; }
-    [ -z "$first" ] && first=$n
-    [ "$n" = "$first" ] || { fail "check saved: $n saved pictures with chart_smooth_lines=$v, $first with the first value"; ok=0; }
-  done < saved.txt
-  [ "$ok" = 1 ] && say "check saved: the same $first saved pictures after Stop with $(cut -d' ' -f1 saved.txt | tr '\n' ' '): OK"
-}
-
-# js_quiet: no uncaught JS error of dochart.js in the log
-js_quiet() {
-  local n
-  n=$(grep -a -c -E 'Uncaught.*dochart|dochart\.js.*Uncaught' full_logcat.txt)
-  if [ "${n:-0}" = 0 ]; then
-    say "check js: no uncaught error of dochart.js ($(grep -a -c 'Uncaught' full_logcat.txt) uncaught in all): OK"
+  # a control over the handler: "Changed" again closes the list, the page sections come back (tap_ui puts
+  # the keyboard away first when it is up - the base side)
+  tap_ui '^Changed$' '^General Options$' 15 || return 1
+  settle
+  record "$c-3-list-off"
+  expect_not "$c-3-list-off" "$CHANGED_LIST_RX" 'the list closed by the second tap on Changed'
+  say "check $c-3-list-off: a tap on Changed still toggles the list: OK"
+  # a drag that starts on empty space (between the section titles or below the last one) scrolls the page
+  dump || return 1
+  cp ui.xml "dumps/$c-4-pre.xml"
+  g=$("$EMU_PY" .github/t716_field.py "dumps/$c-4-pre.xml" --gap 720 900 2300) || {
+    near drag "$c: no empty space under x 720 between y 900 and 2300 - the drag from empty space not made"
+    return 0
+  }
+  set -- $g
+  y=$1
+  st0=$(uifind "dumps/$c-4-pre.xml" '^General Options$' --any --first 2>/dev/null)
+  y0=$(echo "$st0" | cut -d' ' -f2)
+  say "drag $c from empty space: 720 $y -> 720 $((y - 600)); General Options at y ${y0:-?}"
+  # swipe_xy says "!!" itself when the screen did not move; the check below says what moved
+  swipe_xy 720 "$y" 720 $((y - 600)) 400
+  emu_sleep 3
+  record "$c-4-dragged"
+  st1=$(uifind "dumps/$c-4-dragged.xml" '^General Options$' --any --first 2>/dev/null)
+  y1=$(echo "$st1" | cut -d' ' -f2)
+  if [ -n "$y0" ] && [ -n "$y1" ] && [ "$y1" -lt $((y0 - 200)) ]; then
+    say "check $c-4-dragged: the drag from empty space scrolled the page (General Options $y0 -> $y1): OK"
+  elif [ -n "$y0" ] && [ -z "$y1" ]; then
+    say "check $c-4-dragged: the drag from empty space scrolled the page (General Options $y0 -> out of the dump): OK"
   else
-    grep -a -E 'Uncaught.*dochart|dochart\.js.*Uncaught' full_logcat.txt | head -5 >> "$STEPLOG"
-    fail "check js: $n uncaught error(s) of dochart.js"
+    fail "check $c-4-dragged: the drag from empty space did not scroll the page (General Options ${y0:-?} -> ${y1:-?})"
   fi
+  back_to "$HOME_RX" 20
 }
 
 emu_init
 logcat_start
 
-for side in h; do
-  apk=apk-head/android-debug.apk
+for side in b h; do
+  if [ "$side" = h ]; then apk=apk-head/android-debug.apk; else apk=apk-base/android-debug.apk; fi
   side_on $side "$apk" || continue
   say "== $side: start"
   install_apk "$apk"
-  rm -f saved.txt
-  search m
-  search c
-  charts 0
-  charts 1
-  charts 3
-  saved_same
-  js_quiet
-  # without the base side the warnings master gives too (settings.qml ScrollView) are only printed for settings.qml
-  qml_quiet 'settings|ChartJsTest' 'ChartJsTest'
+  focus_case $side m
+  focus_case $side c
+  qml_quiet 'settings' 'settings'
 done
 
 finish

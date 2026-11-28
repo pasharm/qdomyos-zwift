@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 45a13d71bff4 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 1e669a5f1f8f - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -839,7 +839,51 @@ bring_in() {
 # The time from DOWN to the first MOVE is the start of another `input` process (0.3-1 s on the emulator):
 # on a page with onPressAndHold (800 ms: Home.qml, profiles.qml - delete a profile, WorkoutsHistory.qml)
 # the drag may be a long press - exact only on pages without one (the settings pages)
+# Called by the scenario (not by scroll_to, scroll_top, survey_page, bring_in, tap_ui - they compare the dumps
+# after each swipe themselves): the frames before and after are compared, equal - "!! swipe: the screen did not
+# move" and 1 (swipe_moved, T-732). EMU_SWIPE_CHECK=0 - no check (a swipe that must not move: its own frame check)
 swipe_page() {
+  local own=""
+  case ${FUNCNAME[1]:-} in
+    scroll_to|scroll_top|survey_page|bring_in|tap_ui) ;;
+    *) if [ "${EMU_SWIPE_CHECK:-1}" != 0 ]; then
+         frame .emu_swipe_before && own=1 || near swipe "swipe_page $*: no frame before the swipe - not checked"
+       fi ;;
+  esac
+  swipe_go "$@"
+  [ -z "$own" ] || swipe_moved .emu_swipe_before "swipe_page $*"
+}
+
+# swipe_xy x1 y1 x2 y2 [ms]: a swipe of the scenario by its own coordinates (landscape, another band, a dialog)
+# with the check of swipe_page: the screen did not move - "!!" and 1 (T-732). check_emu_script.py own-swipe
+# points a bare `adb shell input swipe` of a scenario here
+swipe_xy() {
+  local own=""
+  if [ "${EMU_SWIPE_CHECK:-1}" != 0 ]; then
+    frame .emu_swipe_before && own=1 || near swipe "swipe_xy $*: no frame before the swipe - not checked"
+  fi
+  adb shell input swipe "$1" "$2" "$3" "$4" "${5:-400}" < /dev/null > /dev/null 2>&1
+  emu_sleep 1
+  [ -z "$own" ] || swipe_moved .emu_swipe_before "swipe_xy $*"
+}
+
+# swipe_moved <frame before> <what>: the frame now against <frame before>, below the status bar and outside
+# EMU_MASKS (emu_frame.py diff). Equal - "!! swipe: the screen did not move - the step proves nothing" and 1
+# (T-732; T-228, lesson 10: the swipe of the scenario fell on the button row of a card, the frames before and
+# after were equal byte for byte on API 30, and the PR said "text scrolls"). Not comparable - a near miss, 0
+swipe_moved() {
+  frame .emu_swipe_after || { near swipe "$2: no frame after the swipe - not checked"; return 0; }
+  "$EMU_PY" "$EMU_GH/emu_frame.py" diff "$1" .emu_swipe_after --rows "$EMU_ROWS" $(emu_mask_args) \
+    > /dev/null 2>&1
+  case $? in
+    0) fail "swipe: the screen did not move - the step proves nothing ($2)"; return 1 ;;
+    1) return 0 ;;
+    *) near swipe "$2: the frames not comparable - not checked"; return 0 ;;
+  esac
+}
+
+# swipe_go up|down [short|exact]: the swipe of swipe_page itself, no check
+swipe_go() {
   local band top bot x a b i n=6 cmd out
   band=$(uifind ui.xml --band 2>/dev/null) || band="252 2390"
   set -- "$1" "$2" $band
