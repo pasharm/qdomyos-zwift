@@ -46,6 +46,7 @@ function jquery(selector) {
         hide() { return chain; },
         show() { return chain; },
         css() { return chain; },
+        toggle() { return chain; }, // the heart zones, power curve and pace boxes of the modern UI
         on() { return chain; },
         ready() { return chain; },
     };
