@@ -1364,6 +1364,9 @@ import AndroidStatusBar 1.0
                     }
                     return appLanguageOptions[0].label
                 }
+                // As its page: a saved wallpaper colour where there is no wallpaper palette is violet
+                if (entry.key === "ui_accent")
+                    value = window.ui.accentName
                 // A list of the catalog, as its page shows it: the translated label of the value
                 // by its place ("Horizontal" for 1), or the value itself translated ("Male"). A
                 // list made at run time (rootItem.metrics) is not read: it has no change signal,

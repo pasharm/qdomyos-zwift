@@ -381,7 +381,7 @@ ApplicationWindow {
         Component.onCompleted: refreshSystemTheme()
         function accentOf(name) {
             if (name === "system" && systemAccentAvailable)
-                return readableAccent(dark ? systemAccentDark : systemAccentLight)
+                return readableAccent(dark ? systemAccentDark : systemAccentLight, t.surfaceHighest, dark)
             return a[name] || a["violet"]
         }
         // WCAG contrast ratio of two colours
@@ -394,14 +394,15 @@ ApplicationWindow {
             return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
         }
         // The wallpaper accent is not ours to vouch for (vendors ship their own palettes): if it
-        // reads below 4.5:1 on the darkest surface of the theme, darken it on a light page and
-        // lighten it on a dark one, keeping its hue
-        function readableAccent(hex) {
+        // reads below 4.5:1 on the given surface - the one it reads worst on, surfaceHighest of
+        // the page (the darkest of a light theme, the lightest of a dark one) - lighten it on a
+        // dark surface (onDark) and darken it on a light one, keeping its hue
+        function readableAccent(hex, surface, onDark) {
             var c = Qt.lighter(hex, 1.0)  // string -> color; Qt.color() is Qt 6 only
-            var worst = Qt.lighter(t.surfaceHighest, 1.0)
+            var worst = Qt.lighter(surface, 1.0)
             var h = Math.max(0, c.hslHue), s = c.hslSaturation, l = c.hslLightness  // grey: hue -1
             for (var i = 0; i < 50 && contrast(c, worst) < 4.5; i++) {
-                l = dark ? Math.min(1, l + 0.02) : Math.max(0, l - 0.02)
+                l = onDark ? Math.min(1, l + 0.02) : Math.max(0, l - 0.02)
                 c = Qt.hsla(h, s, l, 1)
             }
             return c
@@ -418,9 +419,14 @@ ApplicationWindow {
         // dark page and a dark one on a light page
         readonly property color inverseSurface: t.inverseSurface
         readonly property color inverseText: t.inverseText
-        readonly property color accent: accentOf(settings.ui_accent)
-        // the name of the accent: UiButton.inverse takes the one of the opposite theme
-        readonly property string accentName: settings.ui_accent
+        readonly property color accent: accentOf(accentName)
+        // The name of the accent in use: UiButton.inverse takes the one of the opposite theme, the
+        // accent row of the settings marks it. A saved "system" where there is no wallpaper
+        // palette (Android 11 and older, iOS, settings brought from another phone) and an unknown
+        // name are violet, as the accent itself
+        readonly property string accentName: (settings.ui_accent === "system" && systemAccentAvailable)
+                                             || a[settings.ui_accent] !== undefined
+                                             ? settings.ui_accent : "violet"
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"
         readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
