@@ -108,7 +108,7 @@ import QtQuick 2.12 as Quick212
         property var pendingJump: null
         // The glow of the last jump: gone at once when back returns to the results
         property var activeGlow: null
-        // Set while back puts the old query into the field: its onTextChanged must not search
+        // Set while back puts the old query into the field: its onDisplayTextChanged must not search
         property bool restoringSearch: false
         // Modern look, "Changed": the section whose Reset section is being confirmed
         property string resetSectionName: ""
@@ -287,7 +287,7 @@ import QtQuick 2.12 as Quick212
             // is of the text before it, so the way back works the results out again
             var due = settingsSearchDebounceTimer.running
             settingsSearchDebounceTimer.stop()
-            return { query: settingsSearchTextField.text, changedOnly: changedOnly,
+            return { query: settingsSearchTextField.displayText, changedOnly: changedOnly,
                      results: due ? null : filteredSettings, scroll: contentItem.contentY, viaPush: viaPush,
                      modern: window.ui.modern }
         }
@@ -297,10 +297,12 @@ import QtQuick 2.12 as Quick212
         function openPageResult(entry) {
             // A setting tapped before the index came must not open over this page later
             pendingJump = null
-            searchReturn = currentSearch(true)
+            // Kept for back only after the field lost the focus (see jumpToSetting)
+            var kept = currentSearch(true)
             // Or the search field takes the focus back with the keyboard on the way back
             dropTextFocus()
             stackView.push(entry.target, { settings: settings })
+            searchReturn = kept
         }
 
         // A search result opens the setting itself: its page, its sections, scrolled to it and
@@ -332,23 +334,27 @@ import QtQuick 2.12 as Quick212
             }
             var page = settingsPane
             var context = "settings"
-            // The results and their scroll as they were: back shows them without searching again
-            searchReturn = currentSearch(false)
+            // The results and their scroll as they were: back shows them without searching again.
+            // A word still being composed (underlined) is committed when the field is cleared or
+            // loses the focus below, and the commit comes as textEdited, which forgets the search
+            // kept for back. So the search is taken here and kept only after that
+            var kept = currentSearch(false)
             if (where && where.file !== "settings.qml") {
-                if (searchReturn)
-                    searchReturn.viaPush = true
+                kept.viaPush = true
                 stackView.push(where.file, { settings: settings })
                 page = stackView.currentItem
                 context = where.file.replace(/\.qml$/, "")
             }
             // The filter is kept in searchReturn: back brings it up with its results
             changedOnly = false
-            settingsSearchTextField.text = ""
+            // clear(): a word still being composed goes too (see the clear button)
+            settingsSearchTextField.clear()
             // With the filter on and no text the line above changes nothing: the results are
             // closed here, or the page under them stays hidden and the setting is not found
             settingsSearchActive = false
             settingsSearchPending = false
             dropTextFocus()
+            searchReturn = kept
 
             var chain = where ? where.chain : []
             var container = page.contentItem
@@ -748,7 +754,8 @@ import QtQuick 2.12 as Quick212
             pendingJump = null
             settingsSearchDebounceTimer.stop()
             changedOnly = false
-            settingsSearchTextField.text = ""
+            // clear(): a word still being composed goes too (see the clear button)
+            settingsSearchTextField.clear()
             settingsSearchVisible = false
             settingsSearchActive = false
             settingsSearchPending = false
@@ -1118,7 +1125,7 @@ import QtQuick 2.12 as Quick212
                 return
             }
 
-            var query = settingsSearchTextField ? settingsSearchTextField.text.trim().toLowerCase() : ""
+            var query = settingsSearchTextField ? settingsSearchTextField.displayText.trim().toLowerCase() : ""
             if (query.length === 0 && !changedOnly) {
                 filteredSettings = []
                 settingsSearchPending = false
@@ -1204,7 +1211,7 @@ import QtQuick 2.12 as Quick212
             searchReturn = null
             pendingJump = null
             settingsSearchDebounceTimer.stop()
-            settingsSearchActive = on || settingsSearchTextField.text.trim().length > 0
+            settingsSearchActive = on || settingsSearchTextField.displayText.trim().length > 0
             settingsSearchPending = settingsSearchActive
             filteredSettings = []
             loadSettingsCatalog()
@@ -1364,7 +1371,7 @@ import QtQuick 2.12 as Quick212
             var states = sectionStates(contentItem, [])
             var snapshot = initialProfileSettingsSnapshot
             var restartToApply = window.settings_restart_to_apply
-            var query = settingsSearchTextField.text
+            var query = settingsSearchTextField.displayText
             var scroll = { y: contentItem.contentY, height: contentHeight }
             // The catalog and the index of the pages read here: the new page lists "Changed" at
             // once with them, and can put the list where it was. Reading them again would list it
@@ -3213,12 +3220,27 @@ import QtQuick 2.12 as Quick212
                         settingsPane.searchReturn = null
                         settingsPane.pendingJump = null
                     }
-                    onTextChanged: {
+                    // textEdited does not come for a word still being composed
+                    onPreeditTextChanged: {
+                        if (preeditText.length > 0) {
+                            settingsPane.searchReturn = null
+                            settingsPane.pendingJump = null
+                        }
+                    }
+                    // The text the search below was last started for
+                    property string searchedText: ""
+                    // displayText, not text: also the word still being composed (underlined). Its
+                    // signal comes for every input method event, also with the text unchanged (a
+                    // word committed): the same text keeps its results
+                    onDisplayTextChanged: {
+                        if (displayText === searchedText)
+                            return
+                        searchedText = displayText
                         if (settingsPane.restoringSearch)
                             return
-                        settingsPane.settingsSearchActive = text.trim().length > 0 || settingsPane.changedOnly
+                        settingsPane.settingsSearchActive = displayText.trim().length > 0 || settingsPane.changedOnly
                         settingsSearchDebounceTimer.stop()
-                        if (text.trim().length === 0 && settingsPane.changedOnly) {
+                        if (displayText.trim().length === 0 && settingsPane.changedOnly) {
                             // The text cleared: the whole list of changed settings at once
                             settingsPane.updateFilteredSettings()
                         } else if (settingsPane.settingsSearchActive) {
@@ -3245,7 +3267,7 @@ import QtQuick 2.12 as Quick212
                     }
 
                     MouseArea {
-                        visible: window.ui.modern && settingsSearchTextField.text.length > 0
+                        visible: window.ui.modern && settingsSearchTextField.displayText.length > 0
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
@@ -3259,7 +3281,12 @@ import QtQuick 2.12 as Quick212
                         function clear() {
                             settingsPane.searchReturn = null
                             settingsPane.pendingJump = null
-                            settingsSearchTextField.text = ""
+                            // clear(), not text = "": with only a word being composed text is already
+                            // "", setting it does nothing and the word stays. clear() resets the input
+                            // method first (on Android that commits the word into text) and then
+                            // empties text (TextInput::clear; since Qt 6.2 clear() drops the word
+                            // itself, QTBUG-95461)
+                            settingsSearchTextField.clear()
                         }
                         // Qt 5.15: a double tap of the screen reader does not reach onClicked
                         Accessible.onPressAction: clear()
@@ -3322,7 +3349,7 @@ import QtQuick 2.12 as Quick212
                               changedOnly && filteredSettings.length > 0 ?
                                   qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
                               // With a text the changed settings may be there, just not matching it
-                              changedOnly && settingsSearchTextField.text.trim().length === 0 ?
+                              changedOnly && settingsSearchTextField.displayText.trim().length === 0 ?
                                   qsTr("No changed settings") :
                               filteredSettings.length === 0 ? qsTr("No settings found") :
                               qsTr("Search results") + " (" + filteredSettings.length + ")"
