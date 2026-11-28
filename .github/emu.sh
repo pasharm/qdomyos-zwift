@@ -9,7 +9,8 @@
 #       Blue marked, qz.conf ui_accent=blue after a restart; "Wallpaper color" tapped - marked, ui_accent=system after a
 #       restart and marked again.
 #       head API 30 - no "Wallpaper color", Violet marked (the fix of F1). base - no "Wallpaper color", and
-#       Violet NOT marked: the defect the head fixes (a base with Violet marked did not reproduce it - red)
+#       Violet NOT marked: the defect the head fixes (a base with Violet marked did not reproduce it - red); then
+#       Blue tapped and kept after a restart, as the head, for a pair of the QML warnings of that path
 #   d - the same in the dark look: the mark, the frame (the colour of the swatch and of the page accent - for the eye)
 #   l - text at 170 % (ui_text_scale_system=false): the swatches and the label "Accent color" all on the screen,
 #       the label not over the first swatch, the last swatch within the screen
@@ -107,18 +108,24 @@ saved() {
     fi
   fi
   [ "$mode" = dark ] && return 0
-  palette "$c" || return 0
+  # Blue and a restart on the base side too (any API): the same pick and the same way out of the page as the
+  # head, so a QML warning of the head has its pair on master (UiSettingFrames.qml:114 after Blue on hs
+  # only, run 46091320164)
+  palette "$c" || [ "${c:0:1}" = b ] || return 0
   pick "$c" Blue || return 1
   dump
   shot "$c-2-blue"
   marked "$c" "$c-2-blue" 'Blue' true "Blue marked after the tap"
-  marked "$c" "$c-2-blue" 'Wallpaper color' false "the wallpaper swatch not marked after Blue"
+  if palette "$c"; then
+    marked "$c" "$c-2-blue" 'Wallpaper color' false "the wallpaper swatch not marked after Blue"
+  fi
   # each pick written and read back with a value other than the one the case started with (put_conf system):
   # a write that does nothing would keep system and fail the first check
   restart "$c-r1" || return 1
   conf_is "$c-r1" ui_accent blue
   accent_row "$c" "$c-3-restart" || return 1
   marked "$c" "$c-3-restart" 'Blue' true "Blue kept after the restart"
+  palette "$c" || return 0
   pick "$c" 'Wallpaper color' || return 1
   dump
   shot "$c-4-wallpaper"
