@@ -200,6 +200,19 @@ changed() {
   esac
 }
 
+# anr_traces: after an ANR of QZ the stacks Android wrote (/data/anr, root only) to dumps/anr/ of the artifact - the
+# main thread at the ANR. Last, before finish: adb root restarts adbd and the logcat with it (lib.sh tb_on).
+# T-647: ANR of the head on API 35 in 3 runs of 3 (46091320164, 46093749787, 46096374846), of the base in none
+anr_traces() {
+  adb logcat -d < /dev/null 2>/dev/null | grep -a -q "ANR in $PKG" || return 0
+  adb root >> "$STEPLOG" 2>&1
+  timeout 120 adb wait-for-device < /dev/null >> "$STEPLOG" 2>&1 || { near adb "wait-for-device: no device in 120 s"; return 0; }
+  emu_sleep 3
+  mkdir -p dumps/anr
+  adb pull /data/anr dumps/anr < /dev/null >> "$STEPLOG" 2>&1
+  say "== ANR traces: $(find dumps/anr -type f | wc -l) files in dumps/anr"
+}
+
 emu_init
 logcat_start
 
@@ -215,4 +228,5 @@ for side in h b; do
 done
 
 qml_quiet 'settings|main|UiButton|UiSettingFrames|UiIcon|UiFrame'
+anr_traces
 finish
