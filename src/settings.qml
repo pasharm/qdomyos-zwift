@@ -3305,10 +3305,10 @@ import QtQuick 2.12 as Quick212
                 // Classic look: a toggle as in master; modern look: the filled pill when on
                 UiButton {
                     text: qsTr("Changed")
-                    checkable: !window.ui.modern
+                    checkable: true
                     checked: settingsPane.changedOnly
                     highlighted: window.ui.modern && settingsPane.changedOnly
-                    onClicked: settingsPane.setChangedOnly(!settingsPane.changedOnly)
+                    onClicked: settingsPane.setChangedOnly(checked)
                 }
 
                 UiButton {
@@ -18046,8 +18046,6 @@ import QtQuick 2.12 as Quick212
                                         Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteRizerName
                                         text: "Elite Rizer:"
-                                        // Modern look: apart from the description above it, the name of a picker below
-                                        topPadding: window.ui.modern ? 16 : 0
                                         Layout.fillWidth: true
                                     }
                                     RowLayout {
@@ -18123,8 +18121,6 @@ import QtQuick 2.12 as Quick212
                                         Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteSterzoSmartName
                                         text: "Elite Sterzo Smart:"
-                                        // Modern look: apart from the description above it, the name of a picker below
-                                        topPadding: window.ui.modern ? 16 : 0
                                         Layout.fillWidth: true
                                     }
                                     RowLayout {
@@ -18177,8 +18173,6 @@ import QtQuick 2.12 as Quick212
                                 Layout.topMargin: window.ui.modern ? 8 : 0
                                 id: labelFTMSAccessoryName
                                 text: qsTr("SmartSpin2k device:")
-                                // Modern look: apart from the description above it, the name of a picker below
-                                topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
